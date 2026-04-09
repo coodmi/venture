@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/whistle1/venture.cepird.com
+    - /bin/cp -R * $DEPLOYPATH
