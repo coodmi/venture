@@ -1,9 +1,14 @@
 <IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
-    </IfModule>
-
     RewriteEngine On
+
+    # Serve static files from public/ if they exist there
+    RewriteCond %{REQUEST_URI} ^/build/(.*)$
+    RewriteCond %{DOCUMENT_ROOT}/public/build/%1 -f
+    RewriteRule ^build/(.*)$ public/build/$1 [L]
+
+    RewriteCond %{REQUEST_URI} ^/storage/(.*)$
+    RewriteCond %{DOCUMENT_ROOT}/public/storage/%1 -f
+    RewriteRule ^storage/(.*)$ public/storage/$1 [L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
