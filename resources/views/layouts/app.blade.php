@@ -23,7 +23,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="bg-white text-gray-900 font-sans antialiased" x-data>
+<body class="font-sans antialiased" style="background:#0d0a04;color:#e5d5b0;" x-data>
 
     {{-- Navigation --}}
     @include('partials.navbar')
