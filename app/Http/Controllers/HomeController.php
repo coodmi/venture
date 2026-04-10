@@ -20,7 +20,7 @@ class HomeController extends Controller
         $featured     = Opportunity::approved()->featured()->latest()->take(6)->get();
         $events       = Event::published()->upcoming()->orderBy('start_date')->take(4)->get();
         $testimonials = Testimonial::where('is_published', true)->orderBy('sort_order')->take(6)->get();
-        $latestNews   = News::published()->ofType('news')->latest('published_at')->take(3)->get();
+        $latestNews   = News::published()->ofType('news')->latest('published_at')->take(6)->get();
         $heroSlides   = json_decode(Setting::get('hero_slides', '[]'), true) ?: [];
         $topStartups  = Opportunity::approved()->where('is_featured', true)->latest()->take(6)->get();
         try {

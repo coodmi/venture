@@ -337,26 +337,43 @@ function slideScroll(id, dir) {
 
 {{-- ═══════════════════════════════════════════════════════════ LATEST NEWS --}}
 @if($latestNews->count())
-<section style="background:#fff;padding:5rem 1.5rem;">
-    <div style="max-width:80rem;margin:0 auto;">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
-            <h2 style="font-size:2rem;font-weight:800;color:#0f172a;margin:0;letter-spacing:-.02em;">Latest News</h2>
-            <a href="{{ route('news.index') }}" style="color:#1d4ed8;font-size:.875rem;font-weight:600;text-decoration:none;">View all →</a>
+<section style="background:#fff;padding:4rem 0;">
+    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
+            <div>
+                <span style="display:inline-block;background:#f0f9ff;color:#0369a1;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;">📰 Latest</span>
+                <h2 style="font-size:2rem;font-weight:800;color:#0f172a;margin:0;letter-spacing:-.02em;">News & Insights</h2>
+            </div>
+            <div style="display:flex;align-items:center;gap:.75rem;">
+                <button onclick="slideScroll('newsTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.08);">
+                    <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button onclick="slideScroll('newsTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.08);">
+                    <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
+                <a href="{{ route('news.index') }}" style="color:#1d4ed8;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
+            </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;">
+        <div id="newsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;-ms-overflow-style:none;" class="hide-scroll">
             @foreach($latestNews as $article)
-            <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;display:block;" onmouseover="this.querySelector('h3').style.color='#1d4ed8';" onmouseout="this.querySelector('h3').style.color='#0f172a';">
+            <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;flex-shrink:0;width:300px;display:flex;flex-direction:column;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;overflow:hidden;transition:all .25s;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.1)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
                 @if($article->cover_image)
-                    <img src="{{ Storage::url($article->cover_image) }}" alt="{{ $article->title }}" style="width:100%;height:12rem;object-fit:cover;border-radius:1rem;margin-bottom:1rem;display:block;">
+                    <img src="{{ Storage::url($article->cover_image) }}" alt="{{ $article->title }}" style="width:100%;height:10rem;object-fit:cover;display:block;">
                 @else
-                    <div style="width:100%;height:12rem;background:linear-gradient(135deg,#f1f5f9,#e2e8f0);border-radius:1rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;">
-                        <svg width="48" height="48" fill="none" stroke="#94a3b8" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                    @php $newsGrads=['Deal News'=>'linear-gradient(135deg,#1d4ed8,#3b82f6)','Market Insights'=>'linear-gradient(135deg,#7c3aed,#a78bfa)','Platform Update'=>'linear-gradient(135deg,#059669,#34d399)','Press Release'=>'linear-gradient(135deg,#374151,#6b7280)','Founder Resources'=>'linear-gradient(135deg,#d97706,#fbbf24)','Event Recap'=>'linear-gradient(135deg,#dc2626,#f97316)','Startup Spotlight'=>'linear-gradient(135deg,#0891b2,#22d3ee)']; @endphp
+                    <div style="width:100%;height:10rem;background:{{ $newsGrads[$article->category] ?? 'linear-gradient(135deg,#1d4ed8,#3b82f6)' }};display:flex;align-items:center;justify-content:center;">
+                        <svg width="40" height="40" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
                     </div>
                 @endif
-                <span style="font-size:.7rem;color:#1d4ed8;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">{{ $article->category }}</span>
-                <h3 style="font-size:1rem;font-weight:700;color:#0f172a;margin:.375rem 0 .5rem;line-height:1.4;transition:color .2s;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $article->title }}</h3>
-                <p style="font-size:.8125rem;color:#64748b;line-height:1.5;margin:0 0 .5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $article->summary }}</p>
-                <span style="font-size:.75rem;color:#94a3b8;">{{ $article->published_at?->format('M d, Y') }}</span>
+                <div style="padding:1.125rem;flex:1;display:flex;flex-direction:column;">
+                    <span style="font-size:.68rem;color:#1d4ed8;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">{{ $article->category }}</span>
+                    <h3 style="font-size:.9375rem;font-weight:700;color:#0f172a;margin:.3rem 0 .5rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;">{{ $article->title }}</h3>
+                    <p style="font-size:.78rem;color:#64748b;line-height:1.5;margin:0 0 .75rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $article->summary }}</p>
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.625rem;border-top:1px solid #f1f5f9;">
+                        <span style="font-size:.72rem;color:#94a3b8;">{{ $article->published_at?->format('M d, Y') }}</span>
+                        <span style="font-size:.72rem;color:#1d4ed8;font-weight:600;">Read →</span>
+                    </div>
+                </div>
             </a>
             @endforeach
         </div>
