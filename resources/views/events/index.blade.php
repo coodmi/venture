@@ -115,7 +115,7 @@
                 </div>
             @else
                 <div class="relative h-48 bg-gradient-to-br {{ $gradients[$loop->index % count($gradients)] }} flex items-center justify-center overflow-hidden">
-                    <span class="text-6xl opacity-80">{{ $icons[$loop->index % count($icons)] }}</span>
+                    <svg class="w-14 h-14 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     <div class="absolute top-3 left-3">
                         <span class="bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-2.5 py-1 rounded-full border border-white/30">{{ ucfirst($event->event_type) }}</span>
                     </div>

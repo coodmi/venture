@@ -64,11 +64,9 @@
                     @php
                         $featGrads = ['Deal News'=>'from-primary-600 to-primary-800','Market Insights'=>'from-blue-600 to-indigo-700','Startup Spotlight'=>'from-purple-600 to-pink-600','Platform Update'=>'from-green-600 to-teal-600','Press Release'=>'from-gray-700 to-gray-900','Founder Resources'=>'from-amber-500 to-orange-600','Event Recap'=>'from-rose-500 to-red-700'];
                         $featGrad = $featGrads[$featured->category] ?? 'from-primary-600 to-primary-800';
-                        $featIcons = ['Deal News'=>'💰','Market Insights'=>'📊','Startup Spotlight'=>'🚀','Platform Update'=>'⚙️','Press Release'=>'📢','Founder Resources'=>'💡','Event Recap'=>'🏆'];
-                        $featIcon = $featIcons[$featured->category] ?? '📰';
                     @endphp
                     <div class="w-full h-full min-h-64 bg-gradient-to-br {{ $featGrad }} flex items-center justify-center">
-                        <span class="text-8xl opacity-70">{{ $featIcon }}</span>
+                        <svg class="w-20 h-20 text-white opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
                     </div>
                 @endif
                 <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent lg:hidden"></div>
@@ -144,7 +142,7 @@
                     $meta = $catGrads[$article->category] ?? ['grad' => 'from-primary-600 to-primary-800', 'icon' => '📰', 'color' => 'bg-primary-50 text-primary-700'];
                 @endphp
                 <div class="relative h-48 bg-gradient-to-br {{ $meta['grad'] }} flex items-center justify-center overflow-hidden">
-                    <span class="text-6xl opacity-70">{{ $meta['icon'] }}</span>
+                    <svg class="w-14 h-14 text-white opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
                     @if($article->is_featured)
                     <div class="absolute top-3 right-3">
                         <span class="bg-accent-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">⭐ Featured</span>
