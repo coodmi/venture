@@ -3,7 +3,7 @@
 @section('page-title', 'Header Settings')
 
 @section('content')
-<div class="max-w-2xl space-y-4">
+<div class="w-full">
     <div class="bg-white rounded-xl border border-gray-200 p-6">
         <form method="POST" action="{{ route('admin.settings.header.update') }}" enctype="multipart/form-data"
               class="space-y-6" x-data="menuManager()" x-init="init({{ json_encode($menuItems) }})">

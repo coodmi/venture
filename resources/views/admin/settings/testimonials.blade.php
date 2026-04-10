@@ -3,7 +3,7 @@
 @section('page-title', 'Manage Testimonials')
 
 @section('content')
-<div class="max-w-3xl space-y-6">
+<div class="w-full space-y-6">
     <div class="bg-white rounded-xl border border-gray-200 p-6">
         <h3 class="font-semibold text-gray-900 mb-4">Add Testimonial</h3>
         <form method="POST" action="{{ route('admin.settings.testimonials.store') }}" enctype="multipart/form-data" class="space-y-4">
