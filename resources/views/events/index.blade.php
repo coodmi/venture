@@ -1,265 +1,192 @@
 @extends('layouts.app')
-@section('title', 'Events & Conferences — VentureMatch')
-@section('meta_description', 'Attend VentureMatch events — investor summits, startup showcases, networking nights, and ecosystem conferences.')
+@section('title', 'Events & Conferences')
 
 @section('content')
 
 {{-- Hero --}}
-<section class="relative bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white overflow-hidden">
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-10 left-20 w-80 h-80 bg-accent-500 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 right-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-    </div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-        <div class="max-w-3xl">
-            <span class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-primary-200 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm">
-                <span class="w-1.5 h-1.5 bg-accent-400 rounded-full"></span>
-                Events & Conferences
-            </span>
-            <h1 class="text-5xl sm:text-6xl font-extrabold leading-tight mb-6 tracking-tight">
-                Where Deals Are<br>
-                <span class="text-accent-400">Made in Person</span>
-            </h1>
-            <p class="text-lg text-primary-200 leading-relaxed max-w-xl mb-8">
-                Summits, showcases, networking nights, and workshops — designed to connect investors, founders, and ecosystem builders.
-            </p>
-            <div class="flex flex-wrap gap-3">
-                @php $types = ['All', 'Online', 'Offline', 'Hybrid']; @endphp
-                @foreach($types as $t)
-                <a href="{{ $t === 'All' ? route('events.index') : route('events.index', ['type' => strtolower($t)]) }}"
-                   class="px-4 py-2 rounded-xl text-sm font-medium transition-all
-                          {{ (request('type') === strtolower($t) || ($t === 'All' && !request('type'))) ? 'bg-accent-500 text-white' : 'bg-white/10 text-white hover:bg-white/20 border border-white/20' }}">
-                    {{ $t }}
-                </a>
-                @endforeach
-            </div>
+<div style="background:linear-gradient(135deg,#0d0a04,#1a1208,#241c0a);padding:5rem 1.5rem;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-5rem;right:-5rem;width:25rem;height:25rem;background:rgba(212,146,15,.07);border-radius:50%;filter:blur(60px);"></div>
+    <div style="max-width:80rem;margin:0 auto;position:relative;">
+        <span style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(212,146,15,.1);border:1px solid rgba(212,146,15,.25);color:rgba(212,146,15,.8);font-size:.75rem;font-weight:600;padding:.375rem 1rem;border-radius:9999px;margin-bottom:1.5rem;">
+            <span style="width:.375rem;height:.375rem;background:#f59e0b;border-radius:50%;display:inline-block;"></span>
+            Events & Conferences
+        </span>
+        <h1 style="font-size:clamp(2.5rem,6vw,3.75rem);font-weight:800;line-height:1.1;margin:0 0 1.25rem;color:#fff;letter-spacing:-.03em;">
+            Where Deals Are <span style="color:#d4920f;">Made in Person</span>
+        </h1>
+        <p style="font-size:1.125rem;color:rgba(212,146,15,.6);max-width:32rem;line-height:1.7;margin:0 0 2rem;">
+            Summits, showcases, networking nights, and workshops — connecting investors, founders, and ecosystem builders.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:.625rem;">
+            @php $types = ['All', 'Online', 'Offline', 'Hybrid']; @endphp
+            @foreach($types as $t)
+            <a href="{{ $t === 'All' ? route('events.index') : route('events.index', ['type' => strtolower($t)]) }}"
+               style="padding:.5rem 1.125rem;border-radius:.75rem;font-size:.875rem;font-weight:600;text-decoration:none;{{ (request('type') === strtolower($t) || ($t === 'All' && !request('type'))) ? 'background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;' : 'background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(212,146,15,.2);' }}">
+                {{ $t }}
+            </a>
+            @endforeach
         </div>
     </div>
-    <div class="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
-            <path d="M0 60L1440 60L1440 20C1200 60 960 0 720 20C480 40 240 0 0 20L0 60Z" fill="#f9fafb"/>
-        </svg>
-    </div>
-</section>
+</div>
 
-{{-- Featured Event Banner --}}
+{{-- Featured Banner --}}
 @php $featured = $upcoming->firstWhere('is_featured', true) ?? $upcoming->first(); @endphp
 @if($featured)
-<section class="bg-gray-50 py-6 border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-gradient-to-r from-primary-600 to-primary-800 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div class="flex items-center gap-4">
-                <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
-                    </svg>
+<div style="background:#110e05;padding:1.5rem;border-bottom:1px solid rgba(212,146,15,.1);">
+    <div style="max-width:80rem;margin:0 auto;">
+        <div style="background:linear-gradient(135deg,#1a1208,#2d2010);border:1px solid rgba(212,146,15,.25);border-radius:1.25rem;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+            <div style="display:flex;align-items:center;gap:1rem;">
+                <div style="width:3.5rem;height:3.5rem;background:rgba(212,146,15,.15);border-radius:.875rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="24" height="24" fill="none" stroke="#d4920f" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
                 </div>
                 <div>
-                    <p class="text-white/70 text-xs font-semibold uppercase tracking-wider">Featured Event</p>
-                    <p class="text-white font-bold text-lg">{{ $featured->title }}</p>
-                    <p class="text-primary-200 text-sm">{{ $featured->start_date->format('M d, Y · g:i A') }} · {{ $featured->venue ?? 'Online' }}</p>
+                    <p style="color:rgba(212,146,15,.6);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin:0 0 .25rem;">Featured Event</p>
+                    <p style="color:#f0e6c8;font-weight:700;font-size:1rem;margin:0 0 .2rem;">{{ $featured->title }}</p>
+                    <p style="color:#7a6a4a;font-size:.8125rem;margin:0;">{{ $featured->start_date->format('M d, Y · g:i A') }} · {{ $featured->venue ?? 'Online' }}</p>
                 </div>
             </div>
-            <a href="{{ route('events.show', $featured->slug) }}"
-               class="bg-white text-primary-700 font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-gray-100 transition-colors flex-shrink-0">
-                View Details →
-            </a>
+            <a href="{{ route('events.show', $featured->slug) }}" style="background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;padding:.625rem 1.5rem;border-radius:.75rem;text-decoration:none;font-size:.875rem;white-space:nowrap;">View Details →</a>
         </div>
     </div>
-</section>
+</div>
 @endif
 
 {{-- Upcoming Events --}}
-<section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-end justify-between mb-10">
+<div style="background:#0d0a04;padding:4rem 1.5rem;">
+    <div style="max-width:80rem;margin:0 auto;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
             <div>
-                <span class="text-xs font-bold text-primary-600 uppercase tracking-widest">Don't Miss Out</span>
-                <h2 class="text-3xl font-extrabold text-gray-900 mt-1">Upcoming Events</h2>
+                <span style="font-size:.7rem;font-weight:700;color:#d4920f;text-transform:uppercase;letter-spacing:.1em;">Don't Miss Out</span>
+                <h2 style="font-size:2rem;font-weight:800;color:#f0e6c8;margin:.5rem 0 0;letter-spacing:-.02em;">Upcoming Events</h2>
             </div>
-            <form method="GET" class="hidden sm:flex items-center gap-2">
-                <select name="category" onchange="this.form.submit()"
-                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white">
+            <form method="GET">
+                <select name="category" onchange="this.form.submit()" style="background:#1a1408;border:1px solid rgba(212,146,15,.2);color:#c9b48a;font-size:.875rem;border-radius:.5rem;padding:.5rem .875rem;outline:none;cursor:pointer;">
                     <option value="">All Categories</option>
-                    @foreach(['Summit', 'Workshop', 'Networking', 'Showcase', 'Conference', 'Bootcamp'] as $cat)
-                        <option value="{{ $cat }}" {{ request('category') === $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                    @foreach(['Summit','Workshop','Networking','Showcase','Conference','Bootcamp'] as $cat)
+                    <option value="{{ $cat }}" {{ request('category')===$cat?'selected':'' }}>{{ $cat }}</option>
                     @endforeach
                 </select>
             </form>
         </div>
 
-        @php
-            $gradients = ['from-primary-600 to-primary-800','from-blue-600 to-indigo-700','from-purple-600 to-pink-600','from-green-600 to-teal-600','from-orange-500 to-red-600','from-amber-500 to-orange-600'];
-            $icons     = ['🏆','💡','🤝','📊','🌍','🚀'];
-        @endphp
+        @php $gradients=['linear-gradient(135deg,#1d4ed8,#3b82f6)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#059669,#34d399)','linear-gradient(135deg,#dc2626,#f97316)','linear-gradient(135deg,#d97706,#fbbf24)','linear-gradient(135deg,#0891b2,#22d3ee)']; @endphp
 
         @forelse($upcoming as $event)
-        @if($loop->first)
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @endif
+        @if($loop->first)<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;">@endif
 
-        <a href="{{ route('events.show', $event->slug) }}"
-           class="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+        <a href="{{ route('events.show', $event->slug) }}" style="text-decoration:none;background:#1a1408;border:1px solid rgba(212,146,15,.12);border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.4)';this.style.transform='translateY(-3px)';this.style.borderColor='rgba(212,146,15,.35)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';this.style.borderColor='rgba(212,146,15,.12)';">
             @if($event->banner)
-                <div class="relative overflow-hidden h-48">
-                    <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}"
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <div class="absolute top-3 left-3">
-                        <span class="bg-white/90 backdrop-blur-sm text-primary-700 text-xs font-bold px-2.5 py-1 rounded-full">{{ ucfirst($event->event_type) }}</span>
-                    </div>
-                    @if($event->is_featured)
-                    <div class="absolute top-3 right-3">
-                        <span class="bg-accent-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">⭐ Featured</span>
-                    </div>
-                    @endif
+                <div style="position:relative;height:12rem;overflow:hidden;">
+                    <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
+                    <div style="position:absolute;top:.75rem;left:.75rem;background:rgba(0,0,0,.5);color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;backdrop-filter:blur(4px);">{{ ucfirst($event->event_type) }}</div>
+                    @if($event->is_featured)<div style="position:absolute;top:.75rem;right:.75rem;background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;">⭐ Featured</div>@endif
                 </div>
             @else
-                <div class="relative h-48 bg-gradient-to-br {{ $gradients[$loop->index % count($gradients)] }} flex items-center justify-center overflow-hidden">
-                    <svg class="w-14 h-14 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    <div class="absolute top-3 left-3">
-                        <span class="bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-2.5 py-1 rounded-full border border-white/30">{{ ucfirst($event->event_type) }}</span>
-                    </div>
-                    @if($event->is_featured)
-                    <div class="absolute top-3 right-3">
-                        <span class="bg-accent-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">⭐ Featured</span>
-                    </div>
-                    @endif
+                <div style="position:relative;height:12rem;background:{{ $gradients[$loop->index % 6] }};display:flex;align-items:center;justify-content:center;">
+                    <svg width="40" height="40" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <div style="position:absolute;top:.75rem;left:.75rem;background:rgba(0,0,0,.35);color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;border:1px solid rgba(255,255,255,.2);">{{ ucfirst($event->event_type) }}</div>
+                    @if($event->is_featured)<div style="position:absolute;top:.75rem;right:.75rem;background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;">⭐ Featured</div>@endif
                 </div>
             @endif
-
-            <div class="p-5">
-                <div class="flex items-center gap-2 mb-3">
-                    @if($event->category)
-                    <span class="text-xs bg-primary-50 text-primary-700 font-semibold px-2.5 py-1 rounded-full">{{ $event->category }}</span>
-                    @endif
+            <div style="padding:1.25rem;flex:1;display:flex;flex-direction:column;">
+                <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap;">
+                    @if($event->category)<span style="font-size:.68rem;background:rgba(212,146,15,.12);color:#d4920f;font-weight:600;padding:.2rem .6rem;border-radius:9999px;">{{ $event->category }}</span>@endif
                     @if($event->registration_open)
-                    <span class="text-xs bg-green-50 text-green-700 font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Open
-                    </span>
+                    <span style="font-size:.68rem;background:rgba(5,150,105,.12);color:#34d399;font-weight:600;padding:.2rem .6rem;border-radius:9999px;display:flex;align-items:center;gap:.25rem;"><span style="width:.375rem;height:.375rem;background:#34d399;border-radius:50%;display:inline-block;"></span>Open</span>
                     @else
-                    <span class="text-xs bg-gray-100 text-gray-500 font-semibold px-2.5 py-1 rounded-full">Closed</span>
+                    <span style="font-size:.68rem;background:rgba(255,255,255,.06);color:#6b5c3e;font-weight:600;padding:.2rem .6rem;border-radius:9999px;">Closed</span>
                     @endif
                 </div>
-                <h3 class="font-bold text-gray-900 group-hover:text-primary-600 transition-colors leading-snug mb-2">{{ $event->title }}</h3>
-                @if($event->summary)
-                <p class="text-xs text-gray-500 mb-3 line-clamp-2">{{ $event->summary }}</p>
-                @endif
-                <div class="space-y-1.5 text-sm text-gray-500">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
+                <h3 style="font-weight:700;color:#f0e6c8;margin:0 0 .5rem;line-height:1.4;font-size:.9375rem;flex:1;">{{ $event->title }}</h3>
+                @if($event->summary)<p style="font-size:.78rem;color:#7a6a4a;margin:0 0 .875rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $event->summary }}</p>@endif
+                <div style="font-size:.8125rem;color:#6b5c3e;display:flex;flex-direction:column;gap:.375rem;margin-bottom:.875rem;">
+                    <div style="display:flex;align-items:center;gap:.5rem;">
+                        <svg width="14" height="14" fill="none" stroke="#d4920f" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         {{ $event->start_date->format('M d, Y · g:i A') }}
                     </div>
-                    <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
+                    <div style="display:flex;align-items:center;gap:.5rem;">
+                        <svg width="14" height="14" fill="none" stroke="#d4920f" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         {{ $event->venue ?? 'Online Event' }}
                     </div>
                 </div>
-                <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-                    <span class="text-xs text-gray-400">{{ $event->registrations_count ?? 0 }} registered</span>
-                    <span class="text-primary-600 text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">View Details →</span>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.875rem;border-top:1px solid rgba(212,146,15,.08);">
+                    <span style="font-size:.72rem;color:#6b5c3e;">{{ $event->registrations_count ?? 0 }} registered</span>
+                    <span style="font-size:.78rem;color:#d4920f;font-weight:600;">View Details →</span>
                 </div>
             </div>
         </a>
 
-        @if($loop->last)
-        </div>
-        @endif
-
+        @if($loop->last)</div>@endif
         @empty
-        <div class="text-center py-20 text-gray-400">
-            <div class="text-5xl mb-4">📅</div>
-            <p class="text-lg font-medium text-gray-500">No upcoming events at the moment.</p>
-            <p class="text-sm mt-1">Subscribe below to be notified when new events are announced.</p>
+        <div style="text-align:center;padding:5rem 0;color:#6b5c3e;">
+            <div style="font-size:3rem;margin-bottom:1rem;">📅</div>
+            <p style="font-size:1.125rem;font-weight:500;color:#9a8a6a;">No upcoming events at the moment.</p>
         </div>
         @endforelse
 
-        {{ $upcoming->withQueryString()->links() }}
+        <div style="margin-top:2rem;">{{ $upcoming->withQueryString()->links() }}</div>
     </div>
-</section>
+</div>
 
 {{-- Past Events --}}
 @if($past->isNotEmpty())
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-10">
-            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Look Back</span>
-            <h2 class="text-3xl font-extrabold text-gray-900 mt-1">Past Events</h2>
+<div style="background:#110e05;padding:4rem 1.5rem;">
+    <div style="max-width:80rem;margin:0 auto;">
+        <div style="margin-bottom:2rem;">
+            <span style="font-size:.7rem;font-weight:700;color:rgba(212,146,15,.5);text-transform:uppercase;letter-spacing:.1em;">Look Back</span>
+            <h2 style="font-size:2rem;font-weight:800;color:#f0e6c8;margin:.5rem 0 0;">Past Events</h2>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            @php $pastGrads = ['from-gray-500 to-gray-700','from-gray-600 to-gray-800']; @endphp
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;">
             @foreach($past as $p)
-            <a href="{{ route('events.show', $p->slug) }}"
-               class="flex items-center gap-4 bg-gray-50 rounded-xl p-4 border border-gray-100 hover:border-primary-200 hover:bg-primary-50/30 transition-all group">
-                <div class="w-14 h-14 rounded-xl bg-gradient-to-br {{ $pastGrads[$loop->index % 2] }} flex items-center justify-center flex-shrink-0 text-2xl">
-                    📅
+            <a href="{{ route('events.show', $p->slug) }}" style="text-decoration:none;display:flex;align-items:center;gap:1rem;background:#1a1408;border:1px solid rgba(212,146,15,.1);border-radius:.875rem;padding:1rem;transition:all .2s;" onmouseover="this.style.borderColor='rgba(212,146,15,.3)';" onmouseout="this.style.borderColor='rgba(212,146,15,.1)';">
+                <div style="width:3rem;height:3rem;border-radius:.75rem;background:rgba(212,146,15,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" fill="none" stroke="#d4920f" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 </div>
-                <div class="flex-1 min-w-0">
-                    <p class="font-semibold text-gray-700 text-sm truncate group-hover:text-primary-700 transition-colors">{{ $p->title }}</p>
-                    <p class="text-xs text-gray-400 mt-0.5">{{ $p->start_date->format('M d, Y') }} · {{ $p->venue ?? 'Online' }}</p>
-                    <p class="text-xs text-gray-400 mt-0.5">{{ $p->registrations_count ?? 0 }} attendees</p>
+                <div style="flex:1;min-width:0;">
+                    <p style="font-weight:600;color:#c9b48a;font-size:.875rem;margin:0 0 .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $p->title }}</p>
+                    <p style="font-size:.75rem;color:#6b5c3e;margin:0;">{{ $p->start_date->format('M d, Y') }} · {{ $p->venue ?? 'Online' }}</p>
                 </div>
-                <span class="text-xs bg-gray-200 text-gray-500 px-2 py-1 rounded-full font-medium flex-shrink-0">{{ ucfirst($p->event_type) }}</span>
+                <span style="font-size:.68rem;background:rgba(255,255,255,.05);color:#6b5c3e;padding:.2rem .5rem;border-radius:9999px;flex-shrink:0;">{{ ucfirst($p->event_type) }}</span>
             </a>
             @endforeach
         </div>
     </div>
-</section>
+</div>
 @endif
 
 {{-- Why Attend --}}
-<section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-14">
-            <span class="text-xs font-bold text-primary-600 uppercase tracking-widest">The Value</span>
-            <h2 class="text-3xl font-extrabold text-gray-900 mt-2">Why Attend VentureMatch Events?</h2>
+<div style="background:#0d0a04;padding:4rem 1.5rem;">
+    <div style="max-width:80rem;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:3rem;">
+            <span style="font-size:.7rem;font-weight:700;color:#d4920f;text-transform:uppercase;letter-spacing:.1em;">The Value</span>
+            <h2 style="font-size:2rem;font-weight:800;color:#f0e6c8;margin:.5rem 0 0;">Why Attend VentureMatch Events?</h2>
         </div>
-        @php
-            $reasons = [
-                ['icon'=>'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z','title'=>'Curated Networking','desc'=>'Every attendee is vetted — no noise, just serious investors, founders, and ecosystem builders.','color'=>'bg-blue-50 text-blue-600'],
-                ['icon'=>'M13 10V3L4 14h7v7l9-11h-7z','title'=>'Live Deal Flow','desc'=>'Startups pitch live, investors engage in real time — deals happen at our events, not just online.','color'=>'bg-amber-50 text-amber-600'],
-                ['icon'=>'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z','title'=>'Expert Insights','desc'=>'Keynotes and panels from leading investors, operators, and policymakers shaping the ecosystem.','color'=>'bg-purple-50 text-purple-600'],
-                ['icon'=>'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z','title'=>'Verified Community','desc'=>'All participants are registered VentureMatch members — a trusted, high-quality community.','color'=>'bg-green-50 text-green-600'],
-            ];
-        @endphp
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        @php $reasons=[['icon'=>'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z','title'=>'Curated Networking','desc'=>'Every attendee is vetted — serious investors, founders, and ecosystem builders only.','c'=>'#3b82f6'],['icon'=>'M13 10V3L4 14h7v7l9-11h-7z','title'=>'Live Deal Flow','desc'=>'Startups pitch live, investors engage in real time — deals happen at our events.','c'=>'#f59e0b'],['icon'=>'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z','title'=>'Expert Insights','desc'=>'Keynotes from leading investors, operators, and policymakers shaping the ecosystem.','c'=>'#a855f7'],['icon'=>'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z','title'=>'Verified Community','desc'=>'All participants are registered VentureMatch members — a trusted, high-quality community.','c'=>'#10b981']]; @endphp
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;">
             @foreach($reasons as $r)
-            <div class="bg-white rounded-2xl p-7 border border-gray-100 hover:shadow-md transition-shadow text-center">
-                <div class="w-14 h-14 {{ $r['color'] }} rounded-2xl flex items-center justify-center mx-auto mb-5">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $r['icon'] }}"/>
-                    </svg>
+            <div style="background:#1a1408;border:1px solid rgba(212,146,15,.12);border-radius:1rem;padding:1.75rem;text-align:center;">
+                <div style="width:3.5rem;height:3.5rem;background:{{ $r['c'] }}18;border-radius:.875rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;">
+                    <svg width="22" height="22" fill="none" stroke="{{ $r['c'] }}" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $r['icon'] }}"/></svg>
                 </div>
-                <h4 class="font-bold text-gray-900 mb-2">{{ $r['title'] }}</h4>
-                <p class="text-sm text-gray-500 leading-relaxed">{{ $r['desc'] }}</p>
+                <h4 style="font-weight:700;color:#f0e6c8;margin:0 0 .5rem;font-size:.9375rem;">{{ $r['title'] }}</h4>
+                <p style="font-size:.8125rem;color:#7a6a4a;line-height:1.6;margin:0;">{{ $r['desc'] }}</p>
             </div>
             @endforeach
         </div>
     </div>
-</section>
+</div>
 
 {{-- CTA --}}
-<section class="py-20 bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-10 right-20 w-64 h-64 bg-accent-500 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-10 left-10 w-80 h-80 bg-white rounded-full blur-3xl"></div>
-    </div>
-    <div class="relative max-w-4xl mx-auto px-4 text-center">
-        <h2 class="text-4xl font-extrabold mb-4">Never Miss an Event</h2>
-        <p class="text-primary-200 text-lg mb-8 max-w-xl mx-auto">Subscribe to get early access, speaker announcements, and exclusive member discounts for every VentureMatch event.</p>
-        <form action="{{ route('newsletter.subscribe') }}" method="POST" class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+<div style="background:linear-gradient(135deg,#1a1208,#241c0a);padding:4rem 1.5rem;text-align:center;">
+    <div style="max-width:40rem;margin:0 auto;">
+        <h2 style="font-size:2rem;font-weight:800;color:#fff;margin:0 0 .75rem;">Never Miss an Event</h2>
+        <p style="color:rgba(212,146,15,.55);font-size:1rem;margin:0 0 2rem;line-height:1.6;">Subscribe to get early access, speaker announcements, and exclusive member discounts.</p>
+        <form action="{{ route('newsletter.subscribe') }}" method="POST" style="display:flex;gap:.625rem;max-width:28rem;margin:0 auto;">
             @csrf
-            <input type="email" name="email" placeholder="your@email.com" required
-                   class="flex-1 bg-white/10 border border-white/30 text-white placeholder-white/50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-white backdrop-blur-sm">
-            <button type="submit" class="bg-accent-500 hover:bg-accent-600 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm flex-shrink-0">
-                Notify Me
-            </button>
+            <input type="email" name="email" placeholder="your@email.com" required style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(212,146,15,.25);color:#fff;font-size:.875rem;border-radius:.625rem;padding:.625rem 1rem;outline:none;">
+            <button type="submit" style="background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;padding:.625rem 1.25rem;border-radius:.625rem;border:none;cursor:pointer;font-size:.875rem;white-space:nowrap;">Notify Me</button>
         </form>
     </div>
-</section>
+</div>
 
 @endsection
