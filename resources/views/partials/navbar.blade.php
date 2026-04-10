@@ -1,63 +1,77 @@
 @php use Illuminate\Support\Facades\Storage; @endphp
-<nav class="bg-white/95 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-50 shadow-sm" x-data="{ mobileOpen: false }">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
+<nav style="background:#0d0a04;border-bottom:1px solid rgba(212,146,15,.2);position:sticky;top:0;z-index:50;box-shadow:0 2px 20px rgba(0,0,0,.6);" x-data="{ mobileOpen: false }">
+    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;height:4.25rem;">
 
             {{-- Logo --}}
-            <a href="{{ route('home') }}" class="flex items-center gap-2 cursor-pointer">
+            <a href="{{ route('home') }}" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;cursor:pointer;flex-shrink:0;">
                 @php $siteLogo = \App\Models\Setting::get('site_logo'); $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
-                @include('partials.logo', ['logoClass' => 'h-8 w-auto object-contain max-w-[140px]'])
+                @include('partials.logo', ['logoClass' => 'h-8 w-auto object-contain max-w-[140px]', 'nameClass' => 'font-bold text-lg text-white'])
             </a>
 
             {{-- Desktop Nav --}}
-            <div class="hidden md:flex items-center gap-6">
-                @php $navItems = json_decode(\App\Models\Setting::get('nav_menu_items', '[]'), true) ?: [['label'=>'Home','url'=>'/'],['label'=>'About','url'=>'/about'],['label'=>'Top Startups','url'=>'/startups'],['label'=>'Events','url'=>'/events'],['label'=>'News','url'=>'/news'],['label'=>'Membership','url'=>'/membership']]; @endphp
-                @foreach($navItems as $item)
-                    <a href="{{ $item['url'] }}" class="text-sm font-medium text-gray-600 hover:text-primary-600">{{ $item['label'] }}</a>
-                @endforeach
+            @php $navItems = json_decode(\App\Models\Setting::get('nav_menu_items', '[]'), true) ?: [['label'=>'Home','url'=>'/'],['label'=>'About','url'=>'/about'],['label'=>'Top Startups','url'=>'/startups'],['label'=>'Top Investors','url'=>'/investors'],['label'=>'Events','url'=>'/events'],['label'=>'News','url'=>'/news']]; @endphp
+            <div style="display:none;" class="md-nav">
+                <div style="display:flex;align-items:center;gap:1.75rem;">
+                    @foreach($navItems as $item)
+                    <a href="{{ $item['url'] }}" style="font-size:.875rem;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#d4920f';" onmouseout="this.style.color='rgba(255,255,255,.7)';">{{ $item['label'] }}</a>
+                    @endforeach
+                </div>
             </div>
 
             {{-- Auth Buttons --}}
-            <div class="hidden md:flex items-center gap-3">
+            <div style="display:flex;align-items:center;gap:.75rem;">
                 @auth
                     @if(auth()->user()->hasRole('admin'))
-                        <a href="{{ route('admin.dashboard') }}" class="text-sm font-medium text-primary-600 hover:text-primary-700">Admin Panel</a>
+                        <a href="{{ route('admin.dashboard') }}" style="font-size:.8125rem;font-weight:600;color:#d4920f;text-decoration:none;">Admin Panel</a>
                     @elseif(auth()->user()->hasRole('investor'))
-                        <a href="{{ route('investor.dashboard') }}" class="text-sm font-medium text-primary-600 hover:text-primary-700">Dashboard</a>
+                        <a href="{{ route('investor.dashboard') }}" style="font-size:.8125rem;font-weight:600;color:#d4920f;text-decoration:none;">Dashboard</a>
                     @elseif(auth()->user()->hasRole('seeker'))
-                        <a href="{{ route('seeker.dashboard') }}" class="text-sm font-medium text-primary-600 hover:text-primary-700">Dashboard</a>
+                        <a href="{{ route('seeker.dashboard') }}" style="font-size:.8125rem;font-weight:600;color:#d4920f;text-decoration:none;">Dashboard</a>
                     @endif
-                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                    <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                         @csrf
-                        <button type="submit" class="text-sm text-gray-500 hover:text-red-500">Logout</button>
+                        <button type="submit" style="font-size:.8125rem;color:rgba(255,255,255,.5);background:none;border:none;cursor:pointer;">Logout</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="text-sm font-medium text-gray-600 hover:text-primary-600">Login</a>
-                    <a href="{{ route('register.investor') }}" class="bg-primary-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-primary-700">Join as Investor</a>
-                    <a href="{{ route('register.seeker') }}" class="border border-primary-600 text-primary-600 text-sm font-medium px-4 py-2 rounded-lg hover:bg-primary-50">Join as Seeker</a>
+                    <a href="{{ route('login') }}" style="font-size:.8125rem;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;">Login</a>
+                    <a href="{{ route('register.investor') }}" style="background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-size:.8125rem;font-weight:700;padding:.5rem 1.125rem;border-radius:.5rem;text-decoration:none;white-space:nowrap;">Join as Investor</a>
+                    <a href="{{ route('register.seeker') }}" style="border:1px solid rgba(212,146,15,.5);color:#d4920f;font-size:.8125rem;font-weight:600;padding:.5rem 1.125rem;border-radius:.5rem;text-decoration:none;white-space:nowrap;display:none;" class="seeker-btn">Join as Seeker</a>
                 @endauth
-            </div>
 
-            {{-- Mobile toggle --}}
-            <button @click="mobileOpen = !mobileOpen" class="md:hidden text-gray-500">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    <path x-show="mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
+                {{-- Mobile toggle --}}
+                <button @click="mobileOpen = !mobileOpen" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.7);padding:.25rem;display:none;" class="mobile-toggle">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        <path x-show="mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         {{-- Mobile Menu --}}
-        <div x-show="mobileOpen" x-transition class="md:hidden pb-4 space-y-2">
+        <div x-show="mobileOpen" x-transition style="border-top:1px solid rgba(212,146,15,.15);padding:.75rem 0 1rem;">
             @foreach($navItems as $item)
-                <a href="{{ $item['url'] }}" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">{{ $item['label'] }}</a>
+            <a href="{{ $item['url'] }}" style="display:block;padding:.5rem .75rem;font-size:.875rem;color:rgba(255,255,255,.7);text-decoration:none;border-radius:.5rem;" onmouseover="this.style.background='rgba(212,146,15,.1)';this.style.color='#d4920f';" onmouseout="this.style.background='transparent';this.style.color='rgba(255,255,255,.7)';">{{ $item['label'] }}</a>
             @endforeach
             @guest
-                <div class="pt-2 flex flex-col gap-2">
-                    <a href="{{ route('register.investor') }}" class="bg-primary-600 text-white text-sm font-medium px-4 py-2 rounded-lg text-center">Join as Investor</a>
-                    <a href="{{ route('register.seeker') }}" class="border border-primary-600 text-primary-600 text-sm font-medium px-4 py-2 rounded-lg text-center">Join as Seeker</a>
-                </div>
+            <div style="padding:.75rem .75rem 0;display:flex;flex-direction:column;gap:.5rem;">
+                <a href="{{ route('register.investor') }}" style="background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-size:.875rem;font-weight:700;padding:.625rem 1rem;border-radius:.5rem;text-decoration:none;text-align:center;">Join as Investor</a>
+                <a href="{{ route('register.seeker') }}" style="border:1px solid rgba(212,146,15,.4);color:#d4920f;font-size:.875rem;font-weight:600;padding:.625rem 1rem;border-radius:.5rem;text-decoration:none;text-align:center;">Join as Seeker</a>
+            </div>
             @endguest
         </div>
     </div>
 </nav>
+
+<style>
+@media(min-width:768px){
+    .md-nav{display:block !important;}
+    .mobile-toggle{display:none !important;}
+    .seeker-btn{display:inline-block !important;}
+}
+@media(max-width:767px){
+    .md-nav{display:none !important;}
+    .mobile-toggle{display:block !important;}
+}
+</style>
