@@ -1,13 +1,19 @@
+@php use Illuminate\Support\Facades\Storage; @endphp
 <nav class="bg-white/95 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-50 shadow-sm" x-data="{ mobileOpen: false }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
 
             {{-- Logo --}}
             <a href="{{ route('home') }}" class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                    <span class="text-white font-bold text-sm">VM</span>
-                </div>
-                <span class="font-bold text-xl text-gray-900">VentureMatch</span>
+                @php $siteLogo = \App\Models\Setting::get('site_logo'); $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
+                @if($siteLogo)
+                    <img src="{{ Storage::url($siteLogo) }}" alt="{{ $siteName }}" class="h-10 w-auto object-contain">
+                @else
+                    <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">VM</span>
+                    </div>
+                    <span class="font-bold text-xl text-gray-900">{{ $siteName }}</span>
+                @endif
             </a>
 
             {{-- Desktop Nav --}}
