@@ -23,11 +23,14 @@ use App\Http\Controllers\Admin\MembershipController as AdminMembership;
 use App\Http\Controllers\Admin\SettingsController as AdminSettings;
 
 use App\Http\Controllers\StartupController;
+use App\Http\Controllers\InvestorPageController;
 
 // ─── Public Routes ────────────────────────────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/startups', [StartupController::class, 'index'])->name('startups.index');
 Route::get('/startups/{opportunity:slug}', [StartupController::class, 'show'])->name('startups.show');
+Route::get('/investors', [InvestorPageController::class, 'index'])->name('investors.index');
+Route::get('/investors/{investor}', [InvestorPageController::class, 'show'])->name('investors.show');
 Route::post('/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
