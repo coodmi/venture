@@ -32,7 +32,9 @@
         @endif
 
         {{-- Overlay --}}
-        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="absolute inset-0 bg-black/40"></div>
+        {{-- Bottom gradient for dots visibility --}}
+        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/60 to-transparent"></div>
 
         {{-- Content --}}
         <div class="relative z-10 h-full flex items-center">
@@ -64,15 +66,13 @@
     </div>
     @endforeach
 
-    {{-- Arrows --}}
-    @if(count($heroSlides) > 1)
+    {{-- Arrows - always visible --}}
     <button @click="prev(); resetTimer()" class="absolute left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/20 hover:bg-white/90 hover:text-gray-900 text-white border border-white/40 rounded-full flex items-center justify-center backdrop-blur-sm transition-all shadow-lg">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
     </button>
     <button @click="next(); resetTimer()" class="absolute right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/20 hover:bg-white/90 hover:text-gray-900 text-white border border-white/40 rounded-full flex items-center justify-center backdrop-blur-sm transition-all shadow-lg">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
     </button>
-    @endif
 
     {{-- Dots --}}
     <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
