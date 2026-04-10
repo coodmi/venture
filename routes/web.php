@@ -109,6 +109,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/settings', [AdminSettings::class, 'updateGeneral'])->name('settings.update');
     Route::get('/settings/header', [AdminSettings::class, 'header'])->name('settings.header');
     Route::post('/settings/header', [AdminSettings::class, 'updateHeader'])->name('settings.header.update');
+    Route::get('/settings/hero', [AdminSettings::class, 'heroSlider'])->name('settings.hero');
+    Route::post('/settings/hero', [AdminSettings::class, 'updateHeroSlider'])->name('settings.hero.update');
     Route::get('/settings/stats', [AdminSettings::class, 'stats'])->name('settings.stats');
     Route::post('/settings/stats', [AdminSettings::class, 'updateStats'])->name('settings.stats.update');
     Route::get('/settings/testimonials', [AdminSettings::class, 'testimonials'])->name('settings.testimonials');

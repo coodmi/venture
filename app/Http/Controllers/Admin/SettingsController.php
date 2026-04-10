@@ -101,6 +101,37 @@ class SettingsController extends Controller
         return back()->with('success', 'Header settings saved.');
     }
 
+    public function heroSlider()
+    {
+        $slides = json_decode(Setting::get('hero_slides', '[]'), true) ?: [];
+        return view('admin.settings.hero', compact('slides'));
+    }
+
+    public function updateHeroSlider(Request $request)
+    {
+        $slides = [];
+        foreach ($request->input('slides', []) as $i => $slide) {
+            $item = [
+                'type'     => $slide['type'] ?? 'image',
+                'title'    => $slide['title'] ?? '',
+                'subtitle' => $slide['subtitle'] ?? '',
+                'btn1_text'=> $slide['btn1_text'] ?? '',
+                'btn1_url' => $slide['btn1_url'] ?? '',
+                'btn2_text'=> $slide['btn2_text'] ?? '',
+                'btn2_url' => $slide['btn2_url'] ?? '',
+                'video_url'=> $slide['video_url'] ?? '',
+                'image'    => $slide['existing_image'] ?? '',
+            ];
+            if (isset($request->file('slides')[$i]['image'])) {
+                $path = $request->file('slides')[$i]['image']->store('hero', 'public');
+                $item['image'] = $path;
+            }
+            $slides[] = $item;
+        }
+        Setting::set('hero_slides', json_encode($slides), 'general');
+        return back()->with('success', 'Hero slider saved.');
+    }
+
     public function about()
     {
         $sections = AboutContent::orderBy('sort_order')->get()->keyBy('section');

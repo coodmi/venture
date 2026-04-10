@@ -8,6 +8,7 @@ use App\Models\News;
 use App\Models\Testimonial;
 use App\Models\PlatformStat;
 use App\Models\NewsletterSubscription;
+use App\Models\Setting;
 
 class HomeController extends Controller
 {
@@ -19,8 +20,9 @@ class HomeController extends Controller
         $events       = Event::published()->upcoming()->orderBy('start_date')->take(4)->get();
         $testimonials = Testimonial::where('is_published', true)->orderBy('sort_order')->take(6)->get();
         $latestNews   = News::published()->ofType('news')->latest('published_at')->take(3)->get();
+        $heroSlides   = json_decode(Setting::get('hero_slides', '[]'), true) ?: [];
 
-        return view('home', compact('stats', 'hotDeals', 'featured', 'events', 'testimonials', 'latestNews'));
+        return view('home', compact('stats', 'hotDeals', 'featured', 'events', 'testimonials', 'latestNews', 'heroSlides'));
     }
 
     public function subscribe(\Illuminate\Http\Request $request)

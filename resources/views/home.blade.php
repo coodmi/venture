@@ -5,7 +5,102 @@
 
 @section('content')
 
-{{-- Hero Section --}}
+{{-- Hero Slider --}}
+@if(count($heroSlides) > 0)
+<section class="relative w-full overflow-hidden" style="height: 580px;" x-data="heroSlider({{ count($heroSlides) }})" x-init="init()">
+    @foreach($heroSlides as $i => $slide)
+    <div class="absolute inset-0 transition-opacity duration-700"
+         :class="{{ $i }} === current ? 'opacity-100 z-10' : 'opacity-0 z-0'">
+
+        {{-- Background --}}
+        @if($slide['type'] === 'video' && !empty($slide['video_url']))
+            @php
+                preg_match('/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $slide['video_url'], $m);
+                $vid = $m[1] ?? '';
+            @endphp
+            @if($vid)
+            <iframe src="https://www.youtube.com/embed/{{ $vid }}?autoplay=1&mute=1&loop=1&playlist={{ $vid }}&controls=0&showinfo=0&rel=0"
+                class="absolute inset-0 w-full h-full object-cover scale-110"
+                style="pointer-events:none; border:0; width:100%; height:100%;"
+                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            @endif
+        @elseif(!empty($slide['image']))
+            <img src="{{ Storage::url($slide['image']) }}" alt="{{ $slide['title'] }}"
+                 class="absolute inset-0 w-full h-full object-cover">
+        @else
+            <div class="absolute inset-0 bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800"></div>
+        @endif
+
+        {{-- Overlay --}}
+        <div class="absolute inset-0 bg-black/50"></div>
+
+        {{-- Content --}}
+        <div class="relative z-10 h-full flex items-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                <div class="max-w-2xl text-white">
+                    @if(!empty($slide['title']))
+                        <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-4">{{ $slide['title'] }}</h1>
+                    @endif
+                    @if(!empty($slide['subtitle']))
+                        <p class="text-lg text-white/80 mb-8">{{ $slide['subtitle'] }}</p>
+                    @endif
+                    <div class="flex flex-wrap gap-3">
+                        @if(!empty($slide['btn1_text']))
+                            <a href="{{ $slide['btn1_url'] ?? '#' }}"
+                               class="bg-accent-500 hover:bg-accent-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all">
+                                {{ $slide['btn1_text'] }}
+                            </a>
+                        @endif
+                        @if(!empty($slide['btn2_text']))
+                            <a href="{{ $slide['btn2_url'] ?? '#' }}"
+                               class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-6 py-3 rounded-xl backdrop-blur-sm transition-all">
+                                {{ $slide['btn2_text'] }}
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
+    {{-- Arrows --}}
+    @if(count($heroSlides) > 1)
+    <button @click="prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 backdrop-blur-sm transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    </button>
+    <button @click="next" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 backdrop-blur-sm transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </button>
+
+    {{-- Dots --}}
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        @foreach($heroSlides as $i => $slide)
+        <button @click="current = {{ $i }}"
+            :class="{{ $i }} === current ? 'bg-white w-6' : 'bg-white/40 w-2'"
+            class="h-2 rounded-full transition-all duration-300"></button>
+        @endforeach
+    </div>
+    @endif
+</section>
+
+@push('scripts')
+<script>
+function heroSlider(total) {
+    return {
+        current: 0,
+        total: total,
+        timer: null,
+        init() { if (this.total > 1) this.timer = setInterval(() => this.next(), 5000); },
+        next() { this.current = (this.current + 1) % this.total; },
+        prev() { this.current = (this.current - 1 + this.total) % this.total; }
+    }
+}
+</script>
+@endpush
+
+@else
+{{-- Fallback static hero --}}
 <section class="relative bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white overflow-hidden">
     <div class="absolute inset-0 opacity-10">
         <div class="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
@@ -24,22 +119,14 @@
                 VentureMatch brings together investors, founders, startups, partners, and ecosystem stakeholders on one powerful platform — making deal discovery, collaboration, and growth seamless.
             </p>
             <div class="flex flex-wrap gap-4">
-                <a href="{{ route('register.investor') }}"
-                   class="bg-accent-500 hover:bg-accent-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
-                    Join as Investor
-                </a>
-                <a href="{{ route('register.seeker') }}"
-                   class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-6 py-3 rounded-xl backdrop-blur-sm transition-all">
-                    Join as Seeker
-                </a>
-                <a href="{{ route('investor.opportunities.index') }}"
-                   class="border border-white/30 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 transition-all">
-                    Explore Opportunities →
-                </a>
+                <a href="{{ route('register.investor') }}" class="bg-accent-500 hover:bg-accent-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all">Join as Investor</a>
+                <a href="{{ route('register.seeker') }}" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-6 py-3 rounded-xl backdrop-blur-sm transition-all">Join as Seeker</a>
+                <a href="{{ route('investor.opportunities.index') }}" class="border border-white/30 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 transition-all">Explore Opportunities →</a>
             </div>
         </div>
     </div>
 </section>
+@endif
 
 {{-- Stats Section --}}
 @if($stats->count())
