@@ -9,6 +9,7 @@ use App\Models\Testimonial;
 use App\Models\PlatformStat;
 use App\Models\NewsletterSubscription;
 use App\Models\Setting;
+use App\Models\InvestorProfile;
 
 class HomeController extends Controller
 {
@@ -22,7 +23,11 @@ class HomeController extends Controller
         $latestNews   = News::published()->ofType('news')->latest('published_at')->take(3)->get();
         $heroSlides   = json_decode(Setting::get('hero_slides', '[]'), true) ?: [];
         $topStartups  = Opportunity::approved()->where('is_featured', true)->latest()->take(6)->get();
-        $topInvestors = \App\Models\InvestorProfile::with('user')->where('is_visible', true)->where('verification_status', 'verified')->latest()->take(6)->get();
+        try {
+            $topInvestors = InvestorProfile::with('user')->where('is_visible', true)->where('verification_status', 'verified')->latest()->take(6)->get();
+        } catch (\Exception $e) {
+            $topInvestors = collect();
+        }
 
         return view('home', compact('stats', 'hotDeals', 'featured', 'events', 'testimonials', 'latestNews', 'heroSlides', 'topStartups', 'topInvestors'));
     }
