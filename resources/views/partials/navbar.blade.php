@@ -11,7 +11,7 @@
 
             {{-- Desktop Nav --}}
             <div class="hidden md:flex items-center gap-6">
-                @php $navItems = json_decode(\App\Models\Setting::get('nav_menu_items', '[]'), true) ?: [['label'=>'Home','url'=>'/'],['label'=>'About','url'=>'/about'],['label'=>'Events','url'=>'/events'],['label'=>'News','url'=>'/news'],['label'=>'Membership','url'=>'/membership']]; @endphp
+                @php $navItems = json_decode(\App\Models\Setting::get('nav_menu_items', '[]'), true) ?: [['label'=>'Home','url'=>'/'],['label'=>'About','url'=>'/about'],['label'=>'Top Startups','url'=>'/startups'],['label'=>'Events','url'=>'/events'],['label'=>'News','url'=>'/news'],['label'=>'Membership','url'=>'/membership']]; @endphp
                 @foreach($navItems as $item)
                     <a href="{{ $item['url'] }}" class="text-sm font-medium text-gray-600 hover:text-primary-600">{{ $item['label'] }}</a>
                 @endforeach
