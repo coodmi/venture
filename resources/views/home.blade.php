@@ -66,19 +66,19 @@
 
     {{-- Arrows --}}
     @if(count($heroSlides) > 1)
-    <button @click="prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 backdrop-blur-sm transition-all">
+    <button @click="prev(); resetTimer()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 backdrop-blur-sm transition-all">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
     </button>
-    <button @click="next" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 backdrop-blur-sm transition-all">
+    <button @click="next(); resetTimer()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 backdrop-blur-sm transition-all">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
     </button>
 
     {{-- Dots --}}
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
         @foreach($heroSlides as $i => $slide)
-        <button @click="current = {{ $i }}"
-            :class="{{ $i }} === current ? 'bg-white w-6' : 'bg-white/40 w-2'"
-            class="h-2 rounded-full transition-all duration-300"></button>
+        <button @click="current = {{ $i }}; resetTimer()"
+            :class="{{ $i }} === current ? 'bg-white scale-125 shadow-lg' : 'bg-white/40 hover:bg-white/70'"
+            class="w-3 h-3 rounded-full transition-all duration-300"></button>
         @endforeach
     </div>
     @endif
@@ -93,7 +93,8 @@ function heroSlider(total) {
         timer: null,
         init() { if (this.total > 1) this.timer = setInterval(() => this.next(), 5000); },
         next() { this.current = (this.current + 1) % this.total; },
-        prev() { this.current = (this.current - 1 + this.total) % this.total; }
+        prev() { this.current = (this.current - 1 + this.total) % this.total; },
+        resetTimer() { clearInterval(this.timer); this.timer = setInterval(() => this.next(), 5000); }
     }
 }
 </script>
