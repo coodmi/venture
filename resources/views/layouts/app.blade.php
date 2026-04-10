@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @php $favicon = \App\Models\Setting::get('site_favicon'); @endphp
+    <link rel="icon" type="image/png" href="{{ $favicon ? Storage::url($favicon) : asset('favicon.ico') }}">
+
     <title>@yield('title', config('app.name', 'VentureMatch')) — Connecting Investors & Startups</title>
     <meta name="description" content="@yield('meta_description', 'VentureMatch connects investors with high-potential startups and projects across sectors.')">
 
