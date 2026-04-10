@@ -159,8 +159,8 @@
             </div>
         </div>
     </div>
-    <div style="position:relative;">
-        <div id="startupTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding:0 1.5rem 1rem;scrollbar-width:none;-ms-overflow-style:none;" class="hide-scroll">
+    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
+        <div id="startupTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;-ms-overflow-style:none;" class="hide-scroll">
             @php $sectorColors=['FinTech'=>'#3b82f6','AgriTech'=>'#10b981','HealthTech'=>'#ef4444','EdTech'=>'#f59e0b','CleanTech'=>'#8b5cf6']; @endphp
             @foreach($topStartups as $s)
             @php $sc = $sectorColors[$s->sector] ?? '#1d4ed8'; @endphp
@@ -209,8 +209,8 @@
             </div>
         </div>
     </div>
-    <div style="position:relative;">
-        <div id="investorTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding:0 1.5rem 1rem;scrollbar-width:none;-ms-overflow-style:none;">
+    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
+        <div id="investorTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;-ms-overflow-style:none;">
             @php $invColors=['angel'=>'#f59e0b','vc'=>'#3b82f6','corporate'=>'#6366f1','family_office'=>'#a855f7','impact'=>'#10b981']; $invLabels=['angel'=>'Angel','vc'=>'Venture Capital','corporate'=>'Corporate','family_office'=>'Family Office','impact'=>'Impact']; $invBadge=['angel'=>'background:#fef3c7;color:#92400e;','vc'=>'background:#dbeafe;color:#1e40af;','corporate'=>'background:#e0e7ff;color:#3730a3;','family_office'=>'background:#f3e8ff;color:#6b21a8;','impact'=>'background:#d1fae5;color:#065f46;']; @endphp
             @foreach($topInvestors as $inv)
             @php $ic = $invColors[$inv->investor_type] ?? '#1d4ed8'; @endphp
