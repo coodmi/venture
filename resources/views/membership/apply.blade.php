@@ -34,7 +34,7 @@
             <div class="bg-gray-50 rounded-xl p-4 text-sm text-gray-600">
                 <strong>Plan Fee:</strong>
                 @if($plan->fee > 0)
-                    ${{ number_format($plan->fee) }} / {{ $plan->duration_months }} months
+                    ৳{{ number_format($plan->fee) }} / {{ $plan->duration_months }} months
                 @else
                     Free
                 @endif

@@ -9,7 +9,7 @@
         <h3 class="font-semibold text-gray-900">{{ $plan->name }}</h3>
         <p class="text-xs text-gray-400 mt-0.5">{{ ucfirst($plan->category) }}</p>
         <p class="text-2xl font-bold text-primary-700 mt-2">
-            @if($plan->fee > 0) ${{ number_format($plan->fee) }} @else Free @endif
+            @if($plan->fee > 0) ৳{{ number_format($plan->fee) }} @else Free @endif
         </p>
         <p class="text-xs text-gray-400">{{ $plan->duration_months }} months</p>
         <div class="mt-3 space-y-1">

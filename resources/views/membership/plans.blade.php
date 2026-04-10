@@ -21,7 +21,7 @@
                 <p class="text-sm text-gray-500 mt-1 mb-4">{{ $plan->description }}</p>
                 <div class="mb-6">
                     @if($plan->fee > 0)
-                        <span class="text-3xl font-extrabold text-gray-900">${{ number_format($plan->fee) }}</span>
+                        <span class="text-3xl font-extrabold text-gray-900">৳{{ number_format($plan->fee) }}</span>
                         <span class="text-gray-400 text-sm">/year</span>
                     @else
                         <span class="text-3xl font-extrabold text-green-600">Free</span>
