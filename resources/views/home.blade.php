@@ -7,7 +7,7 @@
 
 {{-- Hero Slider --}}
 @if(count($heroSlides) > 0)
-<section class="relative w-full overflow-hidden" style="height: 580px;" x-data="heroSlider({{ count($heroSlides) }})" x-init="init()">
+<section class="relative w-full overflow-hidden" style="height: 90vh; min-height: 500px;" x-data="heroSlider({{ count($heroSlides) }})" x-init="init()">
     @foreach($heroSlides as $i => $slide)
     <div class="absolute inset-0 transition-opacity duration-700"
          :class="{{ $i }} === current ? 'opacity-100 z-10' : 'opacity-0 z-0'">
@@ -72,6 +72,7 @@
     <button @click="next(); resetTimer()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 backdrop-blur-sm transition-all">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
     </button>
+    @endif
 
     {{-- Dots --}}
     <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
@@ -81,7 +82,6 @@
             class="w-3 h-3 rounded-full transition-all duration-300"></button>
         @endforeach
     </div>
-    @endif
 </section>
 
 @push('scripts')
