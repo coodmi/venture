@@ -15,7 +15,13 @@
 {{-- Category Stats --}}
 @php
     $catColors = ['angel'=>'#f59e0b','vc'=>'#3b82f6','corporate'=>'#6366f1','family_office'=>'#a855f7','impact'=>'#10b981'];
-    $catIcons  = ['angel'=>'👤','vc'=>'🏢','corporate'=>'🌐','family_office'=>'🏠','impact'=>'🌱'];
+    $catSvg = [
+        'angel'         => '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.5rem;height:1.5rem;"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+        'vc'            => '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.5rem;height:1.5rem;"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>',
+        'corporate'     => '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.5rem;height:1.5rem;"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>',
+        'family_office' => '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.5rem;height:1.5rem;"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+        'impact'        => '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.5rem;height:1.5rem;"><path d="M12 22V12M12 12C12 7 7 4 3 6M12 12c0-5 5-8 9-6M7 17c1.5-1 3.5-1.5 5-1.5s3.5.5 5 1.5"/></svg>',
+    ];
     $typeLabel = ['angel'=>'Angel Investor','vc'=>'Venture Capital','corporate'=>'Corporate','family_office'=>'Family Office','impact'=>'Impact Investor'];
     $stageLabel = ['pre_seed'=>'Pre-Seed','seed'=>'Seed','series_a'=>'Series A','series_b'=>'Series B','growth'=>'Growth'];
     $typeBadgeStyle = ['angel'=>'background:#fef3c7;color:#92400e;','vc'=>'background:#dbeafe;color:#1e40af;','corporate'=>'background:#e0e7ff;color:#3730a3;','family_office'=>'background:#f3e8ff;color:#6b21a8;','impact'=>'background:#d1fae5;color:#065f46;'];
@@ -25,10 +31,12 @@
     <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;display:grid;grid-template-columns:repeat(5,1fr);">
         @foreach($types as $key => $label)
         <a href="{{ route('investors.index', ['type'=>$key]) }}"
-           style="display:flex;flex-direction:column;align-items:center;padding:1.5rem 1rem;text-decoration:none;border-bottom:3px solid {{ request('type')===$key ? $catColors[$key] : 'transparent' }};transition:all .2s;background:{{ request('type')===$key ? '#f8fafc' : 'transparent' }};">
-            <span style="font-size:1.75rem;margin-bottom:.5rem;">{{ $catIcons[$key] }}</span>
-            <span style="font-size:1.75rem;font-weight:800;color:#111827;line-height:1;">{{ $counts[$key] ?? 0 }}</span>
-            <span style="font-size:.7rem;color:#6b7280;margin-top:.25rem;text-align:center;">{{ $label }}</span>
+           style="display:flex;flex-direction:column;align-items:center;padding:1.75rem 1rem;text-decoration:none;border-bottom:3px solid {{ request('type')===$key ? $catColors[$key] : 'transparent' }};transition:all .2s;background:{{ request('type')===$key ? '#f8fafc' : 'transparent' }};">
+            <div style="width:3rem;height:3rem;border-radius:50%;background:{{ $catColors[$key] }};display:flex;align-items:center;justify-content:center;margin-bottom:.625rem;box-shadow:0 4px 12px {{ $catColors[$key] }}55;">
+                {!! $catSvg[$key] !!}
+            </div>
+            <span style="font-size:1.625rem;font-weight:800;color:#111827;line-height:1;">{{ $counts[$key] ?? 0 }}</span>
+            <span style="font-size:.7rem;color:#6b7280;margin-top:.3rem;text-align:center;font-weight:500;">{{ $label }}</span>
         </a>
         @endforeach
     </div>
