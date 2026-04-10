@@ -21,8 +21,10 @@ class HomeController extends Controller
         $testimonials = Testimonial::where('is_published', true)->orderBy('sort_order')->take(6)->get();
         $latestNews   = News::published()->ofType('news')->latest('published_at')->take(3)->get();
         $heroSlides   = json_decode(Setting::get('hero_slides', '[]'), true) ?: [];
+        $topStartups  = Opportunity::approved()->where('is_featured', true)->latest()->take(6)->get();
+        $topInvestors = \App\Models\InvestorProfile::with('user')->where('is_visible', true)->where('verification_status', 'verified')->latest()->take(6)->get();
 
-        return view('home', compact('stats', 'hotDeals', 'featured', 'events', 'testimonials', 'latestNews', 'heroSlides'));
+        return view('home', compact('stats', 'hotDeals', 'featured', 'events', 'testimonials', 'latestNews', 'heroSlides', 'topStartups', 'topInvestors'));
     }
 
     public function subscribe(\Illuminate\Http\Request $request)
