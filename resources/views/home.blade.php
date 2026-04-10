@@ -7,10 +7,9 @@
 
 {{-- Hero Slider --}}
 @if(count($heroSlides) > 0)
-<section class="relative w-full overflow-hidden" style="height: 90vh; min-height: 500px;" x-data="heroSlider({{ count($heroSlides) }})" x-init="init()">
+<section class="relative w-full overflow-hidden" style="height: 90vh; min-height: 500px;" >
     @foreach($heroSlides as $i => $slide)
-    <div class="absolute inset-0 transition-opacity duration-700"
-         :class="{{ $i }} === current ? 'opacity-100 z-10' : 'opacity-0 z-0'">
+    <div class="vm-slide" style="position:absolute;inset:0;transition:opacity .7s;" data-index="{{ $i }}">
 
         {{-- Background --}}
         @if($slide['type'] === 'video' && !empty($slide['video_url']))
@@ -67,36 +66,44 @@
     @endforeach
 
     {{-- Arrows - always visible --}}
-    <button @click="prev(); resetTimer()" class="absolute left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/20 hover:bg-white/90 hover:text-gray-900 text-white border border-white/40 rounded-full flex items-center justify-center backdrop-blur-sm transition-all shadow-lg">
+    <button onclick="vmPrev()" class="absolute left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/20 hover:bg-white/90 hover:text-gray-900 text-white border border-white/40 rounded-full flex items-center justify-center backdrop-blur-sm transition-all shadow-lg">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
     </button>
-    <button @click="next(); resetTimer()" class="absolute right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/20 hover:bg-white/90 hover:text-gray-900 text-white border border-white/40 rounded-full flex items-center justify-center backdrop-blur-sm transition-all shadow-lg">
+    <button onclick="vmNext()" class="absolute right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/20 hover:bg-white/90 hover:text-gray-900 text-white border border-white/40 rounded-full flex items-center justify-center backdrop-blur-sm transition-all shadow-lg">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
     </button>
 
     {{-- Dots --}}
     <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
         @foreach($heroSlides as $i => $slide)
-        <button @click="current = {{ $i }}; resetTimer()"
-            :class="{{ $i }} === current ? 'bg-white w-6 h-2' : 'bg-white/50 hover:bg-white/80 w-2 h-2'"
-            class="rounded-full transition-all duration-300"></button>
+        <button onclick="vmSet({{ $i }})" id="vmDot{{ $i }}" style="height:.5rem;border-radius:9999px;border:none;cursor:pointer;transition:all .3s;background:rgba(255,255,255,.45);width:.5rem;"></button>
         @endforeach
     </div>
 </section>
 
 @push('scripts')
 <script>
-function heroSlider(total) {
-    return {
-        current: 0,
-        total: total,
-        timer: null,
-        init() { if (this.total > 1) this.timer = setInterval(() => this.next(), 5000); },
-        next() { this.current = (this.current + 1) % this.total; },
-        prev() { this.current = (this.current - 1 + this.total) % this.total; },
-        resetTimer() { clearInterval(this.timer); this.timer = setInterval(() => this.next(), 5000); }
+(function(){
+  var slides,dots,cur=0,tot={{ count($heroSlides) }},tmr;
+  document.addEventListener('DOMContentLoaded',function(){
+    slides=document.querySelectorAll('.vm-slide');
+    dots=document.querySelectorAll('[id^=vmDot]');
+    vmSet(0);
+    if(tot>1) tmr=setInterval(function(){vmNext();},5000);
+  });
+  window.vmNext=function(){vmSet((cur+1)%tot);reset();};
+  window.vmPrev=function(){vmSet((cur-1+tot)%tot);reset();};
+  window.vmSet=function(i){
+    if(slides){
+      slides[cur].style.opacity='0';slides[cur].style.zIndex='0';
+      if(dots[cur]){dots[cur].style.background='rgba(255,255,255,.45)';dots[cur].style.width='.5rem';}
+      cur=i;
+      slides[cur].style.opacity='1';slides[cur].style.zIndex='10';
+      if(dots[cur]){dots[cur].style.background='#fff';dots[cur].style.width='1.5rem';}
     }
-}
+  };
+  function reset(){clearInterval(tmr);if(tot>1)tmr=setInterval(function(){vmNext();},5000);}
+})();
 </script>
 @endpush
 
