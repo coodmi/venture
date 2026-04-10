@@ -1,271 +1,136 @@
 @extends('layouts.app')
-
 @section('title', 'VentureMatch — Connect. Invest. Grow.')
-@section('meta_description', 'VentureMatch connects investors with high-potential startups, projects, and ecosystem opportunities.')
+@section('meta_description', 'VentureMatch connects investors with high-potential startups and ecosystem opportunities in Bangladesh.')
 
 @section('content')
 
-{{-- Hero Slider --}}
+{{-- ═══════════════════════════════════════════════════════════ HERO SLIDER --}}
 @if(count($heroSlides) > 0)
-<section class="relative w-full overflow-hidden" style="height: 90vh; min-height: 500px;" >
+<section id="vmHero" style="position:relative;width:100%;overflow:hidden;height:90vh;min-height:560px;">
     @foreach($heroSlides as $i => $slide)
-    <div class="vm-slide" style="position:absolute;inset:0;transition:opacity .7s;" data-index="{{ $i }}">
-
-        {{-- Background --}}
-        @if($slide['type'] === 'video' && !empty($slide['video_url']))
-            @php
-                preg_match('/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $slide['video_url'], $m);
-                $vid = $m[1] ?? '';
-            @endphp
-            @if($vid)
-            <iframe src="https://www.youtube.com/embed/{{ $vid }}?autoplay=1&mute=1&loop=1&playlist={{ $vid }}&controls=0&showinfo=0&rel=0"
-                class="absolute inset-0 w-full h-full object-cover scale-110"
-                style="pointer-events:none; border:0; width:100%; height:100%;"
-                allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            @endif
+    <div class="vm-slide" style="position:absolute;inset:0;transition:opacity .8s ease;opacity:{{ $i===0?1:0 }};z-index:{{ $i===0?10:0 }}">
+        @if($slide['type']==='video' && !empty($slide['video_url']))
+            @php preg_match('/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/',$slide['video_url'],$m); $vid=$m[1]??''; @endphp
+            @if($vid)<iframe src="https://www.youtube.com/embed/{{ $vid }}?autoplay=1&mute=1&loop=1&playlist={{ $vid }}&controls=0&rel=0" style="position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;" allow="autoplay;encrypted-media" allowfullscreen></iframe>@endif
         @elseif(!empty($slide['image']))
-            <img src="{{ Storage::url($slide['image']) }}" alt="{{ $slide['title'] }}"
-                 class="absolute inset-0 w-full h-full object-cover">
+            <img src="{{ Storage::url($slide['image']) }}" alt="{{ $slide['title'] }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
         @else
-            <div class="absolute inset-0 bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0f172a,#1e3a8a,#1d4ed8)"></div>
         @endif
-
-        {{-- Overlay --}}
-        <div class="absolute inset-0 bg-black/40"></div>
-        {{-- Bottom gradient for dots visibility --}}
-        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/60 to-transparent"></div>
-
-        {{-- Content --}}
-        <div class="relative z-10 h-full flex items-center">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <div class="max-w-2xl text-white">
-                    @if(!empty($slide['title']))
-                        <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-4">{{ $slide['title'] }}</h1>
-                    @endif
-                    @if(!empty($slide['subtitle']))
-                        <p class="text-lg text-white/80 mb-8">{{ $slide['subtitle'] }}</p>
-                    @endif
-                    <div class="flex flex-wrap gap-3">
-                        @if(!empty($slide['btn1_text']))
-                            <a href="{{ $slide['btn1_url'] ?? '#' }}"
-                               class="bg-accent-500 hover:bg-accent-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all">
-                                {{ $slide['btn1_text'] }}
-                            </a>
-                        @endif
-                        @if(!empty($slide['btn2_text']))
-                            <a href="{{ $slide['btn2_url'] ?? '#' }}"
-                               class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-6 py-3 rounded-xl backdrop-blur-sm transition-all">
-                                {{ $slide['btn2_text'] }}
-                            </a>
-                        @endif
+        <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,.65) 0%,rgba(0,0,0,.2) 60%,transparent 100%)"></div>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to top,rgba(0,0,0,.5),transparent)"></div>
+        <div style="position:relative;z-index:10;height:100%;display:flex;align-items:center;">
+            <div style="max-width:80rem;margin:0 auto;padding:0 2rem;width:100%;box-sizing:border-box;">
+                <div style="max-width:38rem;color:#fff;">
+                    @if(!empty($slide['title']))<h1 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.15;margin:0 0 1rem;letter-spacing:-.02em;">{{ $slide['title'] }}</h1>@endif
+                    @if(!empty($slide['subtitle']))<p style="font-size:1.125rem;opacity:.8;margin:0 0 2rem;line-height:1.6;">{{ $slide['subtitle'] }}</p>@endif
+                    <div style="display:flex;flex-wrap:wrap;gap:.75rem;">
+                        @if(!empty($slide['btn1_text']))<a href="{{ $slide['btn1_url']??'#' }}" style="background:#f59e0b;color:#fff;font-weight:700;padding:.8rem 1.75rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;display:inline-block;transition:all .2s;">{{ $slide['btn1_text'] }}</a>@endif
+                        @if(!empty($slide['btn2_text']))<a href="{{ $slide['btn2_url']??'#' }}" style="background:rgba(255,255,255,.15);color:#fff;font-weight:600;padding:.8rem 1.75rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;border:1px solid rgba(255,255,255,.35);display:inline-block;backdrop-filter:blur(8px);">{{ $slide['btn2_text'] }}</a>@endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
     @endforeach
-
-    {{-- Arrows - always visible --}}
-    <button onclick="vmPrev()" class="absolute left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/20 hover:bg-white/90 hover:text-gray-900 text-white border border-white/40 rounded-full flex items-center justify-center backdrop-blur-sm transition-all shadow-lg">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+    <button onclick="vmPrev()" style="position:absolute;left:1.25rem;top:50%;transform:translateY(-50%);z-index:30;width:2.75rem;height:2.75rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(8px);transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,.9)';this.style.color='#111';" onmouseout="this.style.background='rgba(255,255,255,.15)';this.style.color='#fff';">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
     </button>
-    <button onclick="vmNext()" class="absolute right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/20 hover:bg-white/90 hover:text-gray-900 text-white border border-white/40 rounded-full flex items-center justify-center backdrop-blur-sm transition-all shadow-lg">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+    <button onclick="vmNext()" style="position:absolute;right:1.25rem;top:50%;transform:translateY(-50%);z-index:30;width:2.75rem;height:2.75rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(8px);transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,.9)';this.style.color='#111';" onmouseout="this.style.background='rgba(255,255,255,.15)';this.style.color='#fff';">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
     </button>
-
-    {{-- Dots --}}
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+    <div style="position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:.5rem;">
         @foreach($heroSlides as $i => $slide)
-        <button onclick="vmSet({{ $i }})" id="vmDot{{ $i }}" style="height:.5rem;border-radius:9999px;border:none;cursor:pointer;transition:all .3s;background:rgba(255,255,255,.45);width:.5rem;"></button>
+        <button onclick="vmSet({{ $i }})" id="vmDot{{ $i }}" style="height:.375rem;border-radius:9999px;border:none;cursor:pointer;transition:all .35s;background:rgba(255,255,255,.4);width:.375rem;padding:0;"></button>
         @endforeach
     </div>
 </section>
-
 @push('scripts')
 <script>
-(function(){
-  var slides,dots,cur=0,tot={{ count($heroSlides) }},tmr;
-  document.addEventListener('DOMContentLoaded',function(){
-    slides=document.querySelectorAll('.vm-slide');
-    dots=document.querySelectorAll('[id^=vmDot]');
-    vmSet(0);
-    if(tot>1) tmr=setInterval(function(){vmNext();},5000);
-  });
-  window.vmNext=function(){vmSet((cur+1)%tot);reset();};
-  window.vmPrev=function(){vmSet((cur-1+tot)%tot);reset();};
-  window.vmSet=function(i){
-    if(slides){
-      slides[cur].style.opacity='0';slides[cur].style.zIndex='0';
-      if(dots[cur]){dots[cur].style.background='rgba(255,255,255,.45)';dots[cur].style.width='.5rem';}
-      cur=i;
-      slides[cur].style.opacity='1';slides[cur].style.zIndex='10';
-      if(dots[cur]){dots[cur].style.background='#fff';dots[cur].style.width='1.5rem';}
-    }
-  };
-  function reset(){clearInterval(tmr);if(tot>1)tmr=setInterval(function(){vmNext();},5000);}
-})();
+(function(){var slides,dots,cur=0,tot={{ count($heroSlides) }},tmr;document.addEventListener('DOMContentLoaded',function(){slides=document.querySelectorAll('.vm-slide');dots=document.querySelectorAll('[id^=vmDot]');vmSet(0);if(tot>1)tmr=setInterval(function(){vmNext();},5500);});window.vmNext=function(){vmSet((cur+1)%tot);reset();};window.vmPrev=function(){vmSet((cur-1+tot)%tot);reset();};window.vmSet=function(i){if(slides){slides[cur].style.opacity='0';slides[cur].style.zIndex='0';if(dots[cur]){dots[cur].style.background='rgba(255,255,255,.4)';dots[cur].style.width='.375rem';}cur=i;slides[cur].style.opacity='1';slides[cur].style.zIndex='10';if(dots[cur]){dots[cur].style.background='#fff';dots[cur].style.width='1.5rem';}}};function reset(){clearInterval(tmr);if(tot>1)tmr=setInterval(function(){vmNext();},5500);}})();
 </script>
 @endpush
-
 @else
-{{-- Fallback static hero --}}
-<section class="relative bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white overflow-hidden">
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
-        <div class="absolute bottom-10 right-10 w-96 h-96 bg-accent-500 rounded-full blur-3xl"></div>
-    </div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-        <div class="max-w-3xl">
-            <span class="inline-block bg-primary-700/50 text-primary-200 text-xs font-semibold px-3 py-1 rounded-full mb-6 border border-primary-600">
-                🚀 The Investment Ecosystem Platform
-            </span>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
-                Where Investors Meet<br>
-                <span class="text-accent-500">Tomorrow's Ventures</span>
-            </h1>
-            <p class="text-lg text-primary-200 mb-10 max-w-2xl leading-relaxed">
-                VentureMatch brings together investors, founders, startups, partners, and ecosystem stakeholders on one powerful platform — making deal discovery, collaboration, and growth seamless.
-            </p>
-            <div class="flex flex-wrap gap-4">
-                <a href="{{ route('register.investor') }}" class="bg-accent-500 hover:bg-accent-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all">Join as Investor</a>
-                <a href="{{ route('register.seeker') }}" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-6 py-3 rounded-xl backdrop-blur-sm transition-all">Join as Seeker</a>
-                <a href="{{ route('investor.opportunities.index') }}" class="border border-white/30 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 transition-all">Explore Opportunities →</a>
-            </div>
+<section style="background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 50%,#1d4ed8 100%);color:#fff;padding:6rem 1.5rem;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-5rem;right:-5rem;width:30rem;height:30rem;background:rgba(99,102,241,.15);border-radius:50%;filter:blur(60px);"></div>
+    <div style="position:absolute;bottom:-5rem;left:-5rem;width:25rem;height:25rem;background:rgba(245,158,11,.1);border-radius:50%;filter:blur(60px);"></div>
+    <div style="max-width:80rem;margin:0 auto;position:relative;">
+        <span style="display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:.75rem;font-weight:600;padding:.3rem .875rem;border-radius:9999px;margin-bottom:1.5rem;">🚀 The Investment Ecosystem Platform</span>
+        <h1 style="font-size:clamp(2.5rem,6vw,4rem);font-weight:800;line-height:1.1;margin:0 0 1.25rem;letter-spacing:-.03em;max-width:36rem;">Where Investors Meet <span style="color:#fbbf24;">Tomorrow's Ventures</span></h1>
+        <p style="font-size:1.125rem;color:rgba(255,255,255,.65);max-width:32rem;line-height:1.7;margin:0 0 2.5rem;">VentureMatch connects investors, founders, and ecosystem stakeholders on one powerful platform — making deal discovery seamless.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.875rem;">
+            <a href="{{ route('register.investor') }}" style="background:#f59e0b;color:#fff;font-weight:700;padding:.875rem 2rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;">Join as Investor</a>
+            <a href="{{ route('register.seeker') }}" style="background:rgba(255,255,255,.12);color:#fff;font-weight:600;padding:.875rem 2rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;border:1px solid rgba(255,255,255,.3);">Join as Seeker</a>
+            <a href="{{ route('startups.index') }}" style="color:rgba(255,255,255,.7);font-weight:600;padding:.875rem 1.5rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;">Explore Startups →</a>
         </div>
     </div>
 </section>
 @endif
 
-{{-- Stats Section --}}
+{{-- ═══════════════════════════════════════════════════════════ STATS --}}
 @if($stats->count())
-<section class="bg-white border-b border-gray-100 py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
-            @foreach($stats as $stat)
-            <div>
-                <div class="text-3xl font-extrabold text-primary-700" data-counter="{{ $stat->value }}">{{ $stat->value }}</div>
-                <div class="text-sm text-gray-500 mt-1">{{ $stat->label }}</div>
-            </div>
-            @endforeach
+<section style="background:#fff;border-bottom:1px solid #f1f5f9;padding:3rem 1.5rem;">
+    <div style="max-width:80rem;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:2rem;text-align:center;">
+        @foreach($stats as $stat)
+        <div>
+            <div style="font-size:2.25rem;font-weight:800;color:#1d4ed8;line-height:1;" data-counter="{{ $stat->value }}">{{ $stat->value }}</div>
+            <div style="font-size:.8125rem;color:#6b7280;margin-top:.375rem;font-weight:500;">{{ $stat->label }}</div>
         </div>
+        @endforeach
     </div>
 </section>
 @endif
 
-{{-- Platform Overview --}}
-<section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-14">
-            <h2 class="text-3xl font-bold text-gray-900">How VentureMatch Works</h2>
-            <p class="text-gray-500 mt-3 max-w-xl mx-auto">A connected ecosystem where every stakeholder finds value.</p>
+{{-- ═══════════════════════════════════════════════════════════ HOW IT WORKS --}}
+<section style="background:#f8fafc;padding:5rem 1.5rem;">
+    <div style="max-width:80rem;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:3.5rem;">
+            <span style="display:inline-block;background:#eff6ff;color:#1d4ed8;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;letter-spacing:.05em;text-transform:uppercase;">How It Works</span>
+            <h2 style="font-size:2.25rem;font-weight:800;color:#0f172a;margin:0 0 .75rem;letter-spacing:-.02em;">Simple. Powerful. Effective.</h2>
+            <p style="color:#64748b;font-size:1.0625rem;max-width:32rem;margin:0 auto;line-height:1.6;">A connected ecosystem where every stakeholder finds value.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            @php
-                $steps = [
-                    ['icon' => '🔍', 'title' => 'Discover', 'desc' => 'Investors browse curated opportunities filtered by sector, stage, and ticket size.'],
-                    ['icon' => '🤝', 'title' => 'Connect', 'desc' => 'Express interest, request meetings, and engage directly with founders.'],
-                    ['icon' => '🚀', 'title' => 'Grow', 'desc' => 'Close deals, join bootcamps, attend conferences, and scale together.'],
-                ];
-            @endphp
-            @foreach($steps as $i => $step)
-            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow">
-                <div class="text-4xl mb-4">{{ $step['icon'] }}</div>
-                <div class="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold mx-auto mb-4">{{ $i + 1 }}</div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ $step['title'] }}</h3>
-                <p class="text-gray-500 text-sm leading-relaxed">{{ $step['desc'] }}</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;">
+            @php $steps=[['num'=>'01','color'=>'#3b82f6','bg'=>'#eff6ff','title'=>'Discover','desc'=>'Browse curated investment opportunities filtered by sector, stage, and ticket size.','icon'=>'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'],['num'=>'02','color'=>'#10b981','bg'=>'#ecfdf5','title'=>'Connect','desc'=>'Express interest, request meetings, and engage directly with founders and investors.','icon'=>'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z'],['num'=>'03','color'=>'#f59e0b','bg'=>'#fffbeb','title'=>'Grow','desc'=>'Close deals, join bootcamps, attend conferences, and scale your venture together.','icon'=>'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6']]; @endphp
+            @foreach($steps as $step)
+            <div style="background:#fff;border-radius:1.25rem;padding:2rem;border:1px solid #e2e8f0;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:1.25rem;right:1.25rem;font-size:3.5rem;font-weight:900;color:{{ $step['bg'] }};line-height:1;user-select:none;">{{ $step['num'] }}</div>
+                <div style="width:3rem;height:3rem;background:{{ $step['bg'] }};border-radius:.875rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
+                    <svg width="22" height="22" fill="none" stroke="{{ $step['color'] }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="{{ $step['icon'] }}"/></svg>
+                </div>
+                <h3 style="font-size:1.125rem;font-weight:700;color:#0f172a;margin:0 0 .5rem;">{{ $step['title'] }}</h3>
+                <p style="font-size:.875rem;color:#64748b;line-height:1.6;margin:0;">{{ $step['desc'] }}</p>
             </div>
             @endforeach
         </div>
     </div>
 </section>
 
-{{-- Hot Deals --}}
+{{-- ═══════════════════════════════════════════════════════════ HOT DEALS --}}
 @if($hotDeals->count())
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-10">
+<section style="background:#fff;padding:5rem 1.5rem;">
+    <div style="max-width:80rem;margin:0 auto;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
             <div>
-                <span class="text-xs font-semibold text-red-500 uppercase tracking-wider">🔥 Limited Time</span>
-                <h2 class="text-3xl font-bold text-gray-900 mt-1">Hot Deals</h2>
+                <span style="display:inline-flex;align-items:center;gap:.375rem;background:#fef2f2;color:#dc2626;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#dc2626"><path d="M12 2c0 0-4 4-4 9a4 4 0 008 0c0-5-4-9-4-9z"/></svg> Hot Deals
+                </span>
+                <h2 style="font-size:2rem;font-weight:800;color:#0f172a;margin:0;letter-spacing:-.02em;">Active Investment Opportunities</h2>
             </div>
-            <a href="{{ route('investor.opportunities.index') }}" class="text-primary-600 text-sm font-medium hover:underline">View all →</a>
+            <a href="{{ route('startups.index') }}" style="color:#1d4ed8;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;">
             @foreach($hotDeals as $deal)
-            <div class="border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-shadow group">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="bg-red-50 text-red-600 text-xs font-semibold px-2 py-1 rounded-full">🔥 Hot Deal</span>
-                    <span class="text-xs text-gray-400">{{ $deal->sector }}</span>
+            <a href="{{ route('startups.show', $deal->slug) }}" style="text-decoration:none;display:block;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.1)';this.style.transform='translateY(-3px)';this.style.borderColor='#fca5a5';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';this.style.borderColor='#e2e8f0';">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#ef4444,#f97316);"></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;">
+                    <span style="background:#fef2f2;color:#dc2626;font-size:.7rem;font-weight:700;padding:.25rem .625rem;border-radius:9999px;">🔥 Hot Deal</span>
+                    <span style="font-size:.75rem;color:#94a3b8;font-weight:500;">{{ $deal->sector }}</span>
                 </div>
-                <h3 class="font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">{{ $deal->title }}</h3>
-                <p class="text-sm text-gray-500 mb-4 line-clamp-2">{{ $deal->solution }}</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-primary-700 font-bold text-sm">${{ number_format($deal->ask_amount) }} {{ $deal->ask_currency }}</span>
-                    <a href="{{ route('investor.opportunities.show', $deal->slug) }}" class="text-xs text-primary-600 font-medium hover:underline">View Details →</a>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
-
-{{-- Featured Opportunities --}}
-@if($featured->count())
-<section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-10">
-            <div>
-                <span class="text-xs font-semibold text-primary-600 uppercase tracking-wider">⭐ Curated</span>
-                <h2 class="text-3xl font-bold text-gray-900 mt-1">Featured Opportunities</h2>
-            </div>
-            <a href="{{ route('investor.opportunities.index') }}" class="text-primary-600 text-sm font-medium hover:underline">View all →</a>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach($featured as $opp)
-            <div class="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-shadow group">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="bg-primary-50 text-primary-700 text-xs font-semibold px-2 py-1 rounded-full">{{ $opp->stage }}</span>
-                    <span class="text-xs text-gray-400">{{ $opp->sector }}</span>
-                </div>
-                <h3 class="font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">{{ $opp->title }}</h3>
-                <p class="text-sm text-gray-500 mb-4 line-clamp-2">{{ $opp->solution }}</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-primary-700 font-bold text-sm">${{ number_format($opp->ask_amount) }}</span>
-                    <a href="{{ route('investor.opportunities.show', $opp->slug) }}" class="text-xs text-primary-600 font-medium hover:underline">View Details →</a>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
-
-{{-- Upcoming Events --}}
-@if($events->count())
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-10">
-            <div>
-                <span class="text-xs font-semibold text-green-600 uppercase tracking-wider">📅 Upcoming</span>
-                <h2 class="text-3xl font-bold text-gray-900 mt-1">Events & Conferences</h2>
-            </div>
-            <a href="{{ route('events.index') }}" class="text-primary-600 text-sm font-medium hover:underline">View all →</a>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            @foreach($events as $event)
-            <a href="{{ route('events.show', $event->slug) }}" class="group block bg-gray-50 rounded-2xl overflow-hidden hover:shadow-md transition-shadow">
-                @if($event->banner)
-                    <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}" class="w-full h-36 object-cover">
-                @else
-                    <div class="w-full h-36 bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center">
-                        <svg class="w-10 h-10 text-white opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    </div>
-                @endif
-                <div class="p-4">
-                    <span class="text-xs text-primary-600 font-medium">{{ $event->start_date->format('M d, Y') }}</span>
-                    <h3 class="font-semibold text-gray-900 mt-1 text-sm group-hover:text-primary-600 transition-colors line-clamp-2">{{ $event->title }}</h3>
-                    <p class="text-xs text-gray-400 mt-1">{{ $event->venue ?? 'Online' }}</p>
+                <h3 style="font-size:1rem;font-weight:700;color:#0f172a;margin:0 0 .5rem;line-height:1.4;">{{ $deal->title }}</h3>
+                <p style="font-size:.8125rem;color:#64748b;margin:0 0 1.25rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $deal->solution }}</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.875rem;border-top:1px solid #f1f5f9;">
+                    <span style="font-size:1rem;font-weight:800;color:#1d4ed8;">৳{{ number_format($deal->ask_amount) }}</span>
+                    <span style="font-size:.75rem;color:#1d4ed8;font-weight:600;">View Details →</span>
                 </div>
             </a>
             @endforeach
@@ -274,34 +139,65 @@
 </section>
 @endif
 
-{{-- Testimonials --}}
-@if($testimonials->count())
-<section class="py-20 bg-primary-950 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-14">
-            <h2 class="text-3xl font-bold">What Our Members Say</h2>
-            <p class="text-primary-300 mt-3">Real stories from investors, founders, and partners.</p>
+{{-- ═══════════════════════════════════════════════════════════ EVENTS --}}
+@if($events->count())
+<section style="background:#f8fafc;padding:5rem 1.5rem;">
+    <div style="max-width:80rem;margin:0 auto;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
+            <div>
+                <span style="display:inline-block;background:#ecfdf5;color:#059669;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;">Upcoming</span>
+                <h2 style="font-size:2rem;font-weight:800;color:#0f172a;margin:0;letter-spacing:-.02em;">Events & Conferences</h2>
+            </div>
+            <a href="{{ route('events.index') }}" style="color:#1d4ed8;font-size:.875rem;font-weight:600;text-decoration:none;">View all →</a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach($testimonials as $t)
-            <div class="bg-primary-900/50 border border-primary-800 rounded-2xl p-6">
-                <div class="flex gap-1 mb-4">
-                    @for($i = 0; $i < $t->rating; $i++)
-                        <span class="text-accent-500 text-sm">★</span>
-                    @endfor
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.25rem;">
+            @foreach($events as $event)
+            <a href="{{ route('events.show', $event->slug) }}" style="text-decoration:none;background:#fff;border-radius:1.25rem;overflow:hidden;border:1px solid #e2e8f0;display:block;transition:all .25s;" onmouseover="this.style.boxShadow='0 8px 25px rgba(0,0,0,.08)';this.style.transform='translateY(-2px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
+                @if($event->banner)
+                    <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}" style="width:100%;height:10rem;object-fit:cover;display:block;">
+                @else
+                    @php $gradients=['linear-gradient(135deg,#1d4ed8,#3b82f6)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#059669,#34d399)','linear-gradient(135deg,#dc2626,#f97316)']; @endphp
+                    <div style="width:100%;height:10rem;background:{{ $gradients[$loop->index % 4] }};display:flex;align-items:center;justify-content:center;">
+                        <svg width="40" height="40" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                @endif
+                <div style="padding:1.125rem;">
+                    <span style="font-size:.7rem;color:#1d4ed8;font-weight:600;">{{ $event->start_date->format('M d, Y') }}</span>
+                    <h3 style="font-size:.9375rem;font-weight:700;color:#0f172a;margin:.25rem 0 .375rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $event->title }}</h3>
+                    <p style="font-size:.75rem;color:#94a3b8;margin:0;">📍 {{ $event->venue ?? 'Online' }}</p>
                 </div>
-                <p class="text-primary-200 text-sm leading-relaxed mb-6">"{{ $t->content }}"</p>
-                <div class="flex items-center gap-3">
+            </a>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
+{{-- ═══════════════════════════════════════════════════════════ TESTIMONIALS --}}
+@if($testimonials->count())
+<section style="background:linear-gradient(135deg,#0f172a,#1e3a8a);padding:5rem 1.5rem;">
+    <div style="max-width:80rem;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:3.5rem;">
+            <span style="display:inline-block;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.05em;">Testimonials</span>
+            <h2 style="font-size:2.25rem;font-weight:800;color:#fff;margin:0 0 .75rem;letter-spacing:-.02em;">What Our Members Say</h2>
+            <p style="color:rgba(255,255,255,.5);font-size:1rem;max-width:28rem;margin:0 auto;">Real stories from investors, founders, and partners.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;">
+            @foreach($testimonials as $t)
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:1.25rem;padding:1.75rem;">
+                <div style="display:flex;gap:.25rem;margin-bottom:1rem;">
+                    @for($i=0;$i<($t->rating??5);$i++)<span style="color:#fbbf24;font-size:.875rem;">★</span>@endfor
+                </div>
+                <p style="color:rgba(255,255,255,.7);font-size:.875rem;line-height:1.7;margin:0 0 1.5rem;">"{{ $t->content }}"</p>
+                <div style="display:flex;align-items:center;gap:.75rem;">
                     @if($t->photo)
-                        <img src="{{ Storage::url($t->photo) }}" alt="{{ $t->name }}" class="w-10 h-10 rounded-full object-cover">
+                        <img src="{{ Storage::url($t->photo) }}" alt="{{ $t->name }}" style="width:2.5rem;height:2.5rem;border-radius:50%;object-fit:cover;">
                     @else
-                        <div class="w-10 h-10 bg-primary-700 rounded-full flex items-center justify-center">
-                            <span class="text-white font-semibold text-sm">{{ substr($t->name, 0, 1) }}</span>
-                        </div>
+                        <div style="width:2.5rem;height:2.5rem;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.875rem;">{{ substr($t->name,0,1) }}</div>
                     @endif
                     <div>
-                        <p class="font-semibold text-white text-sm">{{ $t->name }}</p>
-                        <p class="text-primary-400 text-xs">{{ $t->designation }}{{ $t->organization ? ', ' . $t->organization : '' }}</p>
+                        <p style="font-weight:700;color:#fff;font-size:.875rem;margin:0;">{{ $t->name }}</p>
+                        <p style="color:rgba(255,255,255,.45);font-size:.75rem;margin:0;">{{ $t->designation }}{{ $t->organization?', '.$t->organization:'' }}</p>
                     </div>
                 </div>
             </div>
@@ -311,28 +207,28 @@
 </section>
 @endif
 
-{{-- Latest News --}}
+{{-- ═══════════════════════════════════════════════════════════ LATEST NEWS --}}
 @if($latestNews->count())
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-10">
-            <h2 class="text-3xl font-bold text-gray-900">Latest News</h2>
-            <a href="{{ route('news.index') }}" class="text-primary-600 text-sm font-medium hover:underline">View all →</a>
+<section style="background:#fff;padding:5rem 1.5rem;">
+    <div style="max-width:80rem;margin:0 auto;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
+            <h2 style="font-size:2rem;font-weight:800;color:#0f172a;margin:0;letter-spacing:-.02em;">Latest News</h2>
+            <a href="{{ route('news.index') }}" style="color:#1d4ed8;font-size:.875rem;font-weight:600;text-decoration:none;">View all →</a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;">
             @foreach($latestNews as $article)
-            <a href="{{ route('news.show', $article->slug) }}" class="group block">
+            <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;display:block;" onmouseover="this.querySelector('h3').style.color='#1d4ed8';" onmouseout="this.querySelector('h3').style.color='#0f172a';">
                 @if($article->cover_image)
-                    <img src="{{ Storage::url($article->cover_image) }}" alt="{{ $article->title }}" class="w-full h-48 object-cover rounded-xl mb-4">
+                    <img src="{{ Storage::url($article->cover_image) }}" alt="{{ $article->title }}" style="width:100%;height:12rem;object-fit:cover;border-radius:1rem;margin-bottom:1rem;display:block;">
                 @else
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl mb-4 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                    <div style="width:100%;height:12rem;background:linear-gradient(135deg,#f1f5f9,#e2e8f0);border-radius:1rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;">
+                        <svg width="48" height="48" fill="none" stroke="#94a3b8" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
                     </div>
                 @endif
-                <span class="text-xs text-primary-600 font-medium">{{ $article->category }}</span>
-                <h3 class="font-semibold text-gray-900 mt-1 group-hover:text-primary-600 transition-colors line-clamp-2">{{ $article->title }}</h3>
-                <p class="text-sm text-gray-500 mt-2 line-clamp-2">{{ $article->summary }}</p>
-                <p class="text-xs text-gray-400 mt-2">{{ $article->published_at?->format('M d, Y') }}</p>
+                <span style="font-size:.7rem;color:#1d4ed8;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">{{ $article->category }}</span>
+                <h3 style="font-size:1rem;font-weight:700;color:#0f172a;margin:.375rem 0 .5rem;line-height:1.4;transition:color .2s;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $article->title }}</h3>
+                <p style="font-size:.8125rem;color:#64748b;line-height:1.5;margin:0 0 .5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $article->summary }}</p>
+                <span style="font-size:.75rem;color:#94a3b8;">{{ $article->published_at?->format('M d, Y') }}</span>
             </a>
             @endforeach
         </div>
@@ -340,18 +236,16 @@
 </section>
 @endif
 
-{{-- CTA Section --}}
-<section class="py-20 bg-gradient-to-r from-primary-600 to-primary-800 text-white">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-        <h2 class="text-3xl font-bold mb-4">Ready to Join the Ecosystem?</h2>
-        <p class="text-primary-200 mb-8 text-lg">Whether you're an investor looking for the next big opportunity or a founder seeking capital — VentureMatch is your platform.</p>
-        <div class="flex flex-wrap justify-center gap-4">
-            <a href="{{ route('register.investor') }}" class="bg-white text-primary-700 font-semibold px-8 py-3 rounded-xl hover:bg-gray-100 transition-colors">
-                Join as Investor
-            </a>
-            <a href="{{ route('register.seeker') }}" class="border-2 border-white text-white font-semibold px-8 py-3 rounded-xl hover:bg-white/10 transition-colors">
-                Join as Seeker
-            </a>
+{{-- ═══════════════════════════════════════════════════════════ CTA --}}
+<section style="background:linear-gradient(135deg,#1d4ed8,#7c3aed);padding:5rem 1.5rem;text-align:center;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-4rem;right:-4rem;width:20rem;height:20rem;background:rgba(255,255,255,.05);border-radius:50%;"></div>
+    <div style="position:absolute;bottom:-4rem;left:-4rem;width:16rem;height:16rem;background:rgba(255,255,255,.05);border-radius:50%;"></div>
+    <div style="max-width:48rem;margin:0 auto;position:relative;">
+        <h2 style="font-size:2.5rem;font-weight:800;color:#fff;margin:0 0 1rem;letter-spacing:-.02em;">Ready to Join the Ecosystem?</h2>
+        <p style="color:rgba(255,255,255,.65);font-size:1.125rem;margin:0 0 2.5rem;line-height:1.6;">Whether you're an investor seeking the next big opportunity or a founder raising capital — VentureMatch is your platform.</p>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;">
+            <a href="{{ route('register.investor') }}" style="background:#fff;color:#1d4ed8;font-weight:700;padding:.875rem 2.25rem;border-radius:.875rem;text-decoration:none;font-size:1rem;display:inline-block;">Join as Investor</a>
+            <a href="{{ route('register.seeker') }}" style="background:rgba(255,255,255,.15);color:#fff;font-weight:600;padding:.875rem 2.25rem;border-radius:.875rem;text-decoration:none;font-size:1rem;border:1px solid rgba(255,255,255,.3);display:inline-block;">Submit Your Startup</a>
         </div>
     </div>
 </section>
