@@ -141,41 +141,46 @@
 
 {{-- ═══════════════════════════════════════════════════════════ TOP STARTUPS --}}
 @if($topStartups->count())
-<section style="background:#f8fafc;padding:5rem 1.5rem;">
-    <div style="max-width:80rem;margin:0 auto;">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
+<section style="background:#f8fafc;padding:4rem 0;">
+    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
             <div>
                 <span style="display:inline-block;background:#eff6ff;color:#1d4ed8;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;">⭐ Featured</span>
                 <h2 style="font-size:2rem;font-weight:800;color:#0f172a;margin:0;letter-spacing:-.02em;">Top Startups</h2>
-                <p style="color:#64748b;font-size:.9375rem;margin:.375rem 0 0;">High-potential ventures seeking investment right now.</p>
             </div>
-            <a href="{{ route('startups.index') }}" style="color:#1d4ed8;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all startups →</a>
+            <div style="display:flex;align-items:center;gap:.75rem;">
+                <button onclick="slideScroll('startupTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.08);">
+                    <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button onclick="slideScroll('startupTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.08);">
+                    <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
+                <a href="{{ route('startups.index') }}" style="color:#1d4ed8;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
+            </div>
         </div>
-        @php
-            $sectorColors=['FinTech'=>'#3b82f6','AgriTech'=>'#10b981','HealthTech'=>'#ef4444','EdTech'=>'#f59e0b','CleanTech'=>'#8b5cf6'];
-        @endphp
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;">
+    </div>
+    <div style="position:relative;">
+        <div id="startupTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding:0 1.5rem 1rem;scrollbar-width:none;-ms-overflow-style:none;" class="hide-scroll">
+            @php $sectorColors=['FinTech'=>'#3b82f6','AgriTech'=>'#10b981','HealthTech'=>'#ef4444','EdTech'=>'#f59e0b','CleanTech'=>'#8b5cf6']; @endphp
             @foreach($topStartups as $s)
             @php $sc = $sectorColors[$s->sector] ?? '#1d4ed8'; @endphp
-            <a href="{{ route('startups.show', $s->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;transition:all .25s;overflow:hidden;position:relative;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.09)';this.style.transform='translateY(-3px)';this.style.borderColor='{{ $sc }}55';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';this.style.borderColor='#e2e8f0';">
+            <a href="{{ route('startups.show', $s->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:280px;transition:all .25s;overflow:hidden;position:relative;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.1)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
                 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:{{ $sc }};"></div>
-                <div style="display:flex;align-items:flex-start;gap:.875rem;margin-bottom:1rem;">
-                    <div style="width:2.75rem;height:2.75rem;border-radius:.75rem;background:{{ $sc }}18;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:.9375rem;color:{{ $sc }};">
-                        {{ strtoupper(substr($s->title,0,2)) }}
-                    </div>
+                <div style="display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.875rem;">
+                    <div style="width:2.5rem;height:2.5rem;border-radius:.75rem;background:{{ $sc }}18;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:.875rem;color:{{ $sc }};">{{ strtoupper(substr($s->title,0,2)) }}</div>
                     <div style="flex:1;min-width:0;">
-                        <h3 style="font-size:.9375rem;font-weight:700;color:#0f172a;margin:0 0 .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $s->title }}</h3>
-                        <div style="display:flex;gap:.375rem;flex-wrap:wrap;">
-                            @if($s->sector)<span style="font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:9999px;background:{{ $sc }}18;color:{{ $sc }};">{{ $s->sector }}</span>@endif
-                            @if($s->stage)<span style="font-size:.7rem;background:#f1f5f9;color:#475569;padding:.15rem .5rem;border-radius:9999px;">{{ $s->stage }}</span>@endif
+                        <h3 style="font-size:.9375rem;font-weight:700;color:#0f172a;margin:0 0 .25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $s->title }}</h3>
+                        <div style="display:flex;gap:.3rem;flex-wrap:wrap;">
+                            @if($s->sector)<span style="font-size:.65rem;font-weight:600;padding:.15rem .45rem;border-radius:9999px;background:{{ $sc }}18;color:{{ $sc }};">{{ $s->sector }}</span>@endif
+                            @if($s->stage)<span style="font-size:.65rem;background:#f1f5f9;color:#475569;padding:.15rem .45rem;border-radius:9999px;">{{ $s->stage }}</span>@endif
+                            @if($s->is_hot_deal)<span style="font-size:.65rem;background:#fef2f2;color:#dc2626;font-weight:700;padding:.15rem .45rem;border-radius:9999px;">🔥</span>@endif
                         </div>
                     </div>
-                    @if($s->is_hot_deal)<span style="font-size:.65rem;background:#fef2f2;color:#dc2626;font-weight:700;padding:.2rem .5rem;border-radius:9999px;flex-shrink:0;">🔥 Hot</span>@endif
                 </div>
-                <p style="font-size:.8125rem;color:#64748b;line-height:1.55;flex:1;margin:0 0 1.125rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $s->business_problem }}</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.875rem;border-top:1px solid #f1f5f9;">
+                <p style="font-size:.8rem;color:#64748b;line-height:1.55;flex:1;margin:0 0 1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">{{ $s->business_problem }}</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid #f1f5f9;">
                     @if($s->ask_amount)<span style="font-size:.9375rem;font-weight:800;color:#1d4ed8;">৳{{ number_format($s->ask_amount) }}</span>@else<span></span>@endif
-                    <span style="font-size:.75rem;color:#1d4ed8;font-weight:600;">Invest Now →</span>
+                    <span style="font-size:.75rem;color:#1d4ed8;font-weight:600;">Invest →</span>
                 </div>
             </a>
             @endforeach
@@ -186,51 +191,55 @@
 
 {{-- ═══════════════════════════════════════════════════════════ TOP INVESTORS --}}
 @if($topInvestors->count())
-<section style="background:#fff;padding:5rem 1.5rem;">
-    <div style="max-width:80rem;margin:0 auto;">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
+<section style="background:#fff;padding:4rem 0;">
+    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
             <div>
                 <span style="display:inline-block;background:#f0fdf4;color:#16a34a;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;">✓ Verified</span>
                 <h2 style="font-size:2rem;font-weight:800;color:#0f172a;margin:0;letter-spacing:-.02em;">Top Investors</h2>
-                <p style="color:#64748b;font-size:.9375rem;margin:.375rem 0 0;">Active investors ready to fund your next venture.</p>
             </div>
-            <a href="{{ route('investors.index') }}" style="color:#1d4ed8;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all investors →</a>
+            <div style="display:flex;align-items:center;gap:.75rem;">
+                <button onclick="slideScroll('investorTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.08);">
+                    <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button onclick="slideScroll('investorTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.08);">
+                    <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
+                <a href="{{ route('investors.index') }}" style="color:#1d4ed8;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
+            </div>
         </div>
-        @php
-            $invColors=['angel'=>'#f59e0b','vc'=>'#3b82f6','corporate'=>'#6366f1','family_office'=>'#a855f7','impact'=>'#10b981'];
-            $invLabels=['angel'=>'Angel','vc'=>'Venture Capital','corporate'=>'Corporate','family_office'=>'Family Office','impact'=>'Impact'];
-            $invBadge=['angel'=>'background:#fef3c7;color:#92400e;','vc'=>'background:#dbeafe;color:#1e40af;','corporate'=>'background:#e0e7ff;color:#3730a3;','family_office'=>'background:#f3e8ff;color:#6b21a8;','impact'=>'background:#d1fae5;color:#065f46;'];
-        @endphp
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;">
+    </div>
+    <div style="position:relative;">
+        <div id="investorTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding:0 1.5rem 1rem;scrollbar-width:none;-ms-overflow-style:none;">
+            @php $invColors=['angel'=>'#f59e0b','vc'=>'#3b82f6','corporate'=>'#6366f1','family_office'=>'#a855f7','impact'=>'#10b981']; $invLabels=['angel'=>'Angel','vc'=>'Venture Capital','corporate'=>'Corporate','family_office'=>'Family Office','impact'=>'Impact']; $invBadge=['angel'=>'background:#fef3c7;color:#92400e;','vc'=>'background:#dbeafe;color:#1e40af;','corporate'=>'background:#e0e7ff;color:#3730a3;','family_office'=>'background:#f3e8ff;color:#6b21a8;','impact'=>'background:#d1fae5;color:#065f46;']; @endphp
             @foreach($topInvestors as $inv)
             @php $ic = $invColors[$inv->investor_type] ?? '#1d4ed8'; @endphp
-            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;transition:all .25s;overflow:hidden;position:relative;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.09)';this.style.transform='translateY(-3px)';this.style.borderColor='{{ $ic }}55';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';this.style.borderColor='#e2e8f0';">
+            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:270px;transition:all .25s;overflow:hidden;position:relative;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.1)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
                 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:{{ $ic }};"></div>
-                <div style="display:flex;align-items:flex-start;gap:.875rem;margin-bottom:1rem;">
-                    <div style="width:2.75rem;height:2.75rem;border-radius:.75rem;background:{{ $ic }};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:.9375rem;color:#fff;">
-                        {{ strtoupper(substr($inv->user->name??'IN',0,2)) }}
-                    </div>
+                <div style="display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.875rem;">
+                    <div style="width:2.75rem;height:2.75rem;border-radius:.75rem;background:{{ $ic }};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:.9375rem;color:#fff;">{{ strtoupper(substr($inv->user->name??'IN',0,2)) }}</div>
                     <div style="flex:1;min-width:0;">
-                        <div style="display:flex;align-items:center;gap:.375rem;">
-                            <span style="font-size:.9375rem;font-weight:700;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;">{{ $inv->user->name }}</span>
-                            @if($inv->verification_status==='verified')<svg width="14" height="14" viewBox="0 0 20 20" fill="#3b82f6" style="flex-shrink:0;"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>@endif
+                        <div style="display:flex;align-items:center;gap:.3rem;">
+                            <span style="font-size:.9rem;font-weight:700;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;">{{ $inv->user->name }}</span>
+                            @if($inv->verification_status==='verified')<svg width="13" height="13" viewBox="0 0 20 20" fill="#3b82f6"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>@endif
                         </div>
-                        <p style="font-size:.75rem;color:#64748b;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>
-                        <p style="font-size:.7rem;color:#94a3b8;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->organization }}</p>
+                        <p style="font-size:.72rem;color:#64748b;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>
+                        <p style="font-size:.68rem;color:#94a3b8;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->organization }}</p>
                     </div>
                 </div>
-                <div style="display:flex;flex-wrap:wrap;gap:.375rem;margin-bottom:.875rem;">
-                    <span style="font-size:.7rem;font-weight:600;padding:.2rem .6rem;border-radius:9999px;{{ $invBadge[$inv->investor_type]??'background:#f1f5f9;color:#475569;' }}">{{ $invLabels[$inv->investor_type]??$inv->investor_type }}</span>
+                <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.75rem;">
+                    <span style="font-size:.68rem;font-weight:600;padding:.2rem .55rem;border-radius:9999px;{{ $invBadge[$inv->investor_type]??'background:#f1f5f9;color:#475569;' }}">{{ $invLabels[$inv->investor_type]??$inv->investor_type }}</span>
                     @if($inv->sector_preferences)
                         @foreach(array_slice($inv->sector_preferences,0,2) as $sec)
-                        <span style="font-size:.7rem;background:#eff6ff;color:#1d4ed8;padding:.2rem .5rem;border-radius:9999px;">{{ $sec }}</span>
+                        <span style="font-size:.68rem;background:#eff6ff;color:#1d4ed8;padding:.2rem .5rem;border-radius:9999px;">{{ $sec }}</span>
                         @endforeach
                     @endif
                 </div>
+                @if($inv->bio)<p style="font-size:.78rem;color:#64748b;line-height:1.5;margin:0 0 .75rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;">{{ $inv->bio }}</p>@endif
                 @if($inv->ticket_size_min && $inv->ticket_size_max)
-                <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.875rem;border-top:1px solid #f1f5f9;margin-top:auto;">
-                    <span style="font-size:.7rem;color:#94a3b8;">Ticket Size</span>
-                    <span style="font-size:.8125rem;font-weight:700;color:#1d4ed8;">৳{{ number_format($inv->ticket_size_min/100000,0) }}L–৳{{ number_format($inv->ticket_size_max/100000,0) }}L</span>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid #f1f5f9;margin-top:auto;">
+                    <span style="font-size:.68rem;color:#94a3b8;">Ticket</span>
+                    <span style="font-size:.78rem;font-weight:700;color:#1d4ed8;">৳{{ number_format($inv->ticket_size_min/100000,0) }}L–৳{{ number_format($inv->ticket_size_max/100000,0) }}L</span>
                 </div>
                 @endif
             </a>
@@ -239,6 +248,16 @@
     </div>
 </section>
 @endif
+
+@push('scripts')
+<script>
+function slideScroll(id, dir) {
+    var el = document.getElementById(id);
+    if(el) el.scrollBy({ left: dir * 310, behavior: 'smooth' });
+}
+</script>
+<style>.hide-scroll::-webkit-scrollbar{display:none;}</style>
+@endpush
 
 {{-- ═══════════════════════════════════════════════════════════ EVENTS --}}
 @if($events->count())
