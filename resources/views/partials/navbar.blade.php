@@ -1,25 +1,33 @@
 @php use Illuminate\Support\Facades\Storage; @endphp
-<nav style="background:#0d0a04;border-bottom:1px solid rgba(212,146,15,.2);position:sticky;top:0;z-index:50;box-shadow:0 2px 20px rgba(0,0,0,.6);" x-data="{ mobileOpen: false }">
+<nav id="mainNav" style="background:#0d0a04;border-bottom:1px solid rgba(212,146,15,.2);position:sticky;top:0;z-index:50;box-shadow:0 2px 20px rgba(0,0,0,.6);">
     <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
         <div style="display:flex;align-items:center;justify-content:space-between;height:4.25rem;">
 
             {{-- Logo --}}
-            <a href="{{ route('home') }}" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;cursor:pointer;flex-shrink:0;">
-                @php $siteLogo = \App\Models\Setting::get('site_logo'); $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
-                @include('partials.logo', ['logoClass' => 'h-8 w-auto object-contain max-w-[140px]', 'nameClass' => 'font-bold text-lg text-white'])
+            <a href="{{ route('home') }}" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;flex-shrink:0;">
+                @php
+                    $siteLogo = \App\Models\Setting::get('site_logo');
+                    $siteName = \App\Models\Setting::get('site_name', config('app.name'));
+                @endphp
+                @if($siteLogo)
+                    <img src="{{ Storage::url($siteLogo) }}" alt="{{ $siteName }}" style="height:2rem;width:auto;object-fit:contain;max-width:140px;">
+                @else
+                    <div style="width:2rem;height:2rem;background:linear-gradient(135deg,#d4920f,#f59e0b);border-radius:.5rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <span style="color:#0d0a04;font-weight:800;font-size:.75rem;">{{ strtoupper(substr($siteName,0,2)) }}</span>
+                    </div>
+                    <span style="font-weight:700;font-size:1.125rem;color:#fff;">{{ $siteName }}</span>
+                @endif
             </a>
 
             {{-- Desktop Nav --}}
             @php $navItems = json_decode(\App\Models\Setting::get('nav_menu_items', '[]'), true) ?: [['label'=>'Home','url'=>'/'],['label'=>'About','url'=>'/about'],['label'=>'Top Startups','url'=>'/startups'],['label'=>'Top Investors','url'=>'/investors'],['label'=>'Events','url'=>'/events'],['label'=>'News','url'=>'/news']]; @endphp
-            <div style="display:none;" class="md-nav">
-                <div style="display:flex;align-items:center;gap:1.75rem;">
-                    @foreach($navItems as $item)
-                    <a href="{{ $item['url'] }}" style="font-size:.875rem;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#d4920f';" onmouseout="this.style.color='rgba(255,255,255,.7)';">{{ $item['label'] }}</a>
-                    @endforeach
-                </div>
+            <div id="desktopNav" style="display:flex;align-items:center;gap:1.75rem;">
+                @foreach($navItems as $item)
+                <a href="{{ $item['url'] }}" style="font-size:.875rem;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;" onmouseover="this.style.color='#d4920f';" onmouseout="this.style.color='rgba(255,255,255,.7)';">{{ $item['label'] }}</a>
+                @endforeach
             </div>
 
-            {{-- Auth Buttons --}}
+            {{-- Auth + Mobile --}}
             <div style="display:flex;align-items:center;gap:.75rem;">
                 @auth
                     @if(auth()->user()->hasRole('admin'))
@@ -34,23 +42,20 @@
                         <button type="submit" style="font-size:.8125rem;color:rgba(255,255,255,.5);background:none;border:none;cursor:pointer;">Logout</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" style="font-size:.8125rem;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;">Login</a>
+                    <a href="{{ route('login') }}" style="font-size:.8125rem;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;" onmouseover="this.style.color='#d4920f';" onmouseout="this.style.color='rgba(255,255,255,.7)';">Login</a>
                     <a href="{{ route('register.investor') }}" style="background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-size:.8125rem;font-weight:700;padding:.5rem 1.125rem;border-radius:.5rem;text-decoration:none;white-space:nowrap;">Join as Investor</a>
-                    <a href="{{ route('register.seeker') }}" style="border:1px solid rgba(212,146,15,.5);color:#d4920f;font-size:.8125rem;font-weight:600;padding:.5rem 1.125rem;border-radius:.5rem;text-decoration:none;white-space:nowrap;display:none;" class="seeker-btn">Join as Seeker</a>
+                    <a id="seekerBtn" href="{{ route('register.seeker') }}" style="border:1px solid rgba(212,146,15,.5);color:#d4920f;font-size:.8125rem;font-weight:600;padding:.5rem 1.125rem;border-radius:.5rem;text-decoration:none;white-space:nowrap;">Join as Seeker</a>
                 @endauth
 
                 {{-- Mobile toggle --}}
-                <button @click="mobileOpen = !mobileOpen" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.7);padding:.25rem;display:none;" class="mobile-toggle">
-                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        <path x-show="mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
+                <button id="mobileToggle" onclick="toggleMobileMenu()" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.7);padding:.25rem;display:none;">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
         </div>
 
         {{-- Mobile Menu --}}
-        <div x-show="mobileOpen" x-transition style="border-top:1px solid rgba(212,146,15,.15);padding:.75rem 0 1rem;">
+        <div id="mobileMenu" style="display:none;border-top:1px solid rgba(212,146,15,.15);padding:.75rem 0 1rem;">
             @foreach($navItems as $item)
             <a href="{{ $item['url'] }}" style="display:block;padding:.5rem .75rem;font-size:.875rem;color:rgba(255,255,255,.7);text-decoration:none;border-radius:.5rem;" onmouseover="this.style.background='rgba(212,146,15,.1)';this.style.color='#d4920f';" onmouseout="this.style.background='transparent';this.style.color='rgba(255,255,255,.7)';">{{ $item['label'] }}</a>
             @endforeach
@@ -64,14 +69,31 @@
     </div>
 </nav>
 
-<style>
-@media(min-width:768px){
-    .md-nav{display:block !important;}
-    .mobile-toggle{display:none !important;}
-    .seeker-btn{display:inline-block !important;}
+<script>
+function toggleMobileMenu(){
+    var m=document.getElementById('mobileMenu');
+    m.style.display=m.style.display==='none'?'block':'none';
 }
-@media(max-width:767px){
-    .md-nav{display:none !important;}
-    .mobile-toggle{display:block !important;}
-}
-</style>
+(function(){
+    function handleResize(){
+        var w=window.innerWidth;
+        var dn=document.getElementById('desktopNav');
+        var mt=document.getElementById('mobileToggle');
+        var sb=document.getElementById('seekerBtn');
+        var mm=document.getElementById('mobileMenu');
+        if(w>=768){
+            if(dn)dn.style.display='flex';
+            if(mt)mt.style.display='none';
+            if(sb)sb.style.display='inline-block';
+            if(mm)mm.style.display='none';
+        } else {
+            if(dn)dn.style.display='none';
+            if(mt)mt.style.display='block';
+            if(sb)sb.style.display='none';
+        }
+    }
+    window.addEventListener('resize',handleResize);
+    document.addEventListener('DOMContentLoaded',handleResize);
+    handleResize();
+})();
+</script>
