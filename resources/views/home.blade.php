@@ -221,7 +221,11 @@
                 </div>
                 <div style="display:flex;flex-wrap:wrap;gap:.375rem;margin-bottom:.875rem;">
                     <span style="font-size:.7rem;font-weight:600;padding:.2rem .6rem;border-radius:9999px;{{ $invBadge[$inv->investor_type]??'background:#f1f5f9;color:#475569;' }}">{{ $invLabels[$inv->investor_type]??$inv->investor_type }}</span>
-                    @if($inv->sector_preferences)@foreach(array_slice($inv->sector_preferences,0,2) as $sec)<span style="font-size:.7rem;background:#eff6ff;color:#1d4ed8;padding:.2rem .5rem;border-radius:9999px;">{{ $sec }}</span>@endforeach@endif
+                    @if($inv->sector_preferences)
+                        @foreach(array_slice($inv->sector_preferences,0,2) as $sec)
+                        <span style="font-size:.7rem;background:#eff6ff;color:#1d4ed8;padding:.2rem .5rem;border-radius:9999px;">{{ $sec }}</span>
+                        @endforeach
+                    @endif
                 </div>
                 @if($inv->ticket_size_min && $inv->ticket_size_max)
                 <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.875rem;border-top:1px solid #f1f5f9;margin-top:auto;">
