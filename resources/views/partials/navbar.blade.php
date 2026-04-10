@@ -4,9 +4,9 @@
         <div class="flex items-center justify-between h-16">
 
             {{-- Logo --}}
-            <a href="{{ route('home') }}" class="flex items-center gap-2">
+            <a href="{{ route('home') }}" class="flex items-center gap-2 cursor-pointer">
                 @php $siteLogo = \App\Models\Setting::get('site_logo'); $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
-                @include('partials.logo')
+                @include('partials.logo', ['logoClass' => 'h-8 w-auto object-contain max-w-[140px]'])
             </a>
 
             {{-- Desktop Nav --}}
