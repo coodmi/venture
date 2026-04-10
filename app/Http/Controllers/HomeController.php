@@ -18,7 +18,7 @@ class HomeController extends Controller
         $stats        = PlatformStat::where('is_visible', true)->orderBy('sort_order')->get();
         $hotDeals     = Opportunity::approved()->hotDeals()->latest()->take(6)->get();
         $featured     = Opportunity::approved()->featured()->latest()->take(6)->get();
-        $events       = Event::published()->upcoming()->orderBy('start_date')->take(4)->get();
+        $events       = Event::published()->upcoming()->orderBy('start_date')->take(6)->get();
         $testimonials = Testimonial::where('is_published', true)->orderBy('sort_order')->take(6)->get();
         $latestNews   = News::published()->ofType('news')->latest('published_at')->take(6)->get();
         $heroSlides   = json_decode(Setting::get('hero_slides', '[]'), true) ?: [];
