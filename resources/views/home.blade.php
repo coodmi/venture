@@ -107,20 +107,28 @@
 
 {{-- ═══════════════════════════════════════════════════════════ HOT DEALS --}}
 @if($hotDeals->count())
-<section style="background:#fff;padding:5rem 1.5rem;">
-    <div style="max-width:80rem;margin:0 auto;">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
+<section style="background:#fff;padding:4rem 0;">
+    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
             <div>
                 <span style="display:inline-flex;align-items:center;gap:.375rem;background:#fef2f2;color:#dc2626;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="#dc2626"><path d="M12 2c0 0-4 4-4 9a4 4 0 008 0c0-5-4-9-4-9z"/></svg> Hot Deals
                 </span>
                 <h2 style="font-size:2rem;font-weight:800;color:#0f172a;margin:0;letter-spacing:-.02em;">Active Investment Opportunities</h2>
             </div>
-            <a href="{{ route('startups.index') }}" style="color:#1d4ed8;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
+            <div style="display:flex;align-items:center;gap:.75rem;">
+                <button onclick="slideScroll('hotDealsTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.08);">
+                    <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button onclick="slideScroll('hotDealsTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.08);">
+                    <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
+                <a href="{{ route('startups.index') }}" style="color:#1d4ed8;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
+            </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;">
+        <div id="hotDealsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;-ms-overflow-style:none;" class="hide-scroll">
             @foreach($hotDeals as $deal)
-            <a href="{{ route('startups.show', $deal->slug) }}" style="text-decoration:none;display:block;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.1)';this.style.transform='translateY(-3px)';this.style.borderColor='#fca5a5';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';this.style.borderColor='#e2e8f0';">
+            <a href="{{ route('startups.show', $deal->slug) }}" style="text-decoration:none;flex-shrink:0;width:280px;display:block;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.1)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
                 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#ef4444,#f97316);"></div>
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;">
                     <span style="background:#fef2f2;color:#dc2626;font-size:.7rem;font-weight:700;padding:.25rem .625rem;border-radius:9999px;">🔥 Hot Deal</span>
