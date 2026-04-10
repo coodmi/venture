@@ -4,14 +4,6 @@
 
 @section('content')
 <div class="max-w-2xl space-y-4">
-    <div class="flex gap-3 mb-6 flex-wrap">
-        <a href="{{ route('admin.settings.general') }}" class="border border-gray-300 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50">General</a>
-        <a href="{{ route('admin.settings.header') }}" class="bg-primary-600 text-white text-sm font-medium px-4 py-2 rounded-lg">Header</a>
-        <a href="{{ route('admin.settings.stats') }}" class="border border-gray-300 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50">Platform Stats</a>
-        <a href="{{ route('admin.settings.testimonials') }}" class="border border-gray-300 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50">Testimonials</a>
-        <a href="{{ route('admin.settings.about') }}" class="border border-gray-300 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50">About Content</a>
-    </div>
-
     <div class="bg-white rounded-xl border border-gray-200 p-6">
         <form method="POST" action="{{ route('admin.settings.header.update') }}" enctype="multipart/form-data"
               class="space-y-6" x-data="menuManager()" x-init="init({{ json_encode($menuItems) }})">
