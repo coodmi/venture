@@ -6,14 +6,7 @@
             {{-- Logo --}}
             <a href="{{ route('home') }}" class="flex items-center gap-2">
                 @php $siteLogo = \App\Models\Setting::get('site_logo'); $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
-                @if($siteLogo)
-                    <img src="{{ Storage::url($siteLogo) }}" alt="{{ $siteName }}" class="h-7 w-auto object-contain max-w-[140px]">
-                @else
-                    <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">VM</span>
-                    </div>
-                    <span class="font-bold text-xl text-gray-900">{{ $siteName }}</span>
-                @endif
+                @include('partials.logo')
             </a>
 
             {{-- Desktop Nav --}}

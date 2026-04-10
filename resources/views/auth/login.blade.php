@@ -6,10 +6,7 @@
     <div class="max-w-md w-full">
         <div class="text-center mb-8">
             <a href="{{ route('home') }}" class="inline-flex items-center gap-2 mb-6">
-                <div class="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
-                    <span class="text-white font-bold">VM</span>
-                </div>
-                <span class="font-bold text-xl text-gray-900">VentureMatch</span>
+                @include('partials.logo', ['logoClass' => 'h-10 w-auto object-contain max-w-[160px]', 'nameClass' => 'font-bold text-xl text-gray-900'])
             </a>
             <h1 class="text-2xl font-bold text-gray-900">Welcome back</h1>
             <p class="text-gray-500 mt-1">Sign in to your account</p>

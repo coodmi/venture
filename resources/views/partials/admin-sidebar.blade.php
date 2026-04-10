@@ -1,12 +1,9 @@
 <aside class="w-64 bg-gray-900 text-gray-300 flex-shrink-0 hidden lg:flex flex-col"
        :class="sidebarOpen ? 'flex' : 'hidden lg:flex'">
     <div class="p-6 border-b border-gray-800">
-        <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <span class="text-white font-bold text-sm">VM</span>
-            </div>
-            <span class="font-bold text-white">Admin Panel</span>
-        </div>
+        <a href="{{ route('home') }}" class="flex items-center gap-2">
+            @include('partials.logo', ['logoClass' => 'h-8 w-auto object-contain max-w-[120px]', 'nameClass' => 'font-bold text-white'])
+        </a>
     </div>
 
     <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
