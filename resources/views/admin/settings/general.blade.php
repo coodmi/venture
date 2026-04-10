@@ -6,6 +6,7 @@
 <div class="max-w-2xl space-y-4">
     <div class="flex gap-3 mb-6">
         <a href="{{ route('admin.settings.general') }}" class="bg-primary-600 text-white text-sm font-medium px-4 py-2 rounded-lg">General</a>
+        <a href="{{ route('admin.settings.header') }}" class="border border-gray-300 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50">Header</a>
         <a href="{{ route('admin.settings.stats') }}" class="border border-gray-300 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50">Platform Stats</a>
         <a href="{{ route('admin.settings.testimonials') }}" class="border border-gray-300 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50">Testimonials</a>
         <a href="{{ route('admin.settings.about') }}" class="border border-gray-300 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50">About Content</a>

@@ -72,6 +72,30 @@ class SettingsController extends Controller
         return back()->with('success', 'Testimonial added.');
     }
 
+    public function header()
+    {
+        $menuItems = json_decode(Setting::get('nav_menu_items', '[]'), true) ?: [];
+        return view('admin.settings.header', compact('menuItems'));
+    }
+
+    public function updateHeader(Request $request)
+    {
+        if ($request->hasFile('site_logo')) {
+            $path = $request->file('site_logo')->store('settings', 'public');
+            Setting::set('site_logo', $path, 'general');
+        }
+
+        $items = [];
+        foreach ($request->input('menu_label', []) as $i => $label) {
+            if (trim($label)) {
+                $items[] = ['label' => $label, 'url' => $request->input('menu_url')[$i] ?? '/'];
+            }
+        }
+        Setting::set('nav_menu_items', json_encode($items), 'general');
+
+        return back()->with('success', 'Header settings saved.');
+    }
+
     public function about()
     {
         $sections = AboutContent::orderBy('sort_order')->get()->keyBy('section');

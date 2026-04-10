@@ -18,11 +18,10 @@
 
             {{-- Desktop Nav --}}
             <div class="hidden md:flex items-center gap-6">
-                <a href="{{ route('home') }}" class="text-sm font-medium text-gray-600 hover:text-primary-600">Home</a>
-                <a href="{{ route('about') }}" class="text-sm font-medium text-gray-600 hover:text-primary-600">About</a>
-                <a href="{{ route('events.index') }}" class="text-sm font-medium text-gray-600 hover:text-primary-600">Events</a>
-                <a href="{{ route('news.index') }}" class="text-sm font-medium text-gray-600 hover:text-primary-600">News</a>
-                <a href="{{ route('membership.plans') }}" class="text-sm font-medium text-gray-600 hover:text-primary-600">Membership</a>
+                @php $navItems = json_decode(\App\Models\Setting::get('nav_menu_items', '[]'), true) ?: [['label'=>'Home','url'=>'/'],['label'=>'About','url'=>'/about'],['label'=>'Events','url'=>'/events'],['label'=>'News','url'=>'/news'],['label'=>'Membership','url'=>'/membership']]; @endphp
+                @foreach($navItems as $item)
+                    <a href="{{ $item['url'] }}" class="text-sm font-medium text-gray-600 hover:text-primary-600">{{ $item['label'] }}</a>
+                @endforeach
             </div>
 
             {{-- Auth Buttons --}}
@@ -57,11 +56,9 @@
 
         {{-- Mobile Menu --}}
         <div x-show="mobileOpen" x-transition class="md:hidden pb-4 space-y-2">
-            <a href="{{ route('home') }}" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">Home</a>
-            <a href="{{ route('about') }}" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">About</a>
-            <a href="{{ route('events.index') }}" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">Events</a>
-            <a href="{{ route('news.index') }}" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">News</a>
-            <a href="{{ route('membership.plans') }}" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">Membership</a>
+            @foreach($navItems as $item)
+                <a href="{{ $item['url'] }}" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg">{{ $item['label'] }}</a>
+            @endforeach
             @guest
                 <div class="pt-2 flex flex-col gap-2">
                     <a href="{{ route('register.investor') }}" class="bg-primary-600 text-white text-sm font-medium px-4 py-2 rounded-lg text-center">Join as Investor</a>
