@@ -4,17 +4,17 @@
 
 @section('content')
 <div class="max-w-3xl">
-    <div class="bg-white rounded-xl border border-gray-200 p-8">
-        <form method="POST" action="{{ route('admin.events.store') }}" enctype="multipart/form-data" class="space-y-5">
+    <div style="background:#1a1408;" class=" rounded-xl border border-gray-200 p-8">
+        <form method="POST" action="{{ route('admin.events.store') }}" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:1.25rem;">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Title <span class="text-red-500">*</span></label>
+                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Title <span class="text-red-500">*</span></label>
                     <input type="text" name="title" value="{{ old('title') }}" required
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                           style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem 1rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Event Type <span class="text-red-500">*</span></label>
+                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Event Type <span class="text-red-500">*</span></label>
                     <select name="event_type" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
                         <option value="offline">Offline</option>
                         <option value="online">Online</option>
@@ -22,27 +22,27 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Category</label>
                     <input type="text" name="category" value="{{ old('category') }}"
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                           style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem 1rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Start Date <span class="text-red-500">*</span></label>
+                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Start Date <span class="text-red-500">*</span></label>
                     <input type="datetime-local" name="start_date" value="{{ old('start_date') }}" required
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                           style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem 1rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">End Date</label>
                     <input type="datetime-local" name="end_date" value="{{ old('end_date') }}"
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                           style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem 1rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Venue</label>
+                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Venue</label>
                     <input type="text" name="venue" value="{{ old('venue') }}"
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                           style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem 1rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Status</label>
                     <select name="status" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
                         <option value="draft">Draft</option>
                         <option value="published">Published</option>
@@ -50,12 +50,12 @@
                 </div>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Summary</label>
+                <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Summary</label>
                 <textarea name="summary" rows="2"
                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">{{ old('summary') }}</textarea>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Description</label>
                 <textarea name="description" rows="6"
                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">{{ old('description') }}</textarea>
             </div>
@@ -70,10 +70,10 @@
                 </label>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Banner Image</label>
+                <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Banner Image</label>
                 <input type="file" name="banner" accept="image/*" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
             </div>
-            <button type="submit" class="bg-primary-600 text-white font-medium px-6 py-2.5 rounded-lg hover:bg-primary-700 text-sm">Save Event</button>
+            <button type="submit" style="background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;padding:.5rem 1.5rem;border-radius:.5rem;border:none;cursor:pointer;font-size:.875rem;text-decoration:none;display:inline-block;">Save Event</button>
         </form>
     </div>
 </div>

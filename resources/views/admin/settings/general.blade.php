@@ -4,8 +4,8 @@
 
 @section('content')
 <div class="w-full">
-    <div class="bg-white rounded-xl border border-gray-200 p-6">
-        <form method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data" class="space-y-6">
+    <div style="background:#1a1408;" class=" rounded-xl border border-gray-200 p-6">
+        <form method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:1.5rem;">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 @php
@@ -22,13 +22,13 @@
                 @endphp
                 @foreach($fields as $key => $field)
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ $field['label'] }}</label>
+                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">{{ $field['label'] }}</label>
                     <input type="{{ $field['type'] }}" name="{{ $key }}" value="{{ \App\Models\Setting::get($key) }}"
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                           style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem 1rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                 </div>
                 @endforeach
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Favicon</label>
+                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Favicon</label>
                     <p class="text-xs text-gray-400 mb-2">Recommended: 32x32 or 64x64 .ico / .png file</p>
                     @php $favicon = \App\Models\Setting::get('site_favicon'); @endphp
                     @if($favicon)
@@ -38,7 +38,7 @@
                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
                 </div>
             </div>
-            <button type="submit" class="bg-primary-600 text-white font-medium px-6 py-2.5 rounded-lg hover:bg-primary-700 text-sm">Save Settings</button>
+            <button type="submit" style="background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;padding:.5rem 1.5rem;border-radius:.5rem;border:none;cursor:pointer;font-size:.875rem;text-decoration:none;display:inline-block;">Save Settings</button>
         </form>
     </div>
 </div>

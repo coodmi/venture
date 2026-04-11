@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="max-w-4xl space-y-6">
-    <div class="bg-white rounded-xl border border-gray-200 p-6">
+    <div style="background:#1a1408;" class=" rounded-xl border border-gray-200 p-6">
         <div class="flex items-start justify-between mb-4">
             <div>
                 <h2 class="text-xl font-bold text-gray-900">{{ $opportunity->title }}</h2>
@@ -19,10 +19,10 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm mb-6">
-            <div><h4 class="font-medium text-gray-700 mb-1">Business Problem</h4><p class="text-gray-600">{{ $opportunity->business_problem }}</p></div>
-            <div><h4 class="font-medium text-gray-700 mb-1">Solution</h4><p class="text-gray-600">{{ $opportunity->solution }}</p></div>
-            <div><h4 class="font-medium text-gray-700 mb-1">Target Market</h4><p class="text-gray-600">{{ $opportunity->target_market }}</p></div>
-            <div><h4 class="font-medium text-gray-700 mb-1">Use of Funds</h4><p class="text-gray-600">{{ $opportunity->use_of_funds }}</p></div>
+            <div><h4 class="font-medium text-gray-700 mb-1">Business Problem</h4><p style="color:#9a8a6a;">{{ $opportunity->business_problem }}</p></div>
+            <div><h4 class="font-medium text-gray-700 mb-1">Solution</h4><p style="color:#9a8a6a;">{{ $opportunity->solution }}</p></div>
+            <div><h4 class="font-medium text-gray-700 mb-1">Target Market</h4><p style="color:#9a8a6a;">{{ $opportunity->target_market }}</p></div>
+            <div><h4 class="font-medium text-gray-700 mb-1">Use of Funds</h4><p style="color:#9a8a6a;">{{ $opportunity->use_of_funds }}</p></div>
         </div>
 
         <div class="p-4 bg-primary-50 rounded-xl mb-6">

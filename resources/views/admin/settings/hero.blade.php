@@ -7,8 +7,8 @@
     <form method="POST" action="{{ route('admin.settings.hero.update') }}" enctype="multipart/form-data">
         @csrf
 
-        <div class="flex items-center justify-between mb-4">
-            <p class="text-sm text-gray-500">Add slides with image or video background. Drag to reorder.</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+            <p style="font-size:.875rem;color:#7a6a4a;">Add slides with image or video background. Drag to reorder.</p>
             <button type="button" @click="addSlide"
                 class="inline-flex items-center gap-2 bg-primary-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-primary-700">
                 + Add Slide
@@ -17,7 +17,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
             <template x-for="(slide, index) in slides" :key="index">
-                <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                <div style="background:#1a1408;" class=" rounded-xl border border-gray-200 overflow-hidden">
                     {{-- Slide header --}}
                     <div class="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
                         <span class="text-sm font-semibold text-gray-700" x-text="'Slide ' + (index + 1)"></span>
@@ -52,7 +52,7 @@
                             <label class="block text-xs font-medium text-gray-500 mb-1">YouTube URL</label>
                             <input type="text" :name="'slides[' + index + '][video_url]'" x-model="slide.video_url"
                                 placeholder="https://youtube.com/watch?v=..."
-                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem .75rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                         </div>
 
                         <input type="hidden" :name="'slides[' + index + '][type]'" :value="slide.type">
@@ -62,7 +62,7 @@
                             <label class="block text-xs font-medium text-gray-500 mb-1">Title</label>
                             <input type="text" :name="'slides[' + index + '][title]'" x-model="slide.title"
                                 placeholder="Slide heading"
-                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem .75rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                         </div>
 
                         {{-- Subtitle --}}
@@ -70,7 +70,7 @@
                             <label class="block text-xs font-medium text-gray-500 mb-1">Subtitle</label>
                             <input type="text" :name="'slides[' + index + '][subtitle]'" x-model="slide.subtitle"
                                 placeholder="Short description"
-                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem .75rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                         </div>
 
                         {{-- Buttons --}}
@@ -79,25 +79,25 @@
                                 <label class="block text-xs font-medium text-gray-500 mb-1">Button 1 Text</label>
                                 <input type="text" :name="'slides[' + index + '][btn1_text]'" x-model="slide.btn1_text"
                                     placeholder="Join Now"
-                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                    style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem .75rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-gray-500 mb-1">Button 1 URL</label>
                                 <input type="text" :name="'slides[' + index + '][btn1_url]'" x-model="slide.btn1_url"
                                     placeholder="/register/investor"
-                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                    style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem .75rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-gray-500 mb-1">Button 2 Text</label>
                                 <input type="text" :name="'slides[' + index + '][btn2_text]'" x-model="slide.btn2_text"
                                     placeholder="Learn More"
-                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                    style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem .75rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-gray-500 mb-1">Button 2 URL</label>
                                 <input type="text" :name="'slides[' + index + '][btn2_url]'" x-model="slide.btn2_url"
                                     placeholder="/about"
-                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                    style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem .75rem;font-size:.875rem;outline:none;box-sizing:border-box;">
                             </div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
             </template>
         </div>
 
-        <div class="mt-6">
+        <div style="margin-top:1.5rem;">
             <button type="submit" class="bg-primary-600 text-white font-medium px-8 py-2.5 rounded-lg hover:bg-primary-700 text-sm">
                 Save Slider
             </button>

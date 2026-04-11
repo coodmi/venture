@@ -3,28 +3,28 @@
 @section('page-title', 'Registrations: ' . $event->title)
 
 @section('content')
-<div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+<div style="background:#1a1408;" class=" rounded-xl border border-gray-200 overflow-hidden">
     <div class="p-4 border-b border-gray-200 flex items-center justify-between">
-        <p class="text-sm text-gray-500">{{ $registrations->total() }} registrations</p>
+        <p style="font-size:.875rem;color:#7a6a4a;">{{ $registrations->total() }} registrations</p>
         <a href="{{ route('admin.events.index') }}" class="text-sm text-primary-600 hover:underline">← Back to Events</a>
     </div>
-    <table class="w-full text-sm">
-        <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
+    <table style="width:100%;font-size:.875rem;border-collapse:collapse;">
+        <thead style="background:#110e05;" style="background:#110e05;">
             <tr>
-                <th class="px-4 py-3 text-left">Name</th>
-                <th class="px-4 py-3 text-left">Email</th>
-                <th class="px-4 py-3 text-left">Organization</th>
-                <th class="px-4 py-3 text-left">Status</th>
-                <th class="px-4 py-3 text-left">Registered</th>
+                <th style="padding:.75rem 1rem;text-align:left;font-size:.7rem;font-weight:700;color:#7a6a4a;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid rgba(212,146,15,.12);">Name</th>
+                <th style="padding:.75rem 1rem;text-align:left;font-size:.7rem;font-weight:700;color:#7a6a4a;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid rgba(212,146,15,.12);">Email</th>
+                <th style="padding:.75rem 1rem;text-align:left;font-size:.7rem;font-weight:700;color:#7a6a4a;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid rgba(212,146,15,.12);">Organization</th>
+                <th style="padding:.75rem 1rem;text-align:left;font-size:.7rem;font-weight:700;color:#7a6a4a;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid rgba(212,146,15,.12);">Status</th>
+                <th style="padding:.75rem 1rem;text-align:left;font-size:.7rem;font-weight:700;color:#7a6a4a;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid rgba(212,146,15,.12);">Registered</th>
             </tr>
         </thead>
-        <tbody class="divide-y divide-gray-100">
+        <tbody >
             @foreach($registrations as $reg)
-            <tr class="hover:bg-gray-50">
+            <tr onmouseover="this.style.background='rgba(212,146,15,.04)';" onmouseout="this.style.background='transparent';">
                 <td class="px-4 py-3 font-medium text-gray-900">{{ $reg->name }}</td>
-                <td class="px-4 py-3 text-gray-500">{{ $reg->email }}</td>
-                <td class="px-4 py-3 text-gray-500">{{ $reg->organization ?? '—' }}</td>
-                <td class="px-4 py-3">
+                <td style="padding:.75rem 1rem;color:#7a6a4a;border-bottom:1px solid rgba(212,146,15,.06);">{{ $reg->email }}</td>
+                <td style="padding:.75rem 1rem;color:#7a6a4a;border-bottom:1px solid rgba(212,146,15,.06);">{{ $reg->organization ?? '—' }}</td>
+                <td style="padding:.75rem 1rem;border-bottom:1px solid rgba(212,146,15,.06);">
                     <span class="text-xs px-2 py-0.5 rounded-full {{ $reg->status === 'confirmed' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700' }}">
                         {{ ucfirst($reg->status) }}
                     </span>

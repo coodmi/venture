@@ -4,9 +4,9 @@
 
 @section('content')
 <div class="w-full">
-    <div class="bg-white rounded-xl border border-gray-200 p-6">
+    <div style="background:#1a1408;" class=" rounded-xl border border-gray-200 p-6">
         <form method="POST" action="{{ route('admin.settings.header.update') }}" enctype="multipart/form-data"
-              class="space-y-6" x-data="menuManager()" x-init="init({{ json_encode($menuItems) }})">
+              style="display:flex;flex-direction:column;gap:1.5rem;" x-data="menuManager()" x-init="init({{ json_encode($menuItems) }})">
             @csrf
 
             {{-- Logo --}}
@@ -35,7 +35,7 @@
 
                 <div class="space-y-3">
                     <template x-for="(item, index) in items" :key="index">
-                        <div class="flex items-center gap-3">
+                        <div style="display:flex;align-items:center;gap:.75rem;">
                             <span class="text-sm text-gray-400 w-5 text-center" x-text="index + 1"></span>
                             <input type="text" :name="'menu_label[]'" x-model="item.label" placeholder="Label"
                                 class="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="bg-primary-600 text-white font-medium px-6 py-2.5 rounded-lg hover:bg-primary-700 text-sm">
+            <button type="submit" style="background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;padding:.5rem 1.5rem;border-radius:.5rem;border:none;cursor:pointer;font-size:.875rem;text-decoration:none;display:inline-block;">
                 Save Settings
             </button>
         </form>
