@@ -2,40 +2,42 @@
 @section('title', $opportunity->title)
 
 @section('content')
-<section class="bg-gradient-to-br from-primary-950 to-primary-800 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <a href="{{ route('startups.index') }}" class="text-primary-300 text-sm hover:text-white mb-4 inline-block">← Back to Startups</a>
-        <div class="flex flex-wrap items-start gap-6">
-            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                <span class="text-white font-bold text-2xl">{{ strtoupper(substr($opportunity->title,0,2)) }}</span>
+
+{{-- Hero --}}
+<section style="background:linear-gradient(135deg,#0d0a04,#1a1208,#241c0a);color:#f0e6c8;padding:3rem 0;">
+    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
+        <a href="{{ route('startups.index') }}" style="color:rgba(212,146,15,.6);font-size:.875rem;text-decoration:none;margin-bottom:1rem;display:inline-block;">← Back to Startups</a>
+        <div style="display:flex;flex-wrap:wrap;align-items:flex-start;gap:1.5rem;">
+            <div style="width:4rem;height:4rem;background:rgba(212,146,15,.12);border-radius:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(212,146,15,.2);">
+                <span style="color:#d4920f;font-weight:700;font-size:1.25rem;">{{ strtoupper(substr($opportunity->title,0,2)) }}</span>
             </div>
-            <div class="flex-1">
-                <div class="flex flex-wrap gap-2 mb-2">
-                    @if($opportunity->sector)<span class="text-xs bg-primary-700/50 text-primary-200 px-2 py-0.5 rounded-full border border-primary-600">{{ $opportunity->sector }}</span>@endif
-                    @if($opportunity->stage)<span class="text-xs bg-white/10 text-white px-2 py-0.5 rounded-full">{{ $opportunity->stage }}</span>@endif
-                    @if($opportunity->is_featured)<span class="text-xs bg-amber-500 text-white px-2 py-0.5 rounded-full">⭐ Featured</span>@endif
-                    @if($opportunity->is_hot_deal)<span class="text-xs bg-red-500 text-white px-2 py-0.5 rounded-full">🔥 Hot Deal</span>@endif
+            <div style="flex:1;">
+                <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem;">
+                    @if($opportunity->sector)<span style="font-size:.75rem;background:rgba(212,146,15,.12);color:#d4920f;padding:.25rem .625rem;border-radius:9999px;border:1px solid rgba(212,146,15,.25);">{{ $opportunity->sector }}</span>@endif
+                    @if($opportunity->stage)<span style="font-size:.75rem;background:rgba(240,230,200,.08);color:#9a8a6a;padding:.25rem .625rem;border-radius:9999px;border:1px solid rgba(240,230,200,.1);">{{ $opportunity->stage }}</span>@endif
+                    @if($opportunity->is_featured)<span style="font-size:.75rem;background:rgba(212,146,15,.2);color:#d4920f;padding:.25rem .625rem;border-radius:9999px;">⭐ Featured</span>@endif
+                    @if($opportunity->is_hot_deal)<span style="font-size:.75rem;background:rgba(239,68,68,.15);color:#f87171;padding:.25rem .625rem;border-radius:9999px;">🔥 Hot Deal</span>@endif
                 </div>
-                <h1 class="text-3xl font-extrabold mb-2">{{ $opportunity->title }}</h1>
-                @if($opportunity->location)<p class="text-primary-300 text-sm">📍 {{ $opportunity->location }}</p>@endif
+                <h1 style="font-size:1.875rem;font-weight:800;margin-bottom:.5rem;color:#f0e6c8;">{{ $opportunity->title }}</h1>
+                @if($opportunity->location)<p style="color:#9a8a6a;font-size:.875rem;">📍 {{ $opportunity->location }}</p>@endif
             </div>
             @if($opportunity->ask_amount)
-            <div class="bg-white/10 rounded-2xl p-5 text-center border border-white/20 min-w-[160px]">
-                <p class="text-primary-300 text-xs mb-1">Investment Ask</p>
-                <p class="text-3xl font-extrabold">৳{{ number_format($opportunity->ask_amount) }}</p>
-                @if($opportunity->ask_currency)<p class="text-primary-300 text-xs">{{ $opportunity->ask_currency }}</p>@endif
+            <div style="background:rgba(212,146,15,.08);border-radius:1.25rem;padding:1.25rem;text-align:center;border:1px solid rgba(212,146,15,.2);min-width:10rem;">
+                <p style="color:#7a6a4a;font-size:.75rem;margin-bottom:.25rem;">Investment Ask</p>
+                <p style="font-size:1.875rem;font-weight:800;color:#d4920f;">৳{{ number_format($opportunity->ask_amount) }}</p>
+                @if($opportunity->ask_currency)<p style="color:#7a6a4a;font-size:.75rem;">{{ $opportunity->ask_currency }}</p>@endif
             </div>
             @endif
         </div>
     </div>
 </section>
 
-<section class="py-12 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<section style="padding:3rem 0;background:#0d0a04;">
+    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:2rem;align-items:start;">
 
             {{-- Main Content --}}
-            <div class="lg:col-span-2 space-y-6">
+            <div style="display:flex;flex-direction:column;gap:1.5rem;">
                 @foreach([
                     ['label'=>'The Problem','content'=>$opportunity->business_problem],
                     ['label'=>'Our Solution','content'=>$opportunity->solution],
@@ -44,76 +46,78 @@
                     ['label'=>'Use of Funds','content'=>$opportunity->use_of_funds],
                 ] as $section)
                 @if(!empty($section['content']))
-                <div class="bg-white rounded-2xl border border-gray-200 p-6">
-                    <h2 class="font-bold text-gray-900 text-lg mb-3">{{ $section['label'] }}</h2>
-                    <div class="text-gray-600 text-sm leading-relaxed prose max-w-none">{!! nl2br(e($section['content'])) !!}</div>
+                <div style="background:#1a1408;border-radius:1.25rem;border:1px solid rgba(212,146,15,.15);padding:1.5rem;">
+                    <h2 style="font-weight:700;color:#f0e6c8;font-size:1.125rem;margin-bottom:.75rem;">{{ $section['label'] }}</h2>
+                    <div style="color:#9a8a6a;font-size:.875rem;line-height:1.75;">{!! nl2br(e($section['content'])) !!}</div>
                 </div>
                 @endif
                 @endforeach
             </div>
 
             {{-- Sidebar --}}
-            <div class="space-y-5">
+            <div style="display:flex;flex-direction:column;gap:1.25rem;position:sticky;top:6rem;">
                 {{-- Invest CTA --}}
-                <div class="bg-primary-600 rounded-2xl p-6 text-white text-center">
-                    <p class="font-bold text-lg mb-1">Interested in investing?</p>
-                    <p class="text-primary-200 text-sm mb-4">Connect with the founder and explore this opportunity.</p>
+                <div style="background:linear-gradient(135deg,#1a1408,#241c0a);border-radius:1.25rem;padding:1.5rem;text-align:center;border:1px solid rgba(212,146,15,.25);">
+                    <p style="font-weight:700;font-size:1.125rem;color:#f0e6c8;margin-bottom:.25rem;">Interested in investing?</p>
+                    <p style="color:#7a6a4a;font-size:.875rem;margin-bottom:1rem;">Connect with the founder and explore this opportunity.</p>
                     @auth
                         @if(auth()->user()->hasRole('investor'))
                             <a href="{{ route('investor.opportunities.show', $opportunity->slug) }}"
-                               class="block bg-white text-primary-700 font-bold py-2.5 rounded-xl hover:bg-primary-50 transition-colors">
+                               style="display:block;background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;padding:.625rem;border-radius:.75rem;text-decoration:none;font-size:.875rem;">
                                 Express Interest
                             </a>
                         @else
                             <a href="{{ route('register.investor') }}"
-                               class="block bg-white text-primary-700 font-bold py-2.5 rounded-xl hover:bg-primary-50 transition-colors">
+                               style="display:block;background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;padding:.625rem;border-radius:.75rem;text-decoration:none;font-size:.875rem;">
                                 Join as Investor
                             </a>
                         @endif
                     @else
                         <a href="{{ route('register.investor') }}"
-                           class="block bg-white text-primary-700 font-bold py-2.5 rounded-xl hover:bg-primary-50 transition-colors mb-2">
+                           style="display:block;background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;padding:.625rem;border-radius:.75rem;text-decoration:none;font-size:.875rem;margin-bottom:.5rem;">
                             Join as Investor
                         </a>
-                        <a href="{{ route('login') }}" class="text-primary-200 text-sm hover:text-white">Already have an account? Login</a>
+                        <a href="{{ route('login') }}" style="color:#7a6a4a;font-size:.875rem;text-decoration:none;">Already have an account? Login</a>
                     @endauth
                 </div>
 
                 {{-- Key Metrics --}}
                 @if($opportunity->key_metrics)
-                <div class="bg-white rounded-2xl border border-gray-200 p-6">
-                    <h3 class="font-bold text-gray-900 mb-3">Key Metrics</h3>
-                    <div class="text-sm text-gray-600 leading-relaxed">{!! nl2br(e($opportunity->key_metrics)) !!}</div>
+                <div style="background:#1a1408;border-radius:1.25rem;border:1px solid rgba(212,146,15,.15);padding:1.5rem;">
+                    <h3 style="font-weight:700;color:#f0e6c8;margin-bottom:.75rem;">Key Metrics</h3>
+                    <div style="font-size:.875rem;color:#9a8a6a;line-height:1.75;">{!! nl2br(e($opportunity->key_metrics)) !!}</div>
                 </div>
                 @endif
 
                 {{-- Stats --}}
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 space-y-3">
-                    <h3 class="font-bold text-gray-900 mb-3">Details</h3>
-                    @if($opportunity->sector)
-                    <div class="flex justify-between text-sm"><span class="text-gray-500">Sector</span><span class="font-medium text-gray-900">{{ $opportunity->sector }}</span></div>
-                    @endif
-                    @if($opportunity->stage)
-                    <div class="flex justify-between text-sm"><span class="text-gray-500">Stage</span><span class="font-medium text-gray-900">{{ $opportunity->stage }}</span></div>
-                    @endif
-                    @if($opportunity->country)
-                    <div class="flex justify-between text-sm"><span class="text-gray-500">Country</span><span class="font-medium text-gray-900">{{ $opportunity->country }}</span></div>
-                    @endif
-                    <div class="flex justify-between text-sm"><span class="text-gray-500">Views</span><span class="font-medium text-gray-900">{{ number_format($opportunity->views) }}</span></div>
+                <div style="background:#1a1408;border-radius:1.25rem;border:1px solid rgba(212,146,15,.15);padding:1.5rem;">
+                    <h3 style="font-weight:700;color:#f0e6c8;margin-bottom:.75rem;">Details</h3>
+                    <div style="display:flex;flex-direction:column;gap:.75rem;">
+                        @if($opportunity->sector)
+                        <div style="display:flex;justify-content:space-between;font-size:.875rem;"><span style="color:#7a6a4a;">Sector</span><span style="font-weight:500;color:#f0e6c8;">{{ $opportunity->sector }}</span></div>
+                        @endif
+                        @if($opportunity->stage)
+                        <div style="display:flex;justify-content:space-between;font-size:.875rem;"><span style="color:#7a6a4a;">Stage</span><span style="font-weight:500;color:#f0e6c8;">{{ $opportunity->stage }}</span></div>
+                        @endif
+                        @if($opportunity->country)
+                        <div style="display:flex;justify-content:space-between;font-size:.875rem;"><span style="color:#7a6a4a;">Country</span><span style="font-weight:500;color:#f0e6c8;">{{ $opportunity->country }}</span></div>
+                        @endif
+                        <div style="display:flex;justify-content:space-between;font-size:.875rem;"><span style="color:#7a6a4a;">Views</span><span style="font-weight:500;color:#f0e6c8;">{{ number_format($opportunity->views) }}</span></div>
+                    </div>
                 </div>
             </div>
         </div>
 
         {{-- Related --}}
         @if($related->count())
-        <div class="mt-12">
-            <h2 class="text-xl font-bold text-gray-900 mb-5">More in {{ $opportunity->sector }}</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div style="margin-top:3rem;padding-top:3rem;border-top:1px solid rgba(212,146,15,.1);">
+            <h2 style="font-size:1.25rem;font-weight:700;color:#f0e6c8;margin-bottom:1.25rem;">More in {{ $opportunity->sector }}</h2>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;">
                 @foreach($related as $r)
-                <a href="{{ route('startups.show', $r->slug) }}" class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition-shadow">
-                    <h3 class="font-semibold text-gray-900 mb-1 line-clamp-2">{{ $r->title }}</h3>
-                    <p class="text-xs text-gray-400">{{ $r->stage }} · {{ $r->location }}</p>
-                    @if($r->ask_amount)<p class="text-primary-600 font-bold text-sm mt-2">৳{{ number_format($r->ask_amount) }}</p>@endif
+                <a href="{{ route('startups.show', $r->slug) }}" style="background:#1a1408;border-radius:1.25rem;border:1px solid rgba(212,146,15,.15);padding:1.25rem;text-decoration:none;display:block;">
+                    <h3 style="font-weight:600;color:#f0e6c8;margin-bottom:.25rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $r->title }}</h3>
+                    <p style="font-size:.75rem;color:#7a6a4a;">{{ $r->stage }} · {{ $r->location }}</p>
+                    @if($r->ask_amount)<p style="color:#d4920f;font-weight:700;font-size:.875rem;margin-top:.5rem;">৳{{ number_format($r->ask_amount) }}</p>@endif
                 </a>
                 @endforeach
             </div>
