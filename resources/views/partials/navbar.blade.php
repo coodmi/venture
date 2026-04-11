@@ -81,7 +81,7 @@ function toggleMobileMenu(){
         var mt=document.getElementById('mobileToggle');
         var sb=document.getElementById('seekerBtn');
         var mm=document.getElementById('mobileMenu');
-        if(w>=768){
+        if(w>=900){
             if(dn)dn.style.display='flex';
             if(mt)mt.style.display='none';
             if(sb)sb.style.display='inline-block';

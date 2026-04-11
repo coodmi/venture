@@ -1,6 +1,6 @@
 <footer style="background:#0d0a04;border-top:1px solid rgba(212,146,15,.2);color:rgba(255,255,255,.6);">
     <div style="max-width:80rem;margin:0 auto;padding:4rem 1.5rem 2rem;">
-        <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem;">
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem;" class="footer-grid">
 
             {{-- Brand --}}
             <div>

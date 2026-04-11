@@ -36,39 +36,53 @@
 
 /* Mobile responsive grids */
 @media (max-width: 767px) {
+    /* Collapse multi-column grids */
     [style*="grid-template-columns:1fr 1fr"],
-    [style*="grid-template-columns: 1fr 1fr"] {
-        grid-template-columns: 1fr !important;
-    }
+    [style*="grid-template-columns: 1fr 1fr"],
     [style*="grid-template-columns:2fr 1fr"],
     [style*="grid-template-columns: 2fr 1fr"],
     [style*="grid-template-columns:3fr 2fr"],
     [style*="grid-template-columns: 3fr 2fr"],
     [style*="grid-template-columns:auto 1fr"],
-    [style*="grid-template-columns: auto 1fr"] {
+    [style*="grid-template-columns: auto 1fr"],
+    [style*="grid-template-columns:repeat(4,1fr)"],
+    [style*="grid-template-columns:repeat(5,1fr)"],
+    [style*="grid-template-columns:repeat(3,1fr)"] {
         grid-template-columns: 1fr !important;
     }
-    [style*="grid-template-columns:repeat(4,1fr)"],
-    [style*="grid-template-columns: repeat(4,1fr)"],
-    [style*="grid-template-columns:repeat(5,1fr)"],
-    [style*="grid-template-columns: repeat(5,1fr)"],
-    [style*="grid-template-columns:repeat(3,1fr)"],
-    [style*="grid-template-columns: repeat(3,1fr)"] {
-        grid-template-columns: 1fr 1fr !important;
-    }
+    /* Reduce padding */
     [style*="padding:5rem 1.5rem"],
     [style*="padding:4rem 1.5rem"],
     [style*="padding:6rem 1.5rem"] {
-        padding-top: 3rem !important;
-        padding-bottom: 3rem !important;
+        padding-top: 2.5rem !important;
+        padding-bottom: 2.5rem !important;
     }
-    [style*="font-size:clamp(2.5rem"] {
-        font-size: 2rem !important;
+    /* Reduce gaps */
+    [style*="gap:4rem"], [style*="gap:3rem"] { gap: 1.5rem !important; }
+    /* Stack flex rows */
+    [style*="display:flex"][style*="flex-wrap:wrap"] { flex-direction: column; }
+    /* Fix hero buttons */
+    [style*="display:flex;flex-wrap:wrap;gap:.875rem"],
+    [style*="display:flex;flex-wrap:wrap;gap:1rem"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
     }
-    [style*="gap:4rem"],
-    [style*="gap: 4rem"],
-    [style*="gap:3rem"],
-    [style*="gap: 3rem"] {
-        gap: 1.5rem !important;
+    /* Footer grid */
+    [style*="grid-template-columns:2fr 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+    /* Stats bar */
+    [style*="grid-template-columns:repeat(5,1fr)"] {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+    /* About two-col */
+    [style*="grid-template-columns:1fr 1fr;gap:4rem"],
+    [style*="grid-template-columns:1fr 1fr;gap:3rem"] {
+        grid-template-columns: 1fr !important;
+    }
+    /* Overflow hidden for sliders */
+    #hotDealsTrack, #startupTrack, #investorTrack, #eventsTrack, #newsTrack {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
     }
 }
