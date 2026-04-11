@@ -33,3 +33,42 @@
 * { transition-property: color, background-color, border-color, opacity, transform;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms; }
+
+/* Mobile responsive grids */
+@media (max-width: 767px) {
+    [style*="grid-template-columns:1fr 1fr"],
+    [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+    [style*="grid-template-columns:2fr 1fr"],
+    [style*="grid-template-columns: 2fr 1fr"],
+    [style*="grid-template-columns:3fr 2fr"],
+    [style*="grid-template-columns: 3fr 2fr"],
+    [style*="grid-template-columns:auto 1fr"],
+    [style*="grid-template-columns: auto 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+    [style*="grid-template-columns:repeat(4,1fr)"],
+    [style*="grid-template-columns: repeat(4,1fr)"],
+    [style*="grid-template-columns:repeat(5,1fr)"],
+    [style*="grid-template-columns: repeat(5,1fr)"],
+    [style*="grid-template-columns:repeat(3,1fr)"],
+    [style*="grid-template-columns: repeat(3,1fr)"] {
+        grid-template-columns: 1fr 1fr !important;
+    }
+    [style*="padding:5rem 1.5rem"],
+    [style*="padding:4rem 1.5rem"],
+    [style*="padding:6rem 1.5rem"] {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+    [style*="font-size:clamp(2.5rem"] {
+        font-size: 2rem !important;
+    }
+    [style*="gap:4rem"],
+    [style*="gap: 4rem"],
+    [style*="gap:3rem"],
+    [style*="gap: 3rem"] {
+        gap: 1.5rem !important;
+    }
+}
