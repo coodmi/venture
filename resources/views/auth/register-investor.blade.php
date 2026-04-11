@@ -2,67 +2,69 @@
 @section('title', 'Join as Investor')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
-    <div class="max-w-md w-full">
-        <div class="text-center mb-8">
-            <a href="{{ route('home') }}" class="inline-flex items-center gap-2 mb-6">
-                @include('partials.logo', ['logoClass' => 'h-10 w-auto object-contain max-w-[160px]', 'nameClass' => 'font-bold text-xl text-gray-900'])
+@php $siteLogo = \App\Models\Setting::get('site_logo'); $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
+<div style="min-height:100vh;background:linear-gradient(135deg,#0d0a04 0%,#1a1208 50%,#241c0a 100%);display:flex;align-items:center;justify-content:center;padding:2rem 1.25rem;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-8rem;right:-8rem;width:30rem;height:30rem;background:rgba(212,146,15,.06);border-radius:50%;filter:blur(60px);"></div>
+    <div style="position:absolute;bottom:-8rem;left:-8rem;width:25rem;height:25rem;background:rgba(212,146,15,.04);border-radius:50%;filter:blur(60px);"></div>
+
+    <div style="width:100%;max-width:28rem;position:relative;">
+        <div style="text-align:center;margin-bottom:2rem;">
+            <a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;margin-bottom:1.25rem;">
+                @if($siteLogo)
+                    <img src="{{ Storage::url($siteLogo) }}" alt="{{ $siteName }}" style="height:2.25rem;width:auto;object-fit:contain;">
+                @else
+                    <div style="width:2.25rem;height:2.25rem;background:linear-gradient(135deg,#d4920f,#f59e0b);border-radius:.5rem;display:flex;align-items:center;justify-content:center;"><span style="color:#0d0a04;font-weight:800;font-size:.75rem;">{{ strtoupper(substr($siteName,0,2)) }}</span></div>
+                    <span style="font-weight:700;font-size:1.125rem;color:#f0e6c8;">{{ $siteName }}</span>
+                @endif
             </a>
-            <h1 class="text-2xl font-bold text-gray-900">Join as Investor</h1>
-            <p class="text-gray-500 mt-1">Access curated investment opportunities</p>
+            <div style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(212,146,15,.12);border:1px solid rgba(212,146,15,.25);color:#d4920f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.08em;">🚀 Investor Registration</div>
+            <h1 style="font-size:1.75rem;font-weight:800;color:#f0e6c8;margin:0 0 .375rem;letter-spacing:-.02em;">Join as Investor</h1>
+            <p style="color:#7a6a4a;font-size:.9375rem;margin:0;">Access curated investment opportunities</p>
         </div>
 
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+        <div style="background:#1a1408;border:1px solid rgba(212,146,15,.2);border-radius:1.25rem;padding:2rem;box-shadow:0 20px 60px rgba(0,0,0,.4);">
             @if($errors->any())
-                <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm">
-                    <ul class="list-disc list-inside space-y-1">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+            <div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;padding:.875rem 1rem;border-radius:.75rem;margin-bottom:1.25rem;font-size:.875rem;">
+                <ul style="margin:0;padding-left:1.25rem;">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul>
+            </div>
             @endif
 
-            <form method="POST" action="{{ route('register.investor') }}" class="space-y-5">
+            <form method="POST" action="{{ route('register.investor') }}">
                 @csrf
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name <span class="text-red-500">*</span></label>
-                    <input type="text" name="name" value="{{ old('name') }}" required
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                @php $inputStyle = "width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;font-size:.9375rem;border-radius:.625rem;padding:.75rem 1rem;outline:none;box-sizing:border-box;"; $labelStyle = "display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;"; @endphp
+
+                <div style="margin-bottom:1.125rem;">
+                    <label style="{{ $labelStyle }}">Full Name <span style="color:#f87171;">*</span></label>
+                    <input type="text" name="name" value="{{ old('name') }}" required style="{{ $inputStyle }}" onfocus="this.style.borderColor='rgba(212,146,15,.6)';" onblur="this.style.borderColor='rgba(212,146,15,.2)';">
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address <span class="text-red-500">*</span></label>
-                    <input type="email" name="email" value="{{ old('email') }}" required
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <div style="margin-bottom:1.125rem;">
+                    <label style="{{ $labelStyle }}">Email Address <span style="color:#f87171;">*</span></label>
+                    <input type="email" name="email" value="{{ old('email') }}" required style="{{ $inputStyle }}" onfocus="this.style.borderColor='rgba(212,146,15,.6)';" onblur="this.style.borderColor='rgba(212,146,15,.2)';">
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                    <input type="tel" name="phone" value="{{ old('phone') }}"
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <div style="margin-bottom:1.125rem;">
+                    <label style="{{ $labelStyle }}">Phone Number</label>
+                    <input type="tel" name="phone" value="{{ old('phone') }}" style="{{ $inputStyle }}" onfocus="this.style.borderColor='rgba(212,146,15,.6)';" onblur="this.style.borderColor='rgba(212,146,15,.2)';">
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Password <span class="text-red-500">*</span></label>
-                    <input type="password" name="password" required
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    <p class="text-xs text-gray-400 mt-1">Min 8 characters, mixed case and numbers</p>
+                <div style="margin-bottom:1.125rem;">
+                    <label style="{{ $labelStyle }}">Password <span style="color:#f87171;">*</span></label>
+                    <input type="password" name="password" required style="{{ $inputStyle }}" onfocus="this.style.borderColor='rgba(212,146,15,.6)';" onblur="this.style.borderColor='rgba(212,146,15,.2)';">
+                    <p style="font-size:.75rem;color:#6b5c3e;margin:.375rem 0 0;">Min 8 characters, mixed case and numbers</p>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password <span class="text-red-500">*</span></label>
-                    <input type="password" name="password_confirmation" required
-                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <div style="margin-bottom:1.5rem;">
+                    <label style="{{ $labelStyle }}">Confirm Password <span style="color:#f87171;">*</span></label>
+                    <input type="password" name="password_confirmation" required style="{{ $inputStyle }}" onfocus="this.style.borderColor='rgba(212,146,15,.6)';" onblur="this.style.borderColor='rgba(212,146,15,.2)';">
                 </div>
-                <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2.5 rounded-lg transition-colors">
-                    Create Investor Account
+                <button type="submit" style="width:100%;background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;font-size:1rem;padding:.875rem;border-radius:.75rem;border:none;cursor:pointer;letter-spacing:.01em;" onmouseover="this.style.opacity='.9';" onmouseout="this.style.opacity='1';">
+                    Create Investor Account →
                 </button>
             </form>
 
-            <div class="mt-6 text-center text-sm text-gray-500">
-                Already have an account? <a href="{{ route('login') }}" class="text-primary-600 font-medium hover:underline">Sign in</a>
-            </div>
-            <div class="mt-2 text-center text-sm text-gray-500">
-                Looking for funding? <a href="{{ route('register.seeker') }}" class="text-primary-600 font-medium hover:underline">Join as Seeker</a>
+            <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(212,146,15,.1);text-align:center;">
+                <p style="font-size:.875rem;color:#6b5c3e;margin:0 0 .5rem;">Already have an account? <a href="{{ route('login') }}" style="color:#d4920f;font-weight:600;text-decoration:none;">Sign in</a></p>
+                <p style="font-size:.875rem;color:#6b5c3e;margin:0;">Looking for funding? <a href="{{ route('register.seeker') }}" style="color:#d4920f;font-weight:600;text-decoration:none;">Join as Seeker</a></p>
             </div>
         </div>
+        <p style="text-align:center;margin-top:1.5rem;"><a href="{{ route('home') }}" style="font-size:.8125rem;color:rgba(212,146,15,.4);text-decoration:none;" onmouseover="this.style.color='#d4920f';" onmouseout="this.style.color='rgba(212,146,15,.4)';">← Back to Home</a></p>
     </div>
 </div>
 @endsection
