@@ -51,7 +51,7 @@
 </script>
 @endpush
 @else
-<section style="background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 50%,#1d4ed8 100%);color:#fff;padding:6rem 1.5rem;position:relative;overflow:hidden;">
+<section style="background:linear-gradient(135deg,#0d0a04 0%,#1a1208 50%,#241c0a 100%);color:#fff;padding:6rem 1.5rem;position:relative;overflow:hidden;">
     <div style="position:absolute;top:-5rem;right:-5rem;width:30rem;height:30rem;background:rgba(99,102,241,.15);border-radius:50%;filter:blur(60px);"></div>
     <div style="position:absolute;bottom:-5rem;left:-5rem;width:25rem;height:25rem;background:rgba(245,158,11,.1);border-radius:50%;filter:blur(60px);"></div>
     <div style="max-width:80rem;margin:0 auto;position:relative;">
@@ -390,7 +390,7 @@ function slideScroll(id, dir) {
 @endif
 
 {{-- ═══════════════════════════════════════════════════════════ CTA --}}
-<section style="background:linear-gradient(135deg,#1d4ed8,#7c3aed);padding:5rem 1.5rem;text-align:center;position:relative;overflow:hidden;">
+<section style="background:linear-gradient(135deg,#0d0a04,#1a1208,#241c0a);padding:5rem 1.5rem;text-align:center;position:relative;overflow:hidden;">
     <div style="position:absolute;top:-4rem;right:-4rem;width:20rem;height:20rem;background:rgba(255,255,255,.05);border-radius:50%;"></div>
     <div style="position:absolute;bottom:-4rem;left:-4rem;width:16rem;height:16rem;background:rgba(255,255,255,.05);border-radius:50%;"></div>
     <div style="max-width:48rem;margin:0 auto;position:relative;">
