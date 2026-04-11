@@ -92,7 +92,7 @@
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;">
             @php $steps=[['num'=>'01','color'=>'#3b82f6','bg'=>'#eff6ff','title'=>'Discover','desc'=>'Browse curated investment opportunities filtered by sector, stage, and ticket size.','icon'=>'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'],['num'=>'02','color'=>'#10b981','bg'=>'#ecfdf5','title'=>'Connect','desc'=>'Express interest, request meetings, and engage directly with founders and investors.','icon'=>'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z'],['num'=>'03','color'=>'#f59e0b','bg'=>'#fffbeb','title'=>'Grow','desc'=>'Close deals, join bootcamps, attend conferences, and scale your venture together.','icon'=>'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6']]; @endphp
             @foreach($steps as $step)
-            <div style="background:#fff;border-radius:1.25rem;padding:2rem;border:1px solid rgba(212,146,15,.12);position:relative;overflow:hidden;">
+            <div style="background:#1a1408;border-radius:1.25rem;padding:2rem;border:1px solid rgba(212,146,15,.12);position:relative;overflow:hidden;">
                 <div style="position:absolute;top:1.25rem;right:1.25rem;font-size:3.5rem;font-weight:900;color:{{ $step['bg'] }};line-height:1;user-select:none;">{{ $step['num'] }}</div>
                 <div style="width:3rem;height:3rem;background:{{ $step['bg'] }};border-radius:.875rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
                     <svg width="22" height="22" fill="none" stroke="{{ $step['color'] }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="{{ $step['icon'] }}"/></svg>
@@ -117,10 +117,10 @@
                 <h2 style="font-size:2rem;font-weight:800;color:#f0e6c8;margin:0;letter-spacing:-.02em;">Active Investment Opportunities</h2>
             </div>
             <div style="display:flex;align-items:center;gap:.75rem;">
-                <button onclick="slideScroll('hotDealsTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3);border:1px solid rgba(212,146,15,.2);">
+                <button onclick="slideScroll('hotDealsTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1px solid rgba(212,146,15,.25);">
                     <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 </button>
-                <button onclick="slideScroll('hotDealsTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3);border:1px solid rgba(212,146,15,.2);">
+                <button onclick="slideScroll('hotDealsTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1px solid rgba(212,146,15,.25);">
                     <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
                 <a href="{{ route('startups.index') }}" style="color:#d4920f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
@@ -128,7 +128,7 @@
         </div>
         <div id="hotDealsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;-ms-overflow-style:none;" class="hide-scroll">
             @foreach($hotDeals as $deal)
-            <a href="{{ route('startups.show', $deal->slug) }}" style="text-decoration:none;flex-shrink:0;width:280px;display:block;background:#1a1408;border:1px solid rgba(212,146,15,.15);border-radius:1.25rem;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.1)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
+            <a href="{{ route('startups.show', $deal->slug) }}" style="text-decoration:none;flex-shrink:0;width:280px;display:block;background:#1a1408;border:1px solid rgba(212,146,15,.15);border-radius:1.25rem;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.4)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
                 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#ef4444,#f97316);"></div>
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;">
                     <span style="background:rgba(220,38,38,.15);color:#f87171;font-size:.7rem;font-weight:700;padding:.25rem .625rem;border-radius:9999px;">🔥 Hot Deal</span>
@@ -157,10 +157,10 @@
                 <h2 style="font-size:2rem;font-weight:800;color:#f0e6c8;margin:0;letter-spacing:-.02em;">Top Startups</h2>
             </div>
             <div style="display:flex;align-items:center;gap:.75rem;">
-                <button onclick="slideScroll('startupTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3);border:1px solid rgba(212,146,15,.2);">
+                <button onclick="slideScroll('startupTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1px solid rgba(212,146,15,.25);">
                     <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 </button>
-                <button onclick="slideScroll('startupTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3);border:1px solid rgba(212,146,15,.2);">
+                <button onclick="slideScroll('startupTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1px solid rgba(212,146,15,.25);">
                     <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
                 <a href="{{ route('startups.index') }}" style="color:#d4920f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
@@ -172,7 +172,7 @@
             @php $sectorColors=['FinTech'=>'#3b82f6','AgriTech'=>'#10b981','HealthTech'=>'#ef4444','EdTech'=>'#f59e0b','CleanTech'=>'#8b5cf6']; @endphp
             @foreach($topStartups as $s)
             @php $sc = $sectorColors[$s->sector] ?? '#1d4ed8'; @endphp
-            <a href="{{ route('startups.show', $s->slug) }}" style="text-decoration:none;background:#1a1408;border:1px solid rgba(212,146,15,.15);border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:280px;transition:all .25s;overflow:hidden;position:relative;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.1)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
+            <a href="{{ route('startups.show', $s->slug) }}" style="text-decoration:none;background:#1a1408;border:1px solid rgba(212,146,15,.15);border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:280px;transition:all .25s;overflow:hidden;position:relative;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.4)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
                 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:{{ $sc }};"></div>
                 <div style="display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.875rem;">
                     <div style="width:2.5rem;height:2.5rem;border-radius:.75rem;background:{{ $sc }}18;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:.875rem;color:{{ $sc }};">{{ strtoupper(substr($s->title,0,2)) }}</div>
@@ -207,10 +207,10 @@
                 <h2 style="font-size:2rem;font-weight:800;color:#f0e6c8;margin:0;letter-spacing:-.02em;">Top Investors</h2>
             </div>
             <div style="display:flex;align-items:center;gap:.75rem;">
-                <button onclick="slideScroll('investorTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3);border:1px solid rgba(212,146,15,.2);">
+                <button onclick="slideScroll('investorTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1px solid rgba(212,146,15,.25);">
                     <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 </button>
-                <button onclick="slideScroll('investorTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3);border:1px solid rgba(212,146,15,.2);">
+                <button onclick="slideScroll('investorTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1px solid rgba(212,146,15,.25);">
                     <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
                 <a href="{{ route('investors.index') }}" style="color:#d4920f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
@@ -222,7 +222,7 @@
             @php $invColors=['angel'=>'#f59e0b','vc'=>'#3b82f6','corporate'=>'#6366f1','family_office'=>'#a855f7','impact'=>'#10b981']; $invLabels=['angel'=>'Angel','vc'=>'Venture Capital','corporate'=>'Corporate','family_office'=>'Family Office','impact'=>'Impact']; $invBadge=['angel'=>'background:#fef3c7;color:#92400e;','vc'=>'background:#dbeafe;color:#1e40af;','corporate'=>'background:#e0e7ff;color:#3730a3;','family_office'=>'background:#f3e8ff;color:#6b21a8;','impact'=>'background:#d1fae5;color:#065f46;']; @endphp
             @foreach($topInvestors as $inv)
             @php $ic = $invColors[$inv->investor_type] ?? '#1d4ed8'; @endphp
-            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;background:#1a1408;border:1px solid rgba(212,146,15,.15);border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:270px;transition:all .25s;overflow:hidden;position:relative;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.1)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
+            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;background:#1a1408;border:1px solid rgba(212,146,15,.15);border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:270px;transition:all .25s;overflow:hidden;position:relative;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.4)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
                 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:{{ $ic }};"></div>
                 <div style="display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.875rem;">
                     <div style="width:2.75rem;height:2.75rem;border-radius:.75rem;background:{{ $ic }};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:.9375rem;color:#fff;">{{ strtoupper(substr($inv->user->name??'IN',0,2)) }}</div>
@@ -277,10 +277,10 @@ function slideScroll(id, dir) {
                 <h2 style="font-size:2rem;font-weight:800;color:#f0e6c8;margin:0;letter-spacing:-.02em;">Events & Conferences</h2>
             </div>
             <div style="display:flex;align-items:center;gap:.75rem;">
-                <button onclick="slideScroll('eventsTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3);border:1px solid rgba(212,146,15,.2);">
+                <button onclick="slideScroll('eventsTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1px solid rgba(212,146,15,.25);">
                     <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 </button>
-                <button onclick="slideScroll('eventsTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3);border:1px solid rgba(212,146,15,.2);">
+                <button onclick="slideScroll('eventsTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1px solid rgba(212,146,15,.25);">
                     <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
                 <a href="{{ route('events.index') }}" style="color:#d4920f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
@@ -289,7 +289,7 @@ function slideScroll(id, dir) {
         <div id="eventsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;-ms-overflow-style:none;" class="hide-scroll">
             @php $gradients=['linear-gradient(135deg,#1d4ed8,#3b82f6)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#059669,#34d399)','linear-gradient(135deg,#dc2626,#f97316)','linear-gradient(135deg,#d97706,#fbbf24)','linear-gradient(135deg,#0891b2,#22d3ee)']; @endphp
             @foreach($events as $event)
-            <a href="{{ route('events.show', $event->slug) }}" style="text-decoration:none;flex-shrink:0;width:260px;background:#fff;border-radius:1.25rem;overflow:hidden;border:1px solid rgba(212,146,15,.12);display:flex;flex-direction:column;transition:all .25s;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.1)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
+            <a href="{{ route('events.show', $event->slug) }}" style="text-decoration:none;flex-shrink:0;width:260px;background:#1a1408;border-radius:1.25rem;overflow:hidden;border:1px solid rgba(212,146,15,.12);display:flex;flex-direction:column;transition:all .25s;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.4)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
                 @if($event->banner)
                     <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}" style="width:100%;height:9rem;object-fit:cover;display:block;">
                 @else
@@ -353,10 +353,10 @@ function slideScroll(id, dir) {
                 <h2 style="font-size:2rem;font-weight:800;color:#f0e6c8;margin:0;letter-spacing:-.02em;">News & Insights</h2>
             </div>
             <div style="display:flex;align-items:center;gap:.75rem;">
-                <button onclick="slideScroll('newsTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3);border:1px solid rgba(212,146,15,.2);">
+                <button onclick="slideScroll('newsTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1px solid rgba(212,146,15,.25);">
                     <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 </button>
-                <button onclick="slideScroll('newsTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3);border:1px solid rgba(212,146,15,.2);">
+                <button onclick="slideScroll('newsTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(212,146,15,.12);background:#1a1408;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1px solid rgba(212,146,15,.25);">
                     <svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
                 <a href="{{ route('news.index') }}" style="color:#d4920f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
@@ -364,7 +364,7 @@ function slideScroll(id, dir) {
         </div>
         <div id="newsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;-ms-overflow-style:none;" class="hide-scroll">
             @foreach($latestNews as $article)
-            <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;flex-shrink:0;width:300px;display:flex;flex-direction:column;background:#1a1408;border:1px solid rgba(212,146,15,.15);border-radius:1.25rem;overflow:hidden;transition:all .25s;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.1)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
+            <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;flex-shrink:0;width:300px;display:flex;flex-direction:column;background:#1a1408;border:1px solid rgba(212,146,15,.15);border-radius:1.25rem;overflow:hidden;transition:all .25s;" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.4)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='none';this.style.transform='translateY(0)';">
                 @if($article->cover_image)
                     <img src="{{ Storage::url($article->cover_image) }}" alt="{{ $article->title }}" style="width:100%;height:10rem;object-fit:cover;display:block;">
                 @else
@@ -397,7 +397,7 @@ function slideScroll(id, dir) {
         <h2 style="font-size:2.5rem;font-weight:800;color:#fff;margin:0 0 1rem;letter-spacing:-.02em;">Ready to Join the Ecosystem?</h2>
         <p style="color:rgba(255,255,255,.65);font-size:1.125rem;margin:0 0 2.5rem;line-height:1.6;">Whether you're an investor seeking the next big opportunity or a founder raising capital — VentureMatch is your platform.</p>
         <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;">
-            <a href="{{ route('register.investor') }}" style="background:#fff;color:#d4920f;font-weight:700;padding:.875rem 2.25rem;border-radius:.875rem;text-decoration:none;font-size:1rem;display:inline-block;">Join as Investor</a>
+            <a href="{{ route('register.investor') }}" style="background:rgba(255,255,255,.1);color:#d4920f;font-weight:700;padding:.875rem 2.25rem;border-radius:.875rem;text-decoration:none;font-size:1rem;display:inline-block;border:1px solid rgba(212,146,15,.4);">Join as Investor</a>
             <a href="{{ route('register.seeker') }}" style="background:rgba(255,255,255,.15);color:#fff;font-weight:600;padding:.875rem 2.25rem;border-radius:.875rem;text-decoration:none;font-size:1rem;border:1px solid rgba(255,255,255,.3);display:inline-block;">Submit Your Startup</a>
         </div>
     </div>
