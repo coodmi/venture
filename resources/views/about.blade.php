@@ -155,7 +155,7 @@
     <div style="position:absolute;top:-4rem;right:-4rem;width:20rem;height:20rem;background:rgba(212,146,15,.06);border-radius:50%;"></div>
     <div style="position:absolute;bottom:-4rem;left:-4rem;width:16rem;height:16rem;background:rgba(212,146,15,.04);border-radius:50%;"></div>
     <div style="max-width:48rem;margin:0 auto;position:relative;">
-        <span style="display:inline-block;background:rgba(212,146,15,.1);border:1px solid rgba(212,146,15,.25);color:rgba(212,146,15,.8);font-size:.75rem;font-weight:600;padding:.375rem 1rem;border-radius:9999px;margin-bottom:1.5rem;">Ready to Get Started?</span>
+        <span style="display:inline-block;background:rgba(212,146,15,.12);border:1px solid rgba(212,146,15,.25);color:#d4920f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:.08em;">Ready to Get Started?</span>
         <h2 style="font-size:2.5rem;font-weight:800;color:#fff;margin:0 0 1rem;letter-spacing:-.02em;">Join the VentureMatch <span style="color:#d4920f;">Ecosystem Today</span></h2>
         <p style="color:rgba(212,146,15,.55);font-size:1.125rem;margin:0 0 2.5rem;line-height:1.6;">Whether you're an investor or a founder seeking capital — your journey starts here.</p>
         <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;">

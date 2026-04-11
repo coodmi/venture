@@ -85,7 +85,7 @@
 <section style="background:#110e05;padding:5rem 1.5rem;">
     <div style="max-width:80rem;margin:0 auto;">
         <div style="text-align:center;margin-bottom:3.5rem;">
-            <span style="display:inline-block;background:rgba(212,146,15,.15);color:#d4920f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;letter-spacing:.05em;text-transform:uppercase;">How It Works</span>
+            <span style="display:inline-block;background:rgba(212,146,15,.12);border:1px solid rgba(212,146,15,.25);color:#d4920f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.08em;">How It Works</span>
             <h2 style="font-size:2.25rem;font-weight:800;color:#f0e6c8;margin:0 0 .75rem;letter-spacing:-.02em;">Simple. Powerful. Effective.</h2>
             <p style="color:#9a8a6a;font-size:1.0625rem;max-width:32rem;margin:0 auto;line-height:1.6;">A connected ecosystem where every stakeholder finds value.</p>
         </div>
@@ -153,7 +153,7 @@
     <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
         <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
             <div>
-                <span style="display:inline-block;background:rgba(212,146,15,.15);color:#d4920f;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;">⭐ Featured</span>
+                <span style="display:inline-block;background:rgba(212,146,15,.12);border:1px solid rgba(212,146,15,.25);color:#d4920f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.08em;">⭐ Featured</span>
                 <h2 style="font-size:2rem;font-weight:800;color:#f0e6c8;margin:0;letter-spacing:-.02em;">Top Startups</h2>
             </div>
             <div style="display:flex;align-items:center;gap:.75rem;">
@@ -203,7 +203,7 @@
     <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
         <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
             <div>
-                <span style="display:inline-block;background:#f0fdf4;color:#16a34a;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;">✓ Verified</span>
+                <span style="display:inline-block;background:rgba(212,146,15,.12);border:1px solid rgba(212,146,15,.25);color:#d4920f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.08em;">✓ Verified</span>
                 <h2 style="font-size:2rem;font-weight:800;color:#f0e6c8;margin:0;letter-spacing:-.02em;">Top Investors</h2>
             </div>
             <div style="display:flex;align-items:center;gap:.75rem;">
