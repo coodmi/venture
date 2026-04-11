@@ -34,6 +34,10 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms; }
 
+/* Fix browser default blue links globally */
+a { color: inherit; }
+a:not([style*="color"]):not([class*="bg-"]) { color: #d4920f; }
+
 /* Mobile responsive grids */
 @media (max-width: 767px) {
     /* Collapse multi-column grids */
