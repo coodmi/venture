@@ -62,7 +62,7 @@
         <div style="border-top:1px solid rgba(212,146,15,.15);padding-top:2rem;margin-bottom:2rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;">
             <div>
                 <h4 style="color:#fff;font-weight:600;margin:0 0 .25rem;font-size:.9375rem;">Stay in the loop</h4>
-                <p style="font-size:.8125rem;color:rgba(255,255,255,.4);margin:0;">Get the latest deals, events, and ecosystem updates.</p>
+                <p style="font-size:.8125rem;color:rgba(255,255,255,.4);margin:0;">📞 +880 1776-000008</p>
             </div>
             <form action="{{ route('newsletter.subscribe') }}" method="POST" style="display:flex;gap:.5rem;">
                 @csrf
