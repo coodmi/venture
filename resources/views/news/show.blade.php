@@ -149,9 +149,9 @@
             </article>
 
             {{-- Sidebar --}}
-            <aside>
+            <aside style="position:sticky;top:5rem;align-self:start;">
                 {{-- Article Info Card --}}
-                <div style="background:#1a1408;border-radius:1.25rem;padding:1.5rem;border:1px solid rgba(212,146,15,.15);position:sticky;top:6rem;">
+                <div style="background:#1a1408;border-radius:1.25rem;padding:1.5rem;border:1px solid rgba(212,146,15,.15);">
                     <h3 style="font-size:.75rem;font-weight:700;color:#7a6a4a;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem;">Article Info</h3>
                     <div style="display:flex;flex-direction:column;gap:.75rem;font-size:.875rem;">
                         <div style="display:flex;align-items:center;justify-content:space-between;">
