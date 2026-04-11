@@ -102,7 +102,7 @@
         <a href="{{ route('admin.events.create') }}" style="background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.25);color:#34d399;font-size:.8125rem;font-weight:600;padding:.5rem 1.125rem;border-radius:.625rem;text-decoration:none;">+ Add Event</a>
         <a href="{{ route('admin.opportunities.index') }}?status=submitted" style="background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.25);color:#f59e0b;font-size:.8125rem;font-weight:600;padding:.5rem 1.125rem;border-radius:.625rem;text-decoration:none;">Review Opportunities</a>
         <a href="{{ route('admin.settings.stats') }}" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#9a8a6a;font-size:.8125rem;font-weight:600;padding:.5rem 1.125rem;border-radius:.625rem;text-decoration:none;">Update Stats</a>
-        <a href="{{ route('admin.settings.hero') }}" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.2);color:#60a5fa;font-size:.8125rem;font-weight:600;padding:.5rem 1.125rem;border-radius:.625rem;text-decoration:none;">Edit Hero Slider</a>
+        <a href="{{ route('admin.settings.hero') }}" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.2);color:#d4920f;font-size:.8125rem;font-weight:600;padding:.5rem 1.125rem;border-radius:.625rem;text-decoration:none;">Edit Hero Slider</a>
     </div>
 </div>
 

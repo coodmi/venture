@@ -13,7 +13,7 @@
                 @endforeach
             </select>
             <button type="submit" class="bg-primary-600 text-white text-sm px-4 py-2 rounded-lg">Filter</button>
-            <a href="{{ route('admin.memberships.plans') }}" class="border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-lg hover:bg-gray-50">Manage Plans</a>
+            <a href="{{ route('admin.memberships.plans') }}" style="color:#d4920f;text-decoration:none;font-weight:600;font-size:.8125rem;">Manage Plans</a>
         </form>
     </div>
     <table style="width:100%;font-size:.875rem;border-collapse:collapse;">

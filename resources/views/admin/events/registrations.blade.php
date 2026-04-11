@@ -6,7 +6,7 @@
 <div style="background:#1a1408;" class=" rounded-xl border border-gray-200 overflow-hidden">
     <div class="p-4 border-b border-gray-200 flex items-center justify-between">
         <p style="font-size:.875rem;color:#7a6a4a;">{{ $registrations->total() }} registrations</p>
-        <a href="{{ route('admin.events.index') }}" class="text-sm text-primary-600 hover:underline">← Back to Events</a>
+        <a href="{{ route('admin.events.index') }}" style="color:#d4920f;text-decoration:none;font-weight:600;font-size:.8125rem;">← Back to Events</a>
     </div>
     <table style="width:100%;font-size:.875rem;border-collapse:collapse;">
         <thead style="background:#110e05;" style="background:#110e05;">

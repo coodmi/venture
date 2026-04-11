@@ -33,7 +33,7 @@
                     <td style="padding:.75rem 1rem;color:#7a6a4a;border-bottom:1px solid rgba(212,146,15,.06);">{{ $event->registrations_count }}</td>
                     <td class="px-4 py-3 flex gap-2">
                         <a href="{{ route('admin.events.edit', $event) }}" style="color:#d4920f;text-decoration:none;font-size:.75rem;font-weight:600;">Edit</a>
-                        <a href="{{ route('admin.events.registrations', $event) }}" class="text-gray-500 hover:underline text-xs">Registrations</a>
+                        <a href="{{ route('admin.events.registrations', $event) }}" style="color:#d4920f;text-decoration:none;font-size:.75rem;font-weight:600;">Registrations</a>
                     </td>
                 </tr>
                 @endforeach
