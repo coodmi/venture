@@ -25,7 +25,7 @@
                     @if(!empty($slide['subtitle']))<p style="font-size:1.125rem;opacity:.9;margin:0 0 2rem;line-height:1.6;">{{ $slide['subtitle'] }}</p>@endif
                     <div style="display:flex;flex-wrap:wrap;gap:.75rem;">
                         @if(!empty($slide['btn1_text']))<a href="{{ $slide['btn1_url']??'#' }}" style="background:#f97316;color:#fff;font-weight:700;padding:.8rem 1.75rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;display:inline-block;">{{ $slide['btn1_text'] }}</a>@endif
-                        @if(!empty($slide['btn2_text']))<a href="{{ $slide['btn2_url']??'#' }}" style="background:rgba(255,255,255,.15);color:#fff;font-weight:600;padding:.8rem 1.75rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;border:2px solid rgba(255,255,255,.5);display:inline-block;">{{ $slide['btn2_text'] }}</a>@endif
+                        @if(!empty($slide['btn2_text']))<a href="{{ $slide['btn2_url']??'#' }}" style="background:#1a3c8f;color:#fff;font-weight:700;padding:.8rem 1.75rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;border:2px solid #1a3c8f;display:inline-block;">{{ $slide['btn2_text'] }}</a>@endif
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
         <p style="font-size:1.125rem;color:rgba(255,255,255,.8);max-width:32rem;line-height:1.7;margin:0 0 2.5rem;">VentureMatch connects investors, founders, and ecosystem stakeholders on one powerful platform.</p>
         <div style="display:flex;flex-wrap:wrap;gap:.875rem;">
             <a href="{{ route('register.investor') }}" style="background:#f97316;color:#fff;font-weight:700;padding:.875rem 2rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;">Join as Investor</a>
-            <a href="{{ route('register.seeker') }}" style="background:rgba(255,255,255,.15);color:#fff;font-weight:600;padding:.875rem 2rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;border:2px solid rgba(255,255,255,.4);">Join as Seeker</a>
+            <a href="{{ route('register.seeker') }}" style="background:#1a3c8f;color:#fff;font-weight:700;padding:.875rem 2rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;border:2px solid #1a3c8f;">Join as Seeker</a>
             <a href="{{ route('startups.index') }}" style="color:rgba(255,255,255,.8);font-weight:600;padding:.875rem 1.5rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;">Explore Startups →</a>
         </div>
     </div>
@@ -349,7 +349,7 @@
         <p style="color:rgba(255,255,255,.7);font-size:1.125rem;margin:0 0 2.5rem;line-height:1.6;">Whether you're an investor or a founder seeking capital — your journey starts here.</p>
         <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;">
             <a href="{{ route('register.investor') }}" style="background:#f97316;color:#fff;font-weight:700;padding:.875rem 2.25rem;border-radius:.875rem;text-decoration:none;font-size:1rem;display:inline-block;">Join as Investor →</a>
-            <a href="{{ route('register.seeker') }}" style="background:rgba(255,255,255,.15);color:#fff;font-weight:600;padding:.875rem 2.25rem;border-radius:.875rem;text-decoration:none;font-size:1rem;border:2px solid rgba(255,255,255,.4);display:inline-block;">Submit Your Startup →</a>
+            <a href="{{ route('register.seeker') }}" style="background:#fff;color:#0d2b6e;font-weight:700;padding:.875rem 2.25rem;border-radius:.875rem;text-decoration:none;font-size:1rem;display:inline-block;">Submit Your Startup →</a>
         </div>
     </div>
 </section>
