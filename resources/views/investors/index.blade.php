@@ -26,24 +26,24 @@
             Investment Community
         </span>
         <h1 style="font-size:clamp(2.5rem,6vw,3.75rem);font-weight:800;line-height:1.1;margin:0 0 1.25rem;color:#fff;letter-spacing:-.03em;">
-            Meet Our <span style="color:#1a3c8f;">Investors</span>
+            Meet Our <span style="color:#fb923c;">Investors</span>
         </h1>
         <p style="font-size:1.125rem;color:rgba(255,255,255,.75);max-width:32rem;line-height:1.7;margin:0;">
-            Connect with {{ array_sum($counts) }}+ verified investors actively seeking opportunities in Bangladesh.
+            Connect with {{ array_sum(array_values($counts ?? [])) }}+ verified investors actively seeking opportunities in Bangladesh.
         </p>
     </div>
 </div>
 
 {{-- Category Stats Bar --}}
-<div style="background:#0d2b6e;border-bottom:1px solid rgba(212,146,15,.1);">
+<div style="background:#fff;border-bottom:2px solid #e2e8f0;">
     <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;display:grid;grid-template-columns:repeat(5,1fr);">
         @foreach($types as $key => $label)
         <a href="{{ route('investors.index', ['type'=>$key]) }}"
-           style="display:flex;flex-direction:column;align-items:center;padding:1.75rem 1rem;text-decoration:none;border-bottom:3px solid {{ request('type')===$key ? $catColors[$key] : 'transparent' }};transition:all .2s;background:{{ request('type')===$key ? 'rgba(212,146,15,.05)' : 'transparent' }};">
+           style="display:flex;flex-direction:column;align-items:center;padding:1.5rem 1rem;text-decoration:none;border-bottom:3px solid {{ request('type')===$key ? $catColors[$key] : 'transparent' }};transition:all .2s;background:{{ request('type')===$key ? '#eff6ff' : 'transparent' }};">
             <div style="width:3rem;height:3rem;border-radius:50%;background:{{ $catColors[$key] }};display:flex;align-items:center;justify-content:center;margin-bottom:.625rem;box-shadow:0 4px 12px {{ $catColors[$key] }}44;">
                 {!! $catSvg[$key] !!}
             </div>
-            <span style="font-size:1.625rem;font-weight:800;color:#0f172a;line-height:1;">{{ $counts[$key] ?? 0 }}</span>
+            <span style="font-size:1.625rem;font-weight:800;color:#0d2b6e;line-height:1;">{{ $counts[$key] ?? 0 }}</span>
             <span style="font-size:.7rem;color:#8d98a1;margin-top:.3rem;text-align:center;font-weight:500;">{{ $label }}</span>
         </a>
         @endforeach
