@@ -1,4 +1,4 @@
-<footer style="background:#0d0a04;border-top:1px solid rgba(212,146,15,.2);color:rgba(255,255,255,.6);">
+<footer style="background:#0d2b6e;border-top:3px solid #f97316;color:rgba(255,255,255,.6);">
     <div style="max-width:80rem;margin:0 auto;padding:4rem 1.5rem 2rem;">
         <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem;" class="footer-grid">
 
@@ -9,7 +9,7 @@
                     <img src="{{ Storage::url($siteLogo) }}" alt="{{ $siteName }}" style="height:2rem;width:auto;object-fit:contain;margin-bottom:1rem;display:block;">
                 @else
                     <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;">
-                        <div style="width:2rem;height:2rem;background:linear-gradient(135deg,#d4920f,#f59e0b);border-radius:.5rem;display:flex;align-items:center;justify-content:center;">
+                        <div style="width:2rem;height:2rem;background:#f97316;border-radius:.5rem;display:flex;align-items:center;justify-content:center;">
                             <span style="color:#0d0a04;font-weight:800;font-size:.75rem;">VM</span>
                         </div>
                         <span style="font-weight:700;font-size:1.125rem;color:#fff;">{{ $siteName }}</span>
@@ -34,7 +34,7 @@
 
             {{-- Platform --}}
             <div>
-                <h4 style="color:#d4920f;font-weight:700;font-size:.8125rem;text-transform:uppercase;letter-spacing:.08em;margin:0 0 1.25rem;">Platform</h4>
+                <h4 style="color:#fb923c;font-weight:700;font-size:.8125rem;text-transform:uppercase;letter-spacing:.08em;margin:0 0 1.25rem;">Platform</h4>
                 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.625rem;">
                     <li><a href="{{ route('register.investor') }}" style="font-size:.875rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#d4920f';" onmouseout="this.style.color='rgba(255,255,255,.55)';">Join as Investor</a></li>
                     <li><a href="{{ route('register.seeker') }}" style="font-size:.875rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#d4920f';" onmouseout="this.style.color='rgba(255,255,255,.55)';">Join as Seeker</a></li>
@@ -47,7 +47,7 @@
 
             {{-- Company --}}
             <div>
-                <h4 style="color:#d4920f;font-weight:700;font-size:.8125rem;text-transform:uppercase;letter-spacing:.08em;margin:0 0 1.25rem;">Company</h4>
+                <h4 style="color:#fb923c;font-weight:700;font-size:.8125rem;text-transform:uppercase;letter-spacing:.08em;margin:0 0 1.25rem;">Company</h4>
                 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.625rem;">
                     <li><a href="{{ route('about') }}" style="font-size:.875rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#d4920f';" onmouseout="this.style.color='rgba(255,255,255,.55)';">About Us</a></li>
                     <li><a href="{{ route('notices.index') }}" style="font-size:.875rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='#d4920f';" onmouseout="this.style.color='rgba(255,255,255,.55)';">Notices</a></li>
@@ -59,7 +59,7 @@
         </div>
 
         {{-- Newsletter --}}
-        <div style="border-top:1px solid rgba(212,146,15,.15);padding-top:2rem;margin-bottom:2rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;">
+        <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:2rem;margin-bottom:2rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;">
             <div style="display:flex;align-items:center;gap:.75rem;">
                 <h4 style="color:#fff;font-weight:600;margin:0;font-size:.9375rem;white-space:nowrap;">Stay in the loop</h4>
                 <span style="color:rgba(255,255,255,.25);">·</span>
@@ -69,7 +69,7 @@
                 @csrf
                 <input type="email" name="email" placeholder="your@email.com" required
                        style="background:rgba(255,255,255,.06);border:1px solid rgba(212,146,15,.25);color:#fff;font-size:.875rem;border-radius:.5rem;padding:.5rem 1rem;width:16rem;outline:none;">
-                <button type="submit" style="background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-size:.875rem;font-weight:700;padding:.5rem 1.25rem;border-radius:.5rem;border:none;cursor:pointer;white-space:nowrap;">Subscribe</button>
+                <button type="submit" style="background:#f97316;color:#0d0a04;font-size:.875rem;font-weight:700;padding:.5rem 1.25rem;border-radius:.5rem;border:none;cursor:pointer;white-space:nowrap;">Subscribe</button>
             </form>
         </div>
 
