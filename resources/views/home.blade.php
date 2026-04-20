@@ -67,7 +67,7 @@
 
 {{-- ═══ STATS ═══ --}}
 @if($stats->count())
-<section style="background:#0d2b6e;padding:2.5rem 1.5rem;">
+<section style="background:#0d2b6e;padding:3rem 1.5rem;">
     <div style="max-width:80rem;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:2rem;text-align:center;">
         @foreach($stats as $stat)
         <div>
@@ -80,23 +80,23 @@
 @endif
 
 {{-- ═══ HOW IT WORKS ═══ --}}
-<section style="background:#f8fafc;padding:5rem 1.5rem;">
+<section style="background:#f4f7fb;padding:5rem 1.5rem;">
     <div style="max-width:80rem;margin:0 auto;">
         <div style="text-align:center;margin-bottom:3.5rem;">
             <span style="display:inline-block;background:#eff6ff;border:1px solid #bfdbfe;color:#1a3c8f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.08em;">How It Works</span>
             <h2 style="font-size:2.25rem;font-weight:800;color:#0d2b6e;margin:0 0 .75rem;letter-spacing:-.02em;">Simple. Powerful. Effective.</h2>
-            <p style="color:#64748b;font-size:1.0625rem;max-width:32rem;margin:0 auto;line-height:1.6;">A connected ecosystem where every stakeholder finds value.</p>
+            <p style="color:#8d98a1;font-size:1.0625rem;max-width:32rem;margin:0 auto;line-height:1.6;">A connected ecosystem where every stakeholder finds value.</p>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;">
             @php $steps=[['num'=>'01','color'=>'#1a3c8f','bg'=>'rgba(26,60,143,.08)','title'=>'Discover','desc'=>'Browse curated investment opportunities filtered by sector, stage, and ticket size.','icon'=>'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'],['num'=>'02','color'=>'#f97316','bg'=>'rgba(249,115,22,.08)','title'=>'Connect','desc'=>'Express interest, request meetings, and engage directly with founders and investors.','icon'=>'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z'],['num'=>'03','color'=>'#1a3c8f','bg'=>'rgba(26,60,143,.08)','title'=>'Grow','desc'=>'Close deals, join bootcamps, attend conferences, and scale your venture together.','icon'=>'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6']]; @endphp
             @foreach($steps as $step)
-            <div style="background:#fff;border-radius:1.25rem;padding:2rem;border:1px solid #e2e8f0;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+            <div style="background:#fff;border-radius:1.25rem;padding:2rem;border:1px solid #dde3ea;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);">
                 <div style="position:absolute;top:1.25rem;right:1.25rem;font-size:3.5rem;font-weight:900;color:{{ $step['bg'] }};line-height:1;user-select:none;">{{ $step['num'] }}</div>
                 <div style="width:3rem;height:3rem;background:{{ $step['bg'] }};border-radius:.875rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
                     <svg width="22" height="22" fill="none" stroke="{{ $step['color'] }}" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $step['icon'] }}"/></svg>
                 </div>
                 <h3 style="font-size:1.125rem;font-weight:700;color:#0d2b6e;margin:0 0 .5rem;">{{ $step['title'] }}</h3>
-                <p style="font-size:.875rem;color:#64748b;line-height:1.6;margin:0;">{{ $step['desc'] }}</p>
+                <p style="font-size:.875rem;color:#8d98a1;line-height:1.6;margin:0;">{{ $step['desc'] }}</p>
             </div>
             @endforeach
         </div>
@@ -120,14 +120,14 @@
         </div>
         <div id="hotDealsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($hotDeals as $deal)
-            <a href="{{ route('startups.show', $deal->slug) }}" style="text-decoration:none;flex-shrink:0;width:280px;display:block;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+            <a href="{{ route('startups.show', $deal->slug) }}" style="text-decoration:none;flex-shrink:0;width:280px;display:block;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
                 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#f97316,#fb923c);"></div>
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;">
                     <span style="background:#fff7ed;color:#f97316;font-size:.7rem;font-weight:700;padding:.25rem .625rem;border-radius:9999px;border:1px solid #fed7aa;">🔥 Hot Deal</span>
-                    <span style="font-size:.75rem;color:#94a3b8;font-weight:500;">{{ $deal->sector }}</span>
+                    <span style="font-size:.75rem;color:#8d98a1;font-weight:500;">{{ $deal->sector }}</span>
                 </div>
                 <h3 style="font-size:1rem;font-weight:700;color:#0d2b6e;margin:0 0 .5rem;line-height:1.4;">{{ $deal->title }}</h3>
-                <p style="font-size:.8125rem;color:#64748b;margin:0 0 1.25rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $deal->solution }}</p>
+                <p style="font-size:.8125rem;color:#8d98a1;margin:0 0 1.25rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $deal->solution }}</p>
                 <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.875rem;border-top:1px solid #f1f5f9;">
                     <span style="font-size:1rem;font-weight:800;color:#1a3c8f;">৳{{ number_format($deal->ask_amount) }}</span>
                     <span style="font-size:.75rem;color:#f97316;font-weight:600;">View Details →</span>
@@ -141,7 +141,7 @@
 
 {{-- ═══ TOP STARTUPS ═══ --}}
 @if($topStartups->count())
-<section style="background:#f8fafc;padding:4rem 0;">
+<section style="background:#f4f7fb;padding:4rem 0;">
     <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
         <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
             <div>
@@ -158,7 +158,7 @@
         <div id="startupTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($topStartups as $s)
             @php $sc = $sectorColors[$s->sector] ?? '#1a3c8f'; @endphp
-            <a href="{{ route('startups.show', $s->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:280px;transition:all .25s;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+            <a href="{{ route('startups.show', $s->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:280px;transition:all .25s;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
                 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:{{ $sc }};"></div>
                 <div style="display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.875rem;">
                     <div style="width:2.5rem;height:2.5rem;border-radius:.75rem;background:{{ $sc }}18;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:.875rem;color:{{ $sc }};">{{ strtoupper(substr($s->title,0,2)) }}</div>
@@ -166,11 +166,11 @@
                         <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:0 0 .25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $s->title }}</h3>
                         <div style="display:flex;gap:.3rem;flex-wrap:wrap;">
                             @if($s->sector)<span style="font-size:.65rem;font-weight:600;padding:.15rem .45rem;border-radius:9999px;background:{{ $sc }}18;color:{{ $sc }};">{{ $s->sector }}</span>@endif
-                            @if($s->stage)<span style="font-size:.65rem;background:#f1f5f9;color:#475569;padding:.15rem .45rem;border-radius:9999px;">{{ $s->stage }}</span>@endif
+                            @if($s->stage)<span style="font-size:.65rem;background:#f1f5f9;color:#8d98a1;padding:.15rem .45rem;border-radius:9999px;">{{ $s->stage }}</span>@endif
                         </div>
                     </div>
                 </div>
-                <p style="font-size:.8rem;color:#64748b;line-height:1.55;flex:1;margin:0 0 1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">{{ $s->business_problem }}</p>
+                <p style="font-size:.8rem;color:#8d98a1;line-height:1.55;flex:1;margin:0 0 1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">{{ $s->business_problem }}</p>
                 <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid #f1f5f9;">
                     @if($s->ask_amount)<span style="font-size:.9375rem;font-weight:800;color:#1a3c8f;">৳{{ number_format($s->ask_amount) }}</span>@else<span></span>@endif
                     <span style="font-size:.75rem;color:#f97316;font-weight:600;">Invest →</span>
@@ -201,18 +201,18 @@
         <div id="investorTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($topInvestors as $inv)
             @php $ic = $invColors[$inv->investor_type] ?? '#1a3c8f'; @endphp
-            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:270px;transition:all .25s;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:270px;transition:all .25s;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
                 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:{{ $ic }};"></div>
                 <div style="display:flex;align-items:flex-start;gap:.875rem;margin-bottom:1rem;">
                     <div style="width:2.75rem;height:2.75rem;border-radius:.75rem;background:{{ $ic }};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:.9375rem;color:#fff;">{{ strtoupper(substr($inv->user->name??'IN',0,2)) }}</div>
                     <div style="flex:1;min-width:0;">
                         <span style="font-size:.9rem;font-weight:700;color:#0d2b6e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;">{{ $inv->user->name }}</span>
-                        <p style="font-size:.72rem;color:#64748b;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>
-                        <p style="font-size:.68rem;color:#94a3b8;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->organization }}</p>
+                        <p style="font-size:.72rem;color:#8d98a1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>
+                        <p style="font-size:.68rem;color:#8d98a1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->organization }}</p>
                     </div>
                 </div>
                 <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.75rem;">
-                    <span style="font-size:.68rem;font-weight:600;padding:.2rem .55rem;border-radius:9999px;{{ $invBadge[$inv->investor_type]??'background:#f1f5f9;color:#475569;' }}">{{ $invLabels[$inv->investor_type]??$inv->investor_type }}</span>
+                    <span style="font-size:.68rem;font-weight:600;padding:.2rem .55rem;border-radius:9999px;{{ $invBadge[$inv->investor_type]??'background:#f1f5f9;color:#8d98a1;' }}">{{ $invLabels[$inv->investor_type]??$inv->investor_type }}</span>
                     @if($inv->sector_preferences)
                         @foreach(array_slice($inv->sector_preferences,0,2) as $sec)
                         <span style="font-size:.68rem;background:#eff6ff;color:#1a3c8f;padding:.2rem .5rem;border-radius:9999px;">{{ $sec }}</span>
@@ -221,7 +221,7 @@
                 </div>
                 @if($inv->ticket_size_min && $inv->ticket_size_max)
                 <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid #f1f5f9;margin-top:auto;">
-                    <span style="font-size:.68rem;color:#94a3b8;">Ticket</span>
+                    <span style="font-size:.68rem;color:#8d98a1;">Ticket</span>
                     <span style="font-size:.78rem;font-weight:700;color:#1a3c8f;">৳{{ number_format($inv->ticket_size_min/100000,0) }}L–৳{{ number_format($inv->ticket_size_max/100000,0) }}L</span>
                 </div>
                 @endif
@@ -234,7 +234,7 @@
 
 {{-- ═══ EVENTS ═══ --}}
 @if($events->count())
-<section style="background:#f8fafc;padding:4rem 0;">
+<section style="background:#f4f7fb;padding:4rem 0;">
     <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
         <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
             <div>
@@ -250,7 +250,7 @@
         @php $gradients=['linear-gradient(135deg,#1a3c8f,#2563eb)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#16a34a,#34d399)','linear-gradient(135deg,#f97316,#fb923c)','linear-gradient(135deg,#dc2626,#f87171)','linear-gradient(135deg,#0891b2,#22d3ee)']; @endphp
         <div id="eventsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($events as $event)
-            <a href="{{ route('events.show', $event->slug) }}" style="text-decoration:none;flex-shrink:0;width:260px;background:#fff;border-radius:1.25rem;overflow:hidden;border:1px solid #e2e8f0;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+            <a href="{{ route('events.show', $event->slug) }}" style="text-decoration:none;flex-shrink:0;width:260px;background:#fff;border-radius:1.25rem;overflow:hidden;border:1px solid #dde3ea;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
                 @if($event->banner)
                     <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}" style="width:100%;height:9rem;object-fit:cover;display:block;">
                 @else
@@ -261,7 +261,7 @@
                 <div style="padding:1rem;flex:1;display:flex;flex-direction:column;">
                     <span style="font-size:.7rem;color:#1a3c8f;font-weight:600;margin-bottom:.25rem;display:block;">{{ $event->start_date->format('M d, Y') }}</span>
                     <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:0 0 .5rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;">{{ $event->title }}</h3>
-                    <p style="font-size:.75rem;color:#94a3b8;margin:0;">📍 {{ $event->venue ?? 'Online' }}</p>
+                    <p style="font-size:.75rem;color:#8d98a1;margin:0;">📍 {{ $event->venue ?? 'Online' }}</p>
                 </div>
             </a>
             @endforeach
@@ -317,7 +317,7 @@
         @php $newsGrads=['Deal News'=>'linear-gradient(135deg,#1a3c8f,#2563eb)','Market Insights'=>'linear-gradient(135deg,#7c3aed,#a78bfa)','Platform Update'=>'linear-gradient(135deg,#16a34a,#34d399)','Press Release'=>'linear-gradient(135deg,#374151,#6b7280)','Founder Resources'=>'linear-gradient(135deg,#f97316,#fb923c)','Event Recap'=>'linear-gradient(135deg,#dc2626,#f87171)','Startup Spotlight'=>'linear-gradient(135deg,#0891b2,#22d3ee)']; @endphp
         <div id="newsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($latestNews as $article)
-            <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;flex-shrink:0;width:300px;display:flex;flex-direction:column;background:#fff;border:1px solid #e2e8f0;border-radius:1.25rem;overflow:hidden;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+            <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;flex-shrink:0;width:300px;display:flex;flex-direction:column;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
                 @if($article->cover_image)
                     <img src="{{ Storage::url($article->cover_image) }}" alt="{{ $article->title }}" style="width:100%;height:10rem;object-fit:cover;display:block;">
                 @else
@@ -329,7 +329,7 @@
                     <span style="font-size:.68rem;color:#1a3c8f;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">{{ $article->category }}</span>
                     <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:.3rem 0 .5rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;">{{ $article->title }}</h3>
                     <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.625rem;border-top:1px solid #f1f5f9;">
-                        <span style="font-size:.72rem;color:#94a3b8;">{{ $article->published_at?->format('M d, Y') }}</span>
+                        <span style="font-size:.72rem;color:#8d98a1;">{{ $article->published_at?->format('M d, Y') }}</span>
                         <span style="font-size:.72rem;color:#f97316;font-weight:600;">Read →</span>
                     </div>
                 </div>
