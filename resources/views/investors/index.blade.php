@@ -2,7 +2,6 @@
 @section('title', 'Investors')
 
 @section('content')
-
 @php
     $typeLabel=['angel'=>'Angel','vc'=>'Venture Capital','corporate'=>'Corporate','family_office'=>'Family Office','impact'=>'Impact'];
     $stageLabel=['pre_seed'=>'Pre-Seed','seed'=>'Seed','series_a'=>'Series A','series_b'=>'Series B','growth'=>'Growth'];
@@ -30,19 +29,20 @@
 </section>
 
 {{-- Type Stats Bar --}}
-<div style="background:#fff;border-bottom:1px solid #dde3ea;">
-    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;display:grid;grid-template-columns:repeat(5,1fr);">
+<div style="background:#fff;border-bottom:1px solid #dde3ea;overflow-x:auto;">
+    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;display:flex;min-width:max-content;">
         @foreach($types as $key => $label)
-        @php $active = request('type')===$key; $col = $typeColor[$key] ?? '#1a3c8f'; @endphp
-        <a href="{{ route('investors.index', ['type'=>$key]) }}"
-           style="display:flex;flex-direction:column;align-items:center;padding:1.5rem 1rem;text-decoration:none;border-bottom:3px solid {{ $active ? $col : 'transparent' }};background:{{ $active ? '#f8fafc' : 'transparent' }};transition:all .2s;">
-            <div style="width:2.75rem;height:2.75rem;border-radius:50%;background:{{ $col }};display:flex;align-items:center;justify-content:center;margin-bottom:.5rem;">
-                <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-            </div>
-            <span style="font-size:1.5rem;font-weight:800;color:#0d2b6e;line-height:1;">{{ $counts[$key] ?? 0 }}</span>
-            <span style="font-size:.7rem;color:#8d98a1;margin-top:.25rem;text-align:center;font-weight:500;">{{ $typeLabel[$key] ?? $label }}</span>
+        @php $active=request('type')===$key; $col=$typeColor[$key]??'#1a3c8f'; @endphp
+        <a href="{{ route('investors.index',['type'=>$key]) }}"
+           style="display:flex;flex-direction:column;align-items:center;padding:1.25rem 2rem;text-decoration:none;border-bottom:3px solid {{ $active?$col:'transparent' }};background:{{ $active?'#f8fafc':'transparent' }};transition:all .2s;white-space:nowrap;">
+            <span style="font-size:1.5rem;font-weight:800;color:#0d2b6e;line-height:1;">{{ $counts[$key]??0 }}</span>
+            <span style="font-size:.7rem;color:#8d98a1;margin-top:.25rem;font-weight:500;">{{ $typeLabel[$key]??$label }}</span>
         </a>
         @endforeach
+        <a href="{{ route('investors.index') }}" style="display:flex;flex-direction:column;align-items:center;padding:1.25rem 2rem;text-decoration:none;border-bottom:3px solid {{ !request('type')?'#1a3c8f':'transparent' }};background:{{ !request('type')?'#f8fafc':'transparent' }};transition:all .2s;white-space:nowrap;">
+            <span style="font-size:1.5rem;font-weight:800;color:#0d2b6e;line-height:1;">{{ $total }}</span>
+            <span style="font-size:.7rem;color:#8d98a1;margin-top:.25rem;font-weight:500;">All</span>
+        </a>
     </div>
 </div>
 
@@ -52,16 +52,16 @@
 
         {{-- Filters --}}
         <form method="GET" style="background:#fff;border:1px solid #dde3ea;border-radius:1rem;padding:1.25rem;margin-bottom:2rem;display:flex;flex-wrap:wrap;gap:.875rem;align-items:flex-end;box-shadow:0 2px 8px rgba(0,0,0,.04);">
-            <div style="flex:1;min-width:200px;">
+            <div style="flex:1;min-width:180px;">
                 <label style="display:block;font-size:.7rem;font-weight:600;color:#8d98a1;margin-bottom:.375rem;text-transform:uppercase;letter-spacing:.05em;">Search</label>
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Name or organization..."
                     style="width:100%;background:#f4f7fb;border:1px solid #dde3ea;color:#374151;font-size:.875rem;border-radius:.5rem;padding:.5rem .875rem;outline:none;box-sizing:border-box;">
             </div>
-            <div style="min-width:160px;">
+            <div style="min-width:150px;">
                 <label style="display:block;font-size:.7rem;font-weight:600;color:#8d98a1;margin-bottom:.375rem;text-transform:uppercase;letter-spacing:.05em;">Type</label>
                 <select name="type" style="width:100%;background:#f4f7fb;border:1px solid #dde3ea;color:#374151;font-size:.875rem;border-radius:.5rem;padding:.5rem .875rem;outline:none;cursor:pointer;">
                     <option value="">All Types</option>
-                    @foreach($types as $k => $v)
+                    @foreach($types as $k=>$v)
                     <option value="{{ $k }}" {{ request('type')===$k?'selected':'' }}>{{ $v }}</option>
                     @endforeach
                 </select>
@@ -70,7 +70,7 @@
                 <label style="display:block;font-size:.7rem;font-weight:600;color:#8d98a1;margin-bottom:.375rem;text-transform:uppercase;letter-spacing:.05em;">Stage</label>
                 <select name="stage" style="width:100%;background:#f4f7fb;border:1px solid #dde3ea;color:#374151;font-size:.875rem;border-radius:.5rem;padding:.5rem .875rem;outline:none;cursor:pointer;">
                     <option value="">All Stages</option>
-                    @foreach($stages as $k => $v)
+                    @foreach($stages as $k=>$v)
                     <option value="{{ $k }}" {{ request('stage')===$k?'selected':'' }}>{{ $v }}</option>
                     @endforeach
                 </select>
@@ -91,15 +91,15 @@
         @else
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.25rem;">
             @foreach($investors as $inv)
-            @php $ic = $typeColor[$inv->investor_type] ?? '#1a3c8f'; @endphp
-            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;transition:all .25s;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
+            @php $ic=$typeColor[$inv->investor_type]??'#1a3c8f'; @endphp
+            <a href="{{ route('investors.show',$inv->id) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;transition:all .25s;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
                 <div style="position:absolute;top:0;left:0;right:0;height:4px;background:{{ $ic }};"></div>
                 <div style="display:flex;align-items:flex-start;gap:.875rem;margin-bottom:1rem;">
                     <div style="width:3rem;height:3rem;border-radius:.875rem;background:{{ $ic }};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:1rem;color:#fff;">
                         {{ strtoupper(substr($inv->user->name??'IN',0,2)) }}
                     </div>
                     <div style="flex:1;min-width:0;">
-                        <span style="font-size:.9375rem;font-weight:700;color:#0d2b6e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;">{{ $inv->user->name }}</span>
+                        <span style="font-size:.9375rem;font-weight:700;color:#0d2b6e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;">{{ $inv->user->name??'—' }}</span>
                         <p style="font-size:.75rem;color:#8d98a1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>
                         <p style="font-size:.7rem;color:#8d98a1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->organization }}</p>
                     </div>
@@ -109,23 +109,19 @@
                     @if($inv->investment_stage)<span style="font-size:.68rem;background:#f1f5f9;color:#475569;padding:.2rem .6rem;border-radius:9999px;">{{ $stageLabel[$inv->investment_stage]??$inv->investment_stage }}</span>@endif
                 </div>
                 @if($inv->bio)<p style="font-size:.78rem;color:#8d98a1;line-height:1.5;margin:0 0 .875rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;">{{ $inv->bio }}</p>@endif
-                @if($inv->sector_preferences)
+                @if(!empty($inv->sector_preferences))
                 <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.875rem;">
-                    @foreach(array_slice($inv->sector_preferences,0,3) as $sec)
+                    @foreach(array_slice((array)$inv->sector_preferences,0,3) as $sec)
                     <span style="font-size:.65rem;background:#eff6ff;color:#1a3c8f;padding:.15rem .5rem;border-radius:9999px;">{{ $sec }}</span>
                     @endforeach
                 </div>
                 @endif
-                @if($inv->ticket_size_min && $inv->ticket_size_max)
                 <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid #f1f5f9;margin-top:auto;">
-                    <span style="font-size:.68rem;color:#8d98a1;">Ticket Size</span>
-                    <span style="font-size:.78rem;font-weight:700;color:#1a3c8f;">৳{{ number_format($inv->ticket_size_min/100000,0) }}L–৳{{ number_format($inv->ticket_size_max/100000,0) }}L</span>
+                    @if($inv->ticket_size_min && $inv->ticket_size_max)
+                    <span style="font-size:.75rem;font-weight:700;color:#1a3c8f;">৳{{ number_format($inv->ticket_size_min/100000,0) }}L–{{ number_format($inv->ticket_size_max/100000,0) }}L</span>
+                    @else<span></span>@endif
+                    <span style="font-size:.75rem;color:#f97316;font-weight:600;">View →</span>
                 </div>
-                @else
-                <div style="padding-top:.75rem;border-top:1px solid #f1f5f9;margin-top:auto;text-align:right;">
-                    <span style="font-size:.75rem;color:#f97316;font-weight:600;">View Profile →</span>
-                </div>
-                @endif
             </a>
             @endforeach
         </div>
