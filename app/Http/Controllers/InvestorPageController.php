@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\InvestorProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class InvestorPageController extends Controller
 {
     public function index(Request $request)
     {
-        $query = InvestorProfile::with('user')->where('is_visible', true);
+        $hasVisible = Schema::hasColumn('investor_profiles', 'is_visible');
+
+        $query = InvestorProfile::with('user');
+        if ($hasVisible) $query->where('is_visible', true);
 
         if ($request->filled('type'))   $query->where('investor_type', $request->type);
         if ($request->filled('stage'))  $query->where('investment_stage', $request->stage);
@@ -25,7 +29,9 @@ class InvestorPageController extends Controller
 
         $counts = [];
         foreach (array_keys($types) as $t) {
-            $counts[$t] = InvestorProfile::where('is_visible', true)->where('investor_type', $t)->count();
+            $q = InvestorProfile::where('investor_type', $t);
+            if ($hasVisible) $q->where('is_visible', true);
+            $counts[$t] = $q->count();
         }
 
         return view('investors.index', compact('investors', 'types', 'stages', 'counts'));
@@ -33,7 +39,8 @@ class InvestorPageController extends Controller
 
     public function show(InvestorProfile $investor)
     {
-        abort_if(!$investor->is_visible, 404);
+        $hasVisible = Schema::hasColumn('investor_profiles', 'is_visible');
+        if ($hasVisible) abort_if(!$investor->is_visible, 404);
         $investor->load('user');
         return view('investors.show', compact('investor'));
     }
