@@ -6,7 +6,6 @@
         ['label'=>'Home','url'=>'/'],
         ['label'=>'About','url'=>'/about'],
         ['label'=>'Top Startups','url'=>'/startups'],
-        ['label'=>'Top Investors','url'=>'/investors'],
         ['label'=>'Events','url'=>'/events'],
         ['label'=>'News','url'=>'/news'],
     ];
