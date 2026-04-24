@@ -9,6 +9,7 @@ use App\Models\Testimonial;
 use App\Models\PlatformStat;
 use App\Models\NewsletterSubscription;
 use App\Models\Setting;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,16 @@ class HomeController extends Controller
         $heroSlides   = json_decode(Setting::get('hero_slides', '[]'), true) ?: [];
         $topStartups  = Opportunity::approved()->where('is_featured', true)->latest()->take(6)->get();
 
-        return view('home', compact('stats', 'hotDeals', 'featured', 'events', 'testimonials', 'latestNews', 'heroSlides', 'topStartups'));
+        try {
+            $topInvestors = DB::table('investor_profiles')
+                ->join('users', 'investor_profiles.user_id', '=', 'users.id')
+                ->select('investor_profiles.*', 'users.name as user_name')
+                ->latest('investor_profiles.created_at')->take(8)->get();
+        } catch (\Exception $e) {
+            $topInvestors = collect();
+        }
+
+        return view('home', compact('stats', 'hotDeals', 'featured', 'events', 'testimonials', 'latestNews', 'heroSlides', 'topStartups', 'topInvestors'));
     }
 
     public function subscribe(\Illuminate\Http\Request $request)

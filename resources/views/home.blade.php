@@ -182,46 +182,58 @@
 </section>
 @endif
 
-{{-- ═══ INVESTMENT OPPORTUNITIES ═══ --}}
-@if($hotDeals->count())
+{{-- ═══ TOP INVESTORS ═══ --}}
+@if($topInvestors->count())
 <section style="background:#fff;padding:4rem 0;">
     <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
         <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
             <div>
-                <span style="display:inline-block;background:#fff7ed;border:1px solid #fed7aa;color:#f97316;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;">🔥 Live Deals</span>
-                <h2 style="font-size:2rem;font-weight:800;color:#0d2b6e;margin:0;letter-spacing:-.02em;">Investment Opportunities</h2>
+                <span style="display:inline-block;background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;">✓ Verified</span>
+                <h2 style="font-size:2rem;font-weight:800;color:#0d2b6e;margin:0;letter-spacing:-.02em;">Top Investors</h2>
             </div>
             <div style="display:flex;align-items:center;gap:.75rem;">
-                <button onclick="slideScroll('investTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:2px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg></button>
-                <button onclick="slideScroll('investTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:2px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
-                <a href="{{ route('investment.index') }}" style="color:#1a3c8f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
+                <button onclick="slideScroll('investorTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:2px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg></button>
+                <button onclick="slideScroll('investorTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:2px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
+                <a href="{{ route('investors.index') }}" style="color:#1a3c8f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
             </div>
         </div>
         @php
-            $iGrads=['FinTech'=>'linear-gradient(135deg,#1a3c8f,#2563eb)','AgriTech'=>'linear-gradient(135deg,#14532d,#16a34a)','HealthTech'=>'linear-gradient(135deg,#991b1b,#ef4444)','EdTech'=>'linear-gradient(135deg,#c2410c,#f97316)','CleanTech'=>'linear-gradient(135deg,#5b21b6,#8b5cf6)'];
-            $iColors=['FinTech'=>'#3b82f6','AgriTech'=>'#10b981','HealthTech'=>'#ef4444','EdTech'=>'#f97316','CleanTech'=>'#8b5cf6'];
+            $invTypeColor=['angel'=>'#f97316','vc'=>'#1a3c8f','corporate'=>'#6366f1','family_office'=>'#a855f7','impact'=>'#16a34a'];
+            $invCoverGrad=['angel'=>'linear-gradient(135deg,#7c2d12,#f97316)','vc'=>'linear-gradient(135deg,#0d2b6e,#2563eb)','corporate'=>'linear-gradient(135deg,#1e1b4b,#6366f1)','family_office'=>'linear-gradient(135deg,#3b0764,#a855f7)','impact'=>'linear-gradient(135deg,#052e16,#16a34a)'];
+            $invTypeLabel=['angel'=>'Angel','vc'=>'Venture Capital','corporate'=>'Corporate','family_office'=>'Family Office','impact'=>'Impact'];
         @endphp
-        <div id="investTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
-            @foreach($hotDeals as $deal)
-            @php $ig=$iGrads[$deal->sector]??'linear-gradient(135deg,#0d2b6e,#2563eb)'; $ic=$iColors[$deal->sector]??'#1a3c8f'; @endphp
-            <a href="{{ route('investment.show',$deal->slug) }}" style="text-decoration:none;flex-shrink:0;width:280px;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
-                <div style="height:8rem;background:{{ $ig }};position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-                    <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:22px 22px;"></div>
-                    <div style="position:relative;z-index:2;width:3rem;height:3rem;border-radius:.875rem;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;">
-                        <span style="color:#fff;font-weight:800;font-size:1rem;">{{ strtoupper(substr($deal->title,0,2)) }}</span>
-                    </div>
-                    <span style="position:absolute;top:.625rem;left:.625rem;background:rgba(249,115,22,.9);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:9999px;">🔥 Hot Deal</span>
+        <div id="investorTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
+            @foreach($topInvestors as $inv)
+            @php
+                $ic  = $invTypeColor[$inv->investor_type] ?? '#1a3c8f';
+                $ig  = $invCoverGrad[$inv->investor_type] ?? 'linear-gradient(135deg,#0d2b6e,#2563eb)';
+                $initials = strtoupper(substr($inv->user_name ?? 'IN', 0, 2));
+                $sectors = json_decode($inv->sector_preferences ?? '[]', true) ?: [];
+            @endphp
+            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;flex-shrink:0;width:240px;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+                {{-- Cover --}}
+                <div style="height:6rem;background:{{ $ig }};position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                    <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:20px 20px;"></div>
+                    <div style="position:relative;z-index:2;width:3rem;height:3rem;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff;">{{ $initials }}</div>
+                    @if(($inv->verification_status??'')==='verified')
+                    <div style="position:absolute;bottom:.5rem;right:.5rem;background:rgba(22,163,74,.9);color:#fff;font-size:.6rem;font-weight:700;padding:.15rem .5rem;border-radius:9999px;">✓ Verified</div>
+                    @endif
                 </div>
+                {{-- Body --}}
                 <div style="padding:1rem;flex:1;display:flex;flex-direction:column;">
-                    <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.5rem;">
-                        @if($deal->sector)<span style="font-size:.65rem;font-weight:600;padding:.15rem .45rem;border-radius:9999px;background:{{ $ic }}15;color:{{ $ic }};">{{ $deal->sector }}</span>@endif
-                        @if($deal->stage)<span style="font-size:.65rem;background:#f1f5f9;color:#8d98a1;padding:.15rem .45rem;border-radius:9999px;">{{ $deal->stage }}</span>@endif
+                    <p style="font-size:.9rem;font-weight:700;color:#0d2b6e;margin:0 0 .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->user_name ?? 'Investor' }}</p>
+                    @if($inv->designation)<p style="font-size:.72rem;color:#8d98a1;margin:0 0 .125rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>@endif
+                    @if($inv->organization)<p style="font-size:.68rem;color:#8d98a1;margin:0 0 .75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->organization }}</p>@endif
+                    <span style="font-size:.65rem;font-weight:600;padding:.2rem .55rem;border-radius:9999px;background:{{ $ic }}15;color:{{ $ic }};border:1px solid {{ $ic }}25;display:inline-block;margin-bottom:.75rem;align-self:flex-start;">{{ $invTypeLabel[$inv->investor_type]??$inv->investor_type }}</span>
+                    @if(!empty($sectors))
+                    <div style="display:flex;flex-wrap:wrap;gap:.25rem;margin-bottom:.75rem;">
+                        @foreach(array_slice($sectors,0,2) as $sec)
+                        <span style="font-size:.62rem;background:#eff6ff;color:#1a3c8f;padding:.15rem .45rem;border-radius:9999px;">{{ $sec }}</span>
+                        @endforeach
                     </div>
-                    <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:0 0 .375rem;line-height:1.3;">{{ $deal->title }}</h3>
-                    <p style="font-size:.78rem;color:#8d98a1;line-height:1.5;flex:1;margin:0 0 .875rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $deal->solution }}</p>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid #f1f5f9;">
-                        @if($deal->ask_amount)<span style="font-size:.9375rem;font-weight:800;color:#0d2b6e;">৳{{ number_format($deal->ask_amount) }}</span>@else<span></span>@endif
-                        <span style="font-size:.75rem;color:#f97316;font-weight:600;">View Deal →</span>
+                    @endif
+                    <div style="margin-top:auto;padding-top:.75rem;border-top:1px solid #f1f5f9;text-align:right;">
+                        <span style="font-size:.75rem;color:#f97316;font-weight:600;">View Profile →</span>
                     </div>
                 </div>
             </a>
