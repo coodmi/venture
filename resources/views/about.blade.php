@@ -166,6 +166,61 @@
     </div>
 </section>
 
+{{-- Board Members --}}
+<section style="background:#fff;padding:5rem 1.5rem;">
+    <div style="max-width:80rem;margin:0 auto;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
+            <div>
+                <span style="display:inline-block;background:#eff6ff;border:1px solid #bfdbfe;color:#1a3c8f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.08em;">Our Team</span>
+                <h2 style="font-size:2.25rem;font-weight:800;color:#0d2b6e;margin:0;letter-spacing:-.02em;">Board Members</h2>
+            </div>
+            <div style="display:flex;gap:.75rem;">
+                <button id="boardPrev" style="width:2.5rem;height:2.5rem;border-radius:50%;border:2px solid #dde3ea;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.borderColor='#1a3c8f';" onmouseout="this.style.borderColor='#dde3ea';"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg></button>
+                <button id="boardNext" style="width:2.5rem;height:2.5rem;border-radius:50%;border:2px solid #dde3ea;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.borderColor='#1a3c8f';" onmouseout="this.style.borderColor='#dde3ea';"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
+            </div>
+        </div>
+
+        <div style="overflow:hidden;">
+        <div id="boardTrack" style="display:flex;gap:1.5rem;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding-bottom:.5rem;">
+            @php
+            $boardMembers=[
+                ['name'=>'Dr. Kamal Hossain','role'=>'Chairman','org'=>'VentureMatch Foundation','color'=>'#1a3c8f','grad'=>'linear-gradient(135deg,#0d2b6e,#2563eb)','bio'=>'Former Governor of Bangladesh Bank with 30+ years in financial regulation and investment policy.'],
+                ['name'=>'Fatima Rahman','role'=>'Vice Chairperson','org'=>'Impact Capital BD','color'=>'#16a34a','grad'=>'linear-gradient(135deg,#14532d,#16a34a)','bio'=>'Pioneer in impact investing across South Asia with a portfolio of 50+ social enterprises.'],
+                ['name'=>'Arif Chowdhury','role'=>'Board Director','org'=>'TechVentures Ltd','color'=>'#f97316','grad'=>'linear-gradient(135deg,#c2410c,#f97316)','bio'=>'Serial entrepreneur and angel investor with exits in FinTech and AgriTech sectors.'],
+                ['name'=>'Nadia Islam','role'=>'Independent Director','org'=>'BRAC Investments','color'=>'#8b5cf6','grad'=>'linear-gradient(135deg,#5b21b6,#8b5cf6)','bio'=>'Expert in corporate governance and sustainable finance with 20+ years of board experience.'],
+                ['name'=>'Tanvir Ahmed','role'=>'Board Director','org'=>'Dhaka Ventures','color'=>'#0891b2','grad'=>'linear-gradient(135deg,#0e7490,#06b6d4)','bio'=>'Venture capitalist focused on early-stage technology startups in emerging markets.'],
+                ['name'=>'Sabrina Malik','role'=>'Advisory Member','org'=>'Global Impact Fund','color'=>'#a855f7','grad'=>'linear-gradient(135deg,#3b0764,#a855f7)','bio'=>'International development finance expert with experience at IFC and ADB.'],
+            ];
+            @endphp
+            @foreach($boardMembers as $member)
+            @php $initials = strtoupper(implode('', array_map(fn($w)=>$w[0], explode(' ', $member['name'])))); @endphp
+            <div style="flex-shrink:0;width:calc(25% - 1.125rem);min-width:220px;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .25s;" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+                {{-- Cover --}}
+                <div style="height:7rem;background:{{ $member['grad'] }};position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                    <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:22px 22px;"></div>
+                    <div style="position:relative;z-index:2;width:3.5rem;height:3.5rem;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff;">{{ $initials }}</div>
+                </div>
+                {{-- Body --}}
+                <div style="padding:1.25rem;">
+                    <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:0 0 .25rem;">{{ $member['name'] }}</h3>
+                    <p style="font-size:.75rem;font-weight:600;color:{{ $member['color'] }};margin:0 0 .2rem;">{{ $member['role'] }}</p>
+                    <p style="font-size:.7rem;color:#8d98a1;margin:0 0 .875rem;">{{ $member['org'] }}</p>
+                    <p style="font-size:.78rem;color:#374151;line-height:1.6;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">{{ $member['bio'] }}</p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        </div>
+    </div>
+</section>
+<script>
+(function(){
+    var track=document.getElementById('boardTrack');
+    document.getElementById('boardPrev').onclick=function(){ track.scrollLeft -= track.offsetWidth; };
+    document.getElementById('boardNext').onclick=function(){ track.scrollLeft += track.offsetWidth; };
+})();
+</script>
+
 {{-- CTA --}}
 <section style="background:linear-gradient(135deg,#0d2b6e 0%,#1a3c8f 50%,#2563eb 100%);padding:5rem 1.5rem;text-align:center;position:relative;overflow:hidden;">
     <div style="position:absolute;top:-4rem;right:-4rem;width:20rem;height:20rem;background:rgba(249,115,22,.12);border-radius:50%;filter:blur(60px);"></div>
