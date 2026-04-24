@@ -159,7 +159,7 @@
                             <p style="font-size:.8rem;font-weight:700;color:#1a3c8f;margin:0;">৳{{ number_format($inv->ticket_size_min/100000,0) }}L – {{ number_format($inv->ticket_size_max/100000,0) }}L</p>
                         </div>
                         @else<span></span>@endif
-                        <a href="{{ route('register.seeker') }}" style="background:#f97316;color:#fff;font-size:.72rem;font-weight:700;padding:.35rem .875rem;border-radius:.5rem;text-decoration:none;">Connect →</a>
+                        <a href="{{ route('investors.show', $inv->id) }}" style="background:#f97316;color:#fff;font-size:.72rem;font-weight:700;padding:.35rem .875rem;border-radius:.5rem;text-decoration:none;">Connect →</a>
                     </div>
                 </div>
             </div>

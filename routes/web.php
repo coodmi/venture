@@ -30,6 +30,7 @@ use App\Http\Controllers\InvestorPageController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/investment', [InvestmentController::class, 'index'])->name('investment.index');
 Route::get('/investors', [InvestorPageController::class, 'index'])->name('investors.index');
+Route::get('/investors/{id}', [InvestorPageController::class, 'show'])->name('investors.show');
 Route::get('/startups', [StartupController::class, 'index'])->name('startups.index');
 Route::get('/startups/{opportunity:slug}', [StartupController::class, 'show'])->name('startups.show');
 Route::post('/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');

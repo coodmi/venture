@@ -42,4 +42,18 @@ class InvestorPageController extends Controller
 
         return view('investors.index', compact('investors', 'types', 'stages', 'counts', 'total'));
     }
+
+    public function show($id)
+    {
+        try {
+            $investor = DB::table('investor_profiles')
+                ->join('users', 'investor_profiles.user_id', '=', 'users.id')
+                ->select('investor_profiles.*', 'users.name as user_name', 'users.email as user_email')
+                ->where('investor_profiles.id', $id)
+                ->firstOrFail();
+        } catch (\Exception $e) {
+            abort(404);
+        }
+        return view('investors.show', compact('investor'));
+    }
 }
