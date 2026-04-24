@@ -5,7 +5,7 @@
 @section('content')
 <div class="space-y-4">
     <div class="flex justify-end">
-        <a href="{{ route('seeker.opportunities.create') }}" class="bg-primary-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-primary-700">
+        <a href="{{ route('seeker.opportunities.create') }}" style="background:#f97316;color:#fff !important;font-size:.875rem;font-weight:600;padding:.5rem 1.25rem;border-radius:.625rem;text-decoration:none;display:inline-block;">
             + Submit New Opportunity
         </a>
     </div>
@@ -37,7 +37,7 @@
     @empty
     <div class="bg-white rounded-xl border border-gray-200 p-12 text-center">
         <p class="text-gray-400 mb-4">No opportunities submitted yet.</p>
-        <a href="{{ route('seeker.opportunities.create') }}" class="bg-primary-600 text-white font-medium px-6 py-2.5 rounded-lg hover:bg-primary-700 text-sm">
+        <a href="{{ route('seeker.opportunities.create') }}" style="background:#f97316;color:#fff !important;font-weight:600;padding:.625rem 1.5rem;border-radius:.625rem;text-decoration:none;font-size:.875rem;display:inline-block;">
             Submit Your First Opportunity
         </a>
     </div>

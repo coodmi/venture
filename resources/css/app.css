@@ -36,7 +36,7 @@
 
 /* Fix browser default blue links globally */
 a { color: inherit; }
-a:not([style*="color"]):not([class*="bg-"]) { color: #1a3c8f; }
+a:not([style*="color"]):not([class*="text-"]):not([class*="bg-"]) { color: #1a3c8f; }
 
 /* Mobile responsive grids */
 @media (max-width: 767px) {
