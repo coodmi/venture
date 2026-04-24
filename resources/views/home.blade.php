@@ -259,9 +259,10 @@
             </div>
         </div>
         @php $gradients=['linear-gradient(135deg,#1a3c8f,#2563eb)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#16a34a,#34d399)','linear-gradient(135deg,#f97316,#fb923c)','linear-gradient(135deg,#dc2626,#f87171)','linear-gradient(135deg,#0891b2,#22d3ee)']; @endphp
+        <div style="overflow:hidden;">
         <div id="eventsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($events as $event)
-            <a href="{{ route('events.show', $event->slug) }}" style="text-decoration:none;flex-shrink:0;width:260px;background:#fff;border-radius:1.25rem;overflow:hidden;border:1px solid #dde3ea;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+            <a href="{{ route('events.show', $event->slug) }}" style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:220px;background:#fff;border-radius:1.25rem;overflow:hidden;border:1px solid #dde3ea;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
                 @if($event->banner)
                     <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}" style="width:100%;height:9rem;object-fit:cover;display:block;">
                 @else
@@ -277,11 +278,22 @@
             </a>
             @endforeach
         </div>
+        </div>
     </div>
 </section>
+@push('scripts')
+<script>
+(function(){
+    var track=document.getElementById('eventsTrack');
+    if(!track) return;
+    var btn1=document.querySelector('[onclick="slideScroll(\'eventsTrack\',-1)"]');
+    var btn2=document.querySelector('[onclick="slideScroll(\'eventsTrack\',1)"]');
+    if(btn1) btn1.onclick=function(){ track.scrollLeft -= track.offsetWidth; };
+    if(btn2) btn2.onclick=function(){ track.scrollLeft += track.offsetWidth; };
+})();
+</script>
+@endpush
 @endif
-
-{{-- ═══ TESTIMONIALS ═══ --}}
 @if($testimonials->count())
 <section style="background:#0d2b6e;padding:5rem 1.5rem;">
     <div style="max-width:80rem;margin:0 auto;">
