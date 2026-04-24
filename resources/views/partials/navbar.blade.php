@@ -12,7 +12,7 @@
     ];
 @endphp
 
-<nav style="background:#fff;border-bottom:2px solid #1a3c8f;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,60,143,.1);">
+<nav style="background:#fff;border-bottom:2px solid #1a3c8f;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,60,143,.1);font-family:'Plus Jakarta Sans',sans-serif;">
     <div style="max-width:80rem;margin:0 auto;padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;height:4.25rem;">
 
         {{-- Logo --}}
