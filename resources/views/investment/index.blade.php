@@ -115,7 +115,7 @@
                 $grad= $coverGradients[$opp->sector] ?? 'linear-gradient(135deg,#0d2b6e 0%,#1a3c8f 100%)';
                 $ico = $icons[$opp->sector] ?? 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6';
             @endphp
-            <a href="{{ route('startups.show',$opp->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,.06);" onmouseover="this.style.boxShadow='0 20px 50px rgba(26,60,143,.16)';this.style.transform='translateY(-5px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
+            <a href="{{ route('investment.show',$opp->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,.06);" onmouseover="this.style.boxShadow='0 20px 50px rgba(26,60,143,.16)';this.style.transform='translateY(-5px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
 
                 {{-- Cover Image --}}
                 <div style="position:relative;height:11rem;background:{{ $grad }};overflow:hidden;display:flex;align-items:center;justify-content:center;">

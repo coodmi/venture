@@ -29,6 +29,7 @@ use App\Http\Controllers\InvestorPageController;
 // ─── Public Routes ────────────────────────────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/investment', [InvestmentController::class, 'index'])->name('investment.index');
+Route::get('/investment/{opportunity:slug}', [InvestmentController::class, 'show'])->name('investment.show');
 Route::get('/investors', [InvestorPageController::class, 'index'])->name('investors.index');
 Route::get('/investors/{id}', [InvestorPageController::class, 'show'])->name('investors.show');
 Route::get('/startups', [StartupController::class, 'index'])->name('startups.index');

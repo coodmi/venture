@@ -15,13 +15,10 @@ class InvestmentController extends Controller
         if ($request->filled('stage'))   $query->where('stage', $request->stage);
         if ($request->filled('search'))  $query->where(function($q) use ($request) {
             $q->where('title', 'like', '%'.$request->search.'%')
-              ->orWhere('business_problem', 'like', '%'.$request->search.'%')
-              ->orWhere('solution', 'like', '%'.$request->search.'%');
+              ->orWhere('business_problem', 'like', '%'.$request->search.'%');
         });
-        if ($request->filled('type')) {
-            if ($request->type === 'hot')      $query->where('is_hot_deal', true);
-            if ($request->type === 'featured') $query->where('is_featured', true);
-        }
+        if ($request->type === 'hot')      $query->where('is_hot_deal', true);
+        if ($request->type === 'featured') $query->where('is_featured', true);
 
         $opportunities = $query->latest()->paginate(12);
         $sectors = Opportunity::approved()->distinct()->pluck('sector')->filter()->sort()->values();
@@ -35,5 +32,16 @@ class InvestmentController extends Controller
         ];
 
         return view('investment.index', compact('opportunities', 'sectors', 'stages', 'stats'));
+    }
+
+    public function show(Opportunity $opportunity)
+    {
+        abort_if($opportunity->status !== 'approved', 404);
+        $opportunity->increment('views');
+        $related = Opportunity::approved()
+            ->where('sector', $opportunity->sector)
+            ->where('id', '!=', $opportunity->id)
+            ->latest()->take(3)->get();
+        return view('investment.show', compact('opportunity', 'related'));
     }
 }
