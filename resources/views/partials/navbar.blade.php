@@ -5,6 +5,7 @@
     $navItems = json_decode(\App\Models\Setting::get('nav_menu_items', '[]'), true) ?: [
         ['label'=>'Home','url'=>'/'],
         ['label'=>'About','url'=>'/about'],
+        ['label'=>'Investment','url'=>'/investment'],
         ['label'=>'Top Startups','url'=>'/startups'],
         ['label'=>'Events','url'=>'/events'],
         ['label'=>'News','url'=>'/news'],
