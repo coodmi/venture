@@ -177,30 +177,54 @@
                 <a href="{{ route('startups.index') }}" style="color:#1a3c8f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
             </div>
         </div>
-        @php $sectorColors=['FinTech'=>'#1a3c8f','AgriTech'=>'#16a34a','HealthTech'=>'#dc2626','EdTech'=>'#f97316','CleanTech'=>'#7c3aed']; @endphp
-        <div id="startupTrack" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
+        @php
+            $sectorColors=['FinTech'=>'#1a3c8f','AgriTech'=>'#16a34a','HealthTech'=>'#dc2626','EdTech'=>'#f97316','CleanTech'=>'#7c3aed'];
+            $coverGrads=['FinTech'=>'linear-gradient(135deg,#1a3c8f,#2563eb)','AgriTech'=>'linear-gradient(135deg,#14532d,#16a34a)','HealthTech'=>'linear-gradient(135deg,#991b1b,#ef4444)','EdTech'=>'linear-gradient(135deg,#c2410c,#f97316)','CleanTech'=>'linear-gradient(135deg,#5b21b6,#8b5cf6)'];
+        @endphp
+        <div style="overflow:hidden;">
+        <div id="startupTrack" style="display:flex;gap:1.25rem;transition:transform .4s ease;padding-bottom:1rem;">
             @foreach($topStartups as $s)
-            @php $sc = $sectorColors[$s->sector] ?? '#1a3c8f'; @endphp
-            <a href="{{ route('startups.show', $s->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;min-width:0;transition:all .25s;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
-                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:{{ $sc }};"></div>
-                <div style="display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.875rem;">
-                    <div style="width:2.5rem;height:2.5rem;border-radius:.75rem;background:{{ $sc }}18;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:.875rem;color:{{ $sc }};">{{ strtoupper(substr($s->title,0,2)) }}</div>
-                    <div style="flex:1;min-width:0;">
-                        <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:0 0 .25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $s->title }}</h3>
-                        <div style="display:flex;gap:.3rem;flex-wrap:wrap;">
-                            @if($s->sector)<span style="font-size:.65rem;font-weight:600;padding:.15rem .45rem;border-radius:9999px;background:{{ $sc }}18;color:{{ $sc }};">{{ $s->sector }}</span>@endif
-                            @if($s->stage)<span style="font-size:.65rem;background:#f1f5f9;color:#8d98a1;padding:.15rem .45rem;border-radius:9999px;">{{ $s->stage }}</span>@endif
-                        </div>
+            @php $sc=$sectorColors[$s->sector]??'#1a3c8f'; $grad=$coverGrads[$s->sector]??'linear-gradient(135deg,#0d2b6e,#2563eb)'; @endphp
+            <a href="{{ route('startups.show',$s->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;flex-shrink:0;width:calc(25% - 1rem);min-width:240px;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+                {{-- Cover --}}
+                <div style="height:7rem;background:{{ $grad }};position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                    <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:22px 22px;"></div>
+                    <div style="position:relative;z-index:2;width:2.75rem;height:2.75rem;border-radius:.875rem;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;">
+                        <span style="color:#fff;font-weight:800;font-size:.9375rem;">{{ strtoupper(substr($s->title,0,2)) }}</span>
                     </div>
+                    @if($s->is_featured)<span style="position:absolute;top:.5rem;right:.5rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);">⭐ Featured</span>@endif
                 </div>
-                <p style="font-size:.8rem;color:#8d98a1;line-height:1.55;flex:1;margin:0 0 1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">{{ $s->business_problem }}</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid #f1f5f9;">
-                    @if($s->ask_amount)<span style="font-size:.9375rem;font-weight:800;color:#1a3c8f;">৳{{ number_format($s->ask_amount) }}</span>@else<span></span>@endif
-                    <span style="font-size:.75rem;color:#f97316;font-weight:600;">Invest →</span>
+                {{-- Body --}}
+                <div style="padding:1rem;flex:1;display:flex;flex-direction:column;">
+                    <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:0 0 .375rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $s->title }}</h3>
+                    <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.625rem;">
+                        @if($s->sector)<span style="font-size:.65rem;font-weight:600;padding:.15rem .45rem;border-radius:9999px;background:{{ $sc }}18;color:{{ $sc }};">{{ $s->sector }}</span>@endif
+                        @if($s->stage)<span style="font-size:.65rem;background:#f1f5f9;color:#8d98a1;padding:.15rem .45rem;border-radius:9999px;">{{ $s->stage }}</span>@endif
+                    </div>
+                    <p style="font-size:.78rem;color:#8d98a1;line-height:1.55;flex:1;margin:0 0 .875rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $s->business_problem }}</p>
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid #f1f5f9;">
+                        @if($s->ask_amount)<span style="font-size:.9375rem;font-weight:800;color:#1a3c8f;">৳{{ number_format($s->ask_amount) }}</span>@else<span></span>@endif
+                        <span style="font-size:.75rem;color:#f97316;font-weight:600;">Invest →</span>
+                    </div>
                 </div>
             </a>
             @endforeach
         </div>
+        </div>
+@push('scripts')
+<script>
+(function(){
+    var track=document.getElementById('startupTrack');
+    if(!track) return;
+    var cardW = track.querySelector('a') ? track.querySelector('a').offsetWidth + 20 : 280;
+    document.querySelector('[onclick="slideScroll(\'startupTrack\',-1)"]').onclick=function(){ track.scrollLeft -= cardW*4; };
+    document.querySelector('[onclick="slideScroll(\'startupTrack\',1)"]').onclick=function(){ track.scrollLeft += cardW*4; };
+    track.style.overflowX='auto';
+    track.style.scrollBehavior='smooth';
+    track.style.scrollbarWidth='none';
+})();
+</script>
+@endpush
     </div>
 </section>
 @endif
