@@ -9,7 +9,6 @@
         ['label'=>'Investors',      'value'=>$stats['total_investors'],       'icon'=>'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 8v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'color'=>'#10b981','light'=>'#ecfdf5','text'=>'#065f46'],
         ['label'=>'Seekers',        'value'=>$stats['total_seekers'],         'icon'=>'M13 10V3L4 14h7v7l9-11h-7z', 'color'=>'#f59e0b','light'=>'#fffbeb','text'=>'#92400e'],
         ['label'=>'Opportunities',  'value'=>$stats['total_opportunities'],   'icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', 'color'=>'#3b82f6','light'=>'#eff6ff','text'=>'#1d4ed8'],
-        ['label'=>'Pending Review', 'value'=>$stats['pending_opportunities'], 'icon'=>'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'color'=>'#ef4444','light'=>'#fef2f2','text'=>'#991b1b'],
     ];
 @endphp
 
@@ -26,7 +25,7 @@
 </div>
 
 {{-- Stats --}}
-<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:1.5rem;">
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
     @foreach($statCards as $card)
     <div style="background:#fff;border:1px solid #e5e7eb;border-radius:.875rem;padding:1.25rem;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:box-shadow .2s;"
          onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.08)';"
@@ -43,8 +42,8 @@
     @endforeach
 </div>
 
-{{-- 3 Column Grid --}}
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:1.5rem;">
+{{-- 2 Column Grid --}}
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-bottom:1.5rem;">
 
     {{-- Recent Users --}}
     <div style="background:#fff;border:1px solid #e5e7eb;border-radius:.875rem;padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.04);">
@@ -88,32 +87,7 @@
         @endforeach
     </div>
 
-    {{-- Pending Memberships --}}
-    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:.875rem;padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.04);">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
-            <h3 style="font-weight:700;color:#111827;font-size:.9375rem;margin:0;">Pending Memberships</h3>
-            <a href="{{ route('admin.memberships.index') }}" style="font-size:.75rem;color:#6366f1;text-decoration:none;font-weight:600;padding:.25rem .625rem;background:#eef2ff;border-radius:.375rem;">View all</a>
-        </div>
-        @forelse($pendingMemberships as $m)
-        <div style="padding:.625rem 0;border-bottom:1px solid #f3f4f6;">
-            <p style="font-size:.8125rem;font-weight:600;color:#111827;margin:0 0 .125rem;">{{ $m->user->name }}</p>
-            <p style="font-size:.7rem;color:#9ca3af;margin:0 0 .375rem;">{{ $m->plan->name }}</p>
-            <a href="{{ route('admin.memberships.show',$m) }}"
-               style="font-size:.75rem;color:#6366f1;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:.25rem;">
-               Review
-               <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </a>
-        </div>
-        @empty
-        <div style="text-align:center;padding:2rem 0;">
-            <svg width="32" height="32" fill="none" stroke="#d1d5db" stroke-width="1.5" viewBox="0 0 24 24" style="margin:0 auto .5rem;display:block;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <p style="font-size:.8125rem;color:#9ca3af;margin:0;">All caught up!</p>
-        </div>
-        @endforelse
-    </div>
-</div>
-
-{{-- Quick Actions --}}
+    {{-- Quick Actions --}}
 <div style="background:#fff;border:1px solid #e5e7eb;border-radius:.875rem;padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.04);">
     <h3 style="font-weight:700;color:#111827;font-size:.9375rem;margin:0 0 1rem;">Quick Actions</h3>
     <div style="display:flex;flex-wrap:wrap;gap:.75rem;">

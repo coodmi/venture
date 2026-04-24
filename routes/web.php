@@ -5,7 +5,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Investor\DashboardController as InvestorDashboard;
@@ -19,7 +18,6 @@ use App\Http\Controllers\Admin\UserController as AdminUser;
 use App\Http\Controllers\Admin\OpportunityController as AdminOpportunity;
 use App\Http\Controllers\Admin\NewsController as AdminNews;
 use App\Http\Controllers\Admin\EventController as AdminEvent;
-use App\Http\Controllers\Admin\MembershipController as AdminMembership;
 use App\Http\Controllers\Admin\SettingsController as AdminSettings;
 
 use App\Http\Controllers\StartupController;
@@ -47,14 +45,6 @@ Route::post('/events/{event}/register', [EventController::class, 'register'])->n
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{news:slug}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/notices', [NewsController::class, 'notices'])->name('notices.index');
-
-// Membership
-Route::get('/membership', [MembershipController::class, 'plans'])->name('membership.plans');
-Route::middleware('auth')->group(function () {
-    Route::get('/membership/apply/{plan:slug}', [MembershipController::class, 'apply'])->name('membership.apply');
-    Route::post('/membership/apply/{plan:slug}', [MembershipController::class, 'store'])->name('membership.store');
-    Route::get('/membership/status', [MembershipController::class, 'status'])->name('membership.status');
-});
 
 // ─── Auth Routes ──────────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -107,12 +97,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Events
     Route::resource('/events', AdminEvent::class);
     Route::get('/events/{event}/registrations', [AdminEvent::class, 'registrations'])->name('events.registrations');
-
-    // Memberships
-    Route::get('/memberships', [AdminMembership::class, 'index'])->name('memberships.index');
-    Route::get('/memberships/plans', [AdminMembership::class, 'plans'])->name('memberships.plans');
-    Route::get('/memberships/{membership}', [AdminMembership::class, 'show'])->name('memberships.show');
-    Route::patch('/memberships/{membership}/status', [AdminMembership::class, 'updateStatus'])->name('memberships.status');
 
     // Settings
     Route::get('/settings', [AdminSettings::class, 'general'])->name('settings.general');

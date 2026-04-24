@@ -16,7 +16,6 @@
                         ['route' => 'investor.dashboard',           'label' => 'Dashboard'],
                         ['route' => 'investor.profile.edit',        'label' => 'My Profile'],
                         ['route' => 'investor.opportunities.index', 'label' => 'Browse Opportunities'],
-                        ['route' => 'membership.status',            'label' => 'Membership'],
                     ];
                 @endphp
             @elseif(auth()->user()->hasRole('seeker'))
@@ -26,7 +25,6 @@
                         ['route' => 'seeker.profile.edit',          'label' => 'My Profile'],
                         ['route' => 'seeker.opportunities.index',   'label' => 'My Opportunities'],
                         ['route' => 'seeker.opportunities.create',  'label' => 'Submit Opportunity'],
-                        ['route' => 'membership.status',            'label' => 'Membership'],
                     ];
                 @endphp
             @else
