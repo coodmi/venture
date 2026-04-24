@@ -401,4 +401,104 @@ function slideScroll(id, dir) {
 <style>.hide-scroll::-webkit-scrollbar{display:none;}</style>
 @endpush
 
+{{-- ═══ WELCOME POPUP ═══ --}}
+@php
+    $siteName = \App\Models\Setting::get('site_name', config('app.name'));
+    $siteLogo = \App\Models\Setting::get('site_logo');
+@endphp
+<div id="welcomePopup" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);opacity:0;transition:opacity .4s ease;">
+    <div style="background:#fff;border-radius:1.25rem;overflow:hidden;max-width:680px;width:100%;display:flex;box-shadow:0 25px 60px rgba(0,0,0,.25);transform:scale(.95);transition:transform .4s ease;" id="welcomePopupInner">
+
+        {{-- Left Panel --}}
+        <div style="width:45%;background:linear-gradient(145deg,#1a3c8f 0%,#2563eb 60%,#6366f1 100%);display:flex;align-items:center;justify-content:center;padding:2.5rem;position:relative;overflow:hidden;flex-shrink:0;">
+            <div style="position:absolute;top:-3rem;left:-3rem;width:10rem;height:10rem;background:rgba(255,255,255,.06);border-radius:50%;"></div>
+            <div style="position:absolute;bottom:-2rem;right:-2rem;width:8rem;height:8rem;background:rgba(255,255,255,.06);border-radius:50%;"></div>
+            <div style="position:relative;z-index:2;text-align:center;">
+                @if($siteLogo)
+                    <img src="{{ Storage::url($siteLogo) }}" alt="{{ $siteName }}" style="max-height:5rem;max-width:160px;object-fit:contain;filter:brightness(0) invert(1);">
+                @else
+                    <div style="width:5rem;height:5rem;background:rgba(255,255,255,.15);border-radius:1.25rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;border:2px solid rgba(255,255,255,.3);">
+                        <span style="color:#fff;font-weight:900;font-size:1.5rem;">{{ strtoupper(substr($siteName,0,2)) }}</span>
+                    </div>
+                    <p style="color:rgba(255,255,255,.9);font-weight:700;font-size:1.125rem;margin:0;">{{ $siteName }}</p>
+                @endif
+                <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.625rem;">
+                    <div style="display:flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.8);font-size:.8125rem;">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Verified Investors
+                    </div>
+                    <div style="display:flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.8);font-size:.8125rem;">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        Top Startup Opportunities
+                    </div>
+                    <div style="display:flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.8);font-size:.8125rem;">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        Grow Your Network
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Right Panel --}}
+        <div style="flex:1;padding:2.5rem;display:flex;flex-direction:column;justify-content:center;position:relative;">
+            <button onclick="closePopup()" style="position:absolute;top:1rem;right:1rem;background:#f3f4f6;border:none;cursor:pointer;width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .15s;" onmouseover="this.style.background='#e5e7eb';" onmouseout="this.style.background='#f3f4f6';">
+                <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div style="margin-bottom:1.5rem;">
+                <span style="display:inline-block;background:#eef2ff;color:#6366f1;font-size:.7rem;font-weight:700;padding:.25rem .75rem;border-radius:9999px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.875rem;">Investment Platform</span>
+                <h2 style="font-size:1.625rem;font-weight:800;color:#111827;margin:0 0 .75rem;line-height:1.2;">Welcome to <span style="color:#2563eb;">{{ $siteName }}</span></h2>
+                <p style="font-size:.9rem;color:#6b7280;line-height:1.65;margin:0;">Connecting investors, founders, and ecosystem stakeholders on Bangladesh's leading venture platform.</p>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:1.75rem;">
+                <a href="{{ route('startups.index') }}" onclick="closePopup()"
+                   style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#2563eb;color:#fff;font-weight:700;padding:.75rem 1.5rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;transition:background .15s;"
+                   onmouseover="this.style.background='#1d4ed8';" onmouseout="this.style.background='#2563eb';">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    Explore Opportunities
+                </a>
+                <a href="{{ route('register.investor') }}" onclick="closePopup()"
+                   style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#f8fafc;border:1px solid #e5e7eb;color:#374151;font-weight:600;padding:.75rem 1.5rem;border-radius:.75rem;text-decoration:none;font-size:.875rem;transition:background .15s;"
+                   onmouseover="this.style.background='#f1f5f9';" onmouseout="this.style.background='#f8fafc';">
+                    Join as Investor or Startup
+                </a>
+            </div>
+
+            <p style="font-size:.75rem;color:#9ca3af;text-align:center;margin:0;">
+                <button onclick="closePopup()" style="background:none;border:none;cursor:pointer;color:#9ca3af;font-size:.75rem;text-decoration:underline;">Skip for now</button>
+            </p>
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+(function() {
+    var popup = document.getElementById('welcomePopup');
+    var inner = document.getElementById('welcomePopupInner');
+    // Show on every page load
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            popup.style.opacity = '1';
+            inner.style.transform = 'scale(1)';
+        }, 600);
+    });
+    window.closePopup = function() {
+        popup.style.opacity = '0';
+        inner.style.transform = 'scale(.95)';
+        setTimeout(function() { popup.style.display = 'none'; }, 400);
+    };
+    // Close on backdrop click
+    popup.addEventListener('click', function(e) {
+        if (e.target === popup) closePopup();
+    });
+    // Close on Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closePopup();
+    });
+})();
+</script>
+@endpush
+
 @endsection
