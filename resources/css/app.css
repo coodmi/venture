@@ -21,8 +21,12 @@
     --color-accent-500: #f97316;
     --color-accent-600: #ea6c0a;
 
-    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
 }
+
+/* Global font enforcement */
+*, *::before, *::after { font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif !important; }
+body { font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
