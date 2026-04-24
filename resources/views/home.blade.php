@@ -103,42 +103,6 @@
     </div>
 </section>
 
-{{-- ═══ HOT DEALS ═══ --}}
-@if($hotDeals->count())
-<section style="background:#fff;padding:4rem 0;">
-    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
-            <div>
-                <span style="display:inline-block;background:#fff7ed;border:1px solid #fed7aa;color:#f97316;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;">🔥 Hot Deals</span>
-                <h2 style="font-size:2rem;font-weight:800;color:#0d2b6e;margin:0;letter-spacing:-.02em;">Active Investment Opportunities</h2>
-            </div>
-            <div style="display:flex;align-items:center;gap:.75rem;">
-                <button onclick="slideScroll('hotDealsTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:2px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg></button>
-                <button onclick="slideScroll('hotDealsTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:2px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
-                <a href="{{ route('startups.index') }}" style="color:#1a3c8f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
-            </div>
-        </div>
-        <div id="hotDealsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
-            @foreach($hotDeals as $deal)
-            <a href="{{ route('startups.show', $deal->slug) }}" style="text-decoration:none;flex-shrink:0;width:280px;display:block;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
-                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#f97316,#fb923c);"></div>
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;">
-                    <span style="background:#fff7ed;color:#f97316;font-size:.7rem;font-weight:700;padding:.25rem .625rem;border-radius:9999px;border:1px solid #fed7aa;">🔥 Hot Deal</span>
-                    <span style="font-size:.75rem;color:#8d98a1;font-weight:500;">{{ $deal->sector }}</span>
-                </div>
-                <h3 style="font-size:1rem;font-weight:700;color:#0d2b6e;margin:0 0 .5rem;line-height:1.4;">{{ $deal->title }}</h3>
-                <p style="font-size:.8125rem;color:#8d98a1;margin:0 0 1.25rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $deal->solution }}</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.875rem;border-top:1px solid #f1f5f9;">
-                    <span style="font-size:1rem;font-weight:800;color:#1a3c8f;">৳{{ number_format($deal->ask_amount) }}</span>
-                    <span style="font-size:.75rem;color:#f97316;font-weight:600;">View Details →</span>
-                </div>
-            </a>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
-
 {{-- ═══ TOP STARTUPS ═══ --}}
 @if($topStartups->count())
 <section style="background:#f4f7fb;padding:4rem 0;">
