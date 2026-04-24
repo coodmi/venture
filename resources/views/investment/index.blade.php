@@ -89,42 +89,76 @@
             <p style="color:#8d98a1;font-size:.875rem;">Try adjusting your filters</p>
         </div>
         @else
+        @php
+        $coverGradients=[
+            'FinTech'    =>'linear-gradient(135deg,#1a3c8f 0%,#2563eb 100%)',
+            'AgriTech'   =>'linear-gradient(135deg,#14532d 0%,#16a34a 100%)',
+            'HealthTech' =>'linear-gradient(135deg,#991b1b 0%,#ef4444 100%)',
+            'EdTech'     =>'linear-gradient(135deg,#c2410c 0%,#f97316 100%)',
+            'CleanTech'  =>'linear-gradient(135deg,#5b21b6 0%,#8b5cf6 100%)',
+            'E-Commerce' =>'linear-gradient(135deg,#0e7490 0%,#06b6d4 100%)',
+            'FoodTech'   =>'linear-gradient(135deg,#b45309 0%,#f59e0b 100%)',
+            'LogiTech'   =>'linear-gradient(135deg,#3730a3 0%,#6366f1 100%)',
+        ];
+        $icons=[
+            'FinTech'=>'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+            'AgriTech'=>'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064',
+            'HealthTech'=>'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z',
+            'EdTech'=>'M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z',
+            'CleanTech'=>'M13 10V3L4 14h7v7l9-11h-7z',
+        ];
+        @endphp
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;">
             @foreach($opportunities as $opp)
-            @php $sc=$sectorColors[$opp->sector]??'#1a3c8f'; @endphp
-            <a href="{{ route('startups.show',$opp->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 16px 40px rgba(26,60,143,.14)';this.style.transform='translateY(-4px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
-                {{-- Color bar --}}
-                <div style="height:4px;background:linear-gradient(to right,{{ $sc }},{{ $sc }}99);"></div>
-                <div style="padding:1.5rem;flex:1;display:flex;flex-direction:column;">
-                    {{-- Header --}}
-                    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;">
-                        <div style="width:3rem;height:3rem;border-radius:.875rem;background:{{ $sc }}18;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <span style="color:{{ $sc }};font-weight:800;font-size:1rem;">{{ strtoupper(substr($opp->title,0,2)) }}</span>
-                        </div>
-                        <div style="display:flex;gap:.375rem;flex-wrap:wrap;justify-content:flex-end;">
-                            @if($opp->is_hot_deal)<span style="font-size:.65rem;background:#fff7ed;color:#f97316;font-weight:700;padding:.2rem .55rem;border-radius:9999px;border:1px solid #fed7aa;">🔥 Hot</span>@endif
-                            @if($opp->is_featured)<span style="font-size:.65rem;background:#eff6ff;color:#1a3c8f;font-weight:700;padding:.2rem .55rem;border-radius:9999px;border:1px solid #bfdbfe;">⭐ Featured</span>@endif
-                        </div>
+            @php
+                $sc  = $sectorColors[$opp->sector] ?? '#1a3c8f';
+                $grad= $coverGradients[$opp->sector] ?? 'linear-gradient(135deg,#0d2b6e 0%,#1a3c8f 100%)';
+                $ico = $icons[$opp->sector] ?? 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6';
+            @endphp
+            <a href="{{ route('startups.show',$opp->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,.06);" onmouseover="this.style.boxShadow='0 20px 50px rgba(26,60,143,.16)';this.style.transform='translateY(-5px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
+
+                {{-- Cover Image --}}
+                <div style="position:relative;height:11rem;background:{{ $grad }};overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                    {{-- Background pattern --}}
+                    <div style="position:absolute;inset:0;opacity:.08;background-image:radial-gradient(circle at 20% 50%,#fff 1px,transparent 1px),radial-gradient(circle at 80% 20%,#fff 1px,transparent 1px);background-size:30px 30px;"></div>
+                    {{-- Logo circle --}}
+                    <div style="position:relative;z-index:2;width:4.5rem;height:4.5rem;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);border-radius:1.25rem;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+                        <span style="color:#fff;font-weight:800;font-size:1.375rem;letter-spacing:-.02em;">{{ strtoupper(substr($opp->title,0,2)) }}</span>
                     </div>
-                    {{-- Title --}}
-                    <h3 style="font-weight:700;color:#0d2b6e;font-size:1.0625rem;margin:0 0 .5rem;line-height:1.4;">{{ $opp->title }}</h3>
+                    {{-- Badges --}}
+                    <div style="position:absolute;top:.75rem;left:.75rem;display:flex;gap:.375rem;">
+                        @if($opp->is_hot_deal)<span style="background:rgba(249,115,22,.9);color:#fff;font-size:.65rem;font-weight:700;padding:.25rem .625rem;border-radius:9999px;backdrop-filter:blur(4px);">🔥 Hot Deal</span>@endif
+                        @if($opp->is_featured)<span style="background:rgba(255,255,255,.2);color:#fff;font-size:.65rem;font-weight:700;padding:.25rem .625rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(4px);">⭐ Featured</span>@endif
+                    </div>
+                    {{-- Sector icon top right --}}
+                    <div style="position:absolute;top:.75rem;right:.75rem;width:2rem;height:2rem;background:rgba(255,255,255,.15);border-radius:.5rem;display:flex;align-items:center;justify-content:center;">
+                        <svg width="14" height="14" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $ico }}"/></svg>
+                    </div>
+                    {{-- Bottom fade --}}
+                    <div style="position:absolute;bottom:0;left:0;right:0;height:3rem;background:linear-gradient(to top,rgba(0,0,0,.15),transparent);"></div>
+                </div>
+
+                {{-- Card Body --}}
+                <div style="padding:1.25rem 1.5rem;flex:1;display:flex;flex-direction:column;">
                     {{-- Tags --}}
-                    <div style="display:flex;flex-wrap:wrap;gap:.375rem;margin-bottom:.875rem;">
-                        @if($opp->sector)<span style="font-size:.68rem;font-weight:600;padding:.2rem .6rem;border-radius:9999px;background:{{ $sc }}18;color:{{ $sc }};">{{ $opp->sector }}</span>@endif
+                    <div style="display:flex;flex-wrap:wrap;gap:.375rem;margin-bottom:.75rem;">
+                        @if($opp->sector)<span style="font-size:.68rem;font-weight:600;padding:.2rem .6rem;border-radius:9999px;background:{{ $sc }}15;color:{{ $sc }};border:1px solid {{ $sc }}30;">{{ $opp->sector }}</span>@endif
                         @if($opp->stage)<span style="font-size:.68rem;background:#f1f5f9;color:#475569;padding:.2rem .6rem;border-radius:9999px;">{{ $opp->stage }}</span>@endif
                         @if($opp->location)<span style="font-size:.68rem;color:#8d98a1;">📍 {{ $opp->location }}</span>@endif
                     </div>
+                    {{-- Title --}}
+                    <h3 style="font-weight:700;color:#0d2b6e;font-size:1.0625rem;margin:0 0 .5rem;line-height:1.4;">{{ $opp->title }}</h3>
                     {{-- Description --}}
-                    <p style="font-size:.8125rem;color:#8d98a1;line-height:1.6;flex:1;margin:0 0 1.25rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">{{ $opp->business_problem }}</p>
+                    <p style="font-size:.8125rem;color:#8d98a1;line-height:1.6;flex:1;margin:0 0 1.25rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $opp->business_problem }}</p>
                     {{-- Footer --}}
                     <div style="display:flex;align-items:center;justify-content:space-between;padding-top:1rem;border-top:1px solid #f1f5f9;">
                         @if($opp->ask_amount)
                         <div>
-                            <p style="font-size:.65rem;color:#8d98a1;margin:0 0 .125rem;text-transform:uppercase;letter-spacing:.05em;">Investment Ask</p>
-                            <p style="font-weight:800;color:#0d2b6e;font-size:1.0625rem;margin:0;">৳{{ number_format($opp->ask_amount) }}</p>
+                            <p style="font-size:.6rem;color:#8d98a1;margin:0 0 .1rem;text-transform:uppercase;letter-spacing:.06em;font-weight:600;">Investment Ask</p>
+                            <p style="font-weight:800;color:#0d2b6e;font-size:1.125rem;margin:0;">৳{{ number_format($opp->ask_amount) }}</p>
                         </div>
                         @else<span></span>@endif
-                        <span style="background:#f97316;color:#fff;font-size:.75rem;font-weight:700;padding:.375rem .875rem;border-radius:.5rem;">Invest Now →</span>
+                        <span style="background:linear-gradient(135deg,#f97316,#fb923c);color:#fff;font-size:.78rem;font-weight:700;padding:.5rem 1.125rem;border-radius:.625rem;box-shadow:0 4px 12px rgba(249,115,22,.3);">Invest Now →</span>
                     </div>
                 </div>
             </a>
