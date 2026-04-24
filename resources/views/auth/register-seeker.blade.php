@@ -6,7 +6,7 @@
 <div style="min-height:100vh;background:#f4f7fb;display:flex;align-items:center;justify-content:center;padding:2rem 1.25rem;">
     <div style="width:100%;max-width:28rem;">
         <div style="text-align:center;margin-bottom:2rem;">
-            <a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;margin-bottom:1.25rem;">
+            <a href="{{ route('home') }}" style="display:flex;align-items:center;justify-content:center;gap:.5rem;text-decoration:none;margin-bottom:1.25rem;">
                 @if($siteLogo)
                     <img src="{{ Storage::url($siteLogo) }}" alt="{{ $siteName }}" style="height:2.25rem;width:auto;object-fit:contain;">
                 @else

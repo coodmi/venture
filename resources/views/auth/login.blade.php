@@ -7,7 +7,7 @@
 
         {{-- Logo --}}
         <div style="text-align:center;margin-bottom:2rem;">
-            <a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;margin-bottom:1.5rem;">
+            <a href="{{ route('home') }}" style="display:flex;align-items:center;justify-content:center;gap:.5rem;text-decoration:none;margin-bottom:1.5rem;">
                 @php $siteLogo=\App\Models\Setting::get('site_logo'); $siteName=\App\Models\Setting::get('site_name',config('app.name')); @endphp
                 @if($siteLogo)
                     <img src="{{ Storage::url($siteLogo) }}" alt="{{ $siteName }}" style="height:2.5rem;width:auto;object-fit:contain;">
