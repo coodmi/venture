@@ -14,7 +14,6 @@
                     <span style="font-weight:700;font-size:1.125rem;color:#0d2b6e;">{{ $siteName }}</span>
                 @endif
             </a>
-            <div style="display:inline-flex;align-items:center;gap:.5rem;background:#eff6ff;border:1px solid #bfdbfe;color:#1a3c8f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.08em;">🚀 Investor Registration</div>
             <h1 style="font-size:1.75rem;font-weight:800;color:#0d2b6e;margin:0 0 .375rem;letter-spacing:-.02em;">Join as Investor</h1>
             <p style="color:#8d98a1;font-size:.9375rem;margin:0;">Access curated investment opportunities</p>
         </div>
