@@ -123,6 +123,7 @@
             $invCoverGrad=['angel'=>'linear-gradient(135deg,#7c2d12,#f97316)','vc'=>'linear-gradient(135deg,#0d2b6e,#2563eb)','corporate'=>'linear-gradient(135deg,#1e1b4b,#6366f1)','family_office'=>'linear-gradient(135deg,#3b0764,#a855f7)','impact'=>'linear-gradient(135deg,#052e16,#16a34a)'];
             $invTypeLabel=['angel'=>'Angel','vc'=>'Venture Capital','corporate'=>'Corporate','family_office'=>'Family Office','impact'=>'Impact'];
         @endphp
+        <div style="overflow:hidden;">
         <div id="investorTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($topInvestors as $inv)
             @php
@@ -131,7 +132,7 @@
                 $initials = strtoupper(substr($inv->user_name ?? 'IN', 0, 2));
                 $sectors = json_decode($inv->sector_preferences ?? '[]', true) ?: [];
             @endphp
-            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;flex-shrink:0;width:240px;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:220px;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
                 <div style="height:6rem;background:{{ $ig }};position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
                     <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:20px 20px;"></div>
                     <div style="position:relative;z-index:2;width:3rem;height:3rem;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff;">{{ $initials }}</div>
@@ -158,6 +159,19 @@
             </a>
             @endforeach
         </div>
+        </div>
+@push('scripts')
+<script>
+(function(){
+    var track=document.getElementById('investorTrack');
+    if(!track) return;
+    var btn1=document.querySelector('[onclick="slideScroll(\'investorTrack\',-1)"]');
+    var btn2=document.querySelector('[onclick="slideScroll(\'investorTrack\',1)"]');
+    if(btn1) btn1.onclick=function(){ track.scrollLeft -= track.offsetWidth; };
+    if(btn2) btn2.onclick=function(){ track.scrollLeft += track.offsetWidth; };
+})();
+</script>
+@endpush
     </div>
 </section>
 @endif
