@@ -101,29 +101,40 @@
                 $sectors = json_decode($inv->sector_preferences ?? '[]', true) ?: [];
             @endphp
             <div style="background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .25s;" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
-                {{-- Top color bar --}}
-                <div style="height:4px;background:{{ $ic }};"></div>
-                <div style="padding:1.5rem;flex:1;display:flex;flex-direction:column;">
-                    {{-- Header --}}
-                    <div style="display:flex;align-items:flex-start;gap:.875rem;margin-bottom:1rem;">
-                        <div style="width:3.25rem;height:3.25rem;border-radius:1rem;background:{{ $ic }};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:1.125rem;color:#fff;box-shadow:0 4px 12px {{ $ic }}40;">
-                            {{ $initials }}
-                        </div>
-                        <div style="flex:1;min-width:0;">
-                            <p style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:0 0 .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $name }}</p>
-                            @if($inv->designation)<p style="font-size:.75rem;color:#8d98a1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>@endif
-                            @if($inv->organization)<p style="font-size:.7rem;color:#8d98a1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">🏢 {{ $inv->organization }}</p>@endif
-                        </div>
-                        @if(($inv->verification_status??'') === 'verified')
-                        <span title="Verified" style="color:#16a34a;flex-shrink:0;">
-                            <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                        </span>
-                        @endif
+
+                {{-- Cover Image --}}
+                @php
+                    $coverGrads=['angel'=>'linear-gradient(135deg,#c2410c 0%,#f97316 100%)','vc'=>'linear-gradient(135deg,#0d2b6e 0%,#2563eb 100%)','corporate'=>'linear-gradient(135deg,#3730a3 0%,#6366f1 100%)','family_office'=>'linear-gradient(135deg,#6b21a8 0%,#a855f7 100%)','impact'=>'linear-gradient(135deg,#14532d 0%,#16a34a 100%)'];
+                    $coverGrad = $coverGrads[$inv->investor_type] ?? 'linear-gradient(135deg,#0d2b6e 0%,#1a3c8f 100%)';
+                @endphp
+                <div style="position:relative;height:9rem;background:{{ $coverGrad }};overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                    <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle at 25% 50%,#fff 1px,transparent 1px),radial-gradient(circle at 75% 25%,#fff 1px,transparent 1px);background-size:28px 28px;"></div>
+                    <div style="position:absolute;top:-2rem;right:-2rem;width:8rem;height:8rem;background:rgba(255,255,255,.06);border-radius:50%;"></div>
+                    <div style="position:absolute;bottom:-3rem;left:-2rem;width:10rem;height:10rem;background:rgba(255,255,255,.04);border-radius:50%;"></div>
+                    {{-- Avatar --}}
+                    <div style="position:relative;z-index:2;width:4.5rem;height:4.5rem;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.2);">
+                        <span style="color:#fff;font-weight:800;font-size:1.375rem;">{{ $initials }}</span>
+                    </div>
+                    {{-- Verified badge on cover --}}
+                    @if(($inv->verification_status??'') === 'verified')
+                    <div style="position:absolute;bottom:.75rem;right:.75rem;background:rgba(22,163,74,.9);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;display:flex;align-items:center;gap:.25rem;">
+                        <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        Verified
+                    </div>
+                    @endif
+                    {{-- Type badge --}}
+                    <div style="position:absolute;top:.75rem;left:.75rem;background:rgba(0,0,0,.3);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;backdrop-filter:blur(4px);">{{ $typeLabel[$inv->investor_type]??$inv->investor_type }}</div>
+                </div>
+                <div style="padding:1.25rem 1.5rem;flex:1;display:flex;flex-direction:column;">
+                    {{-- Name & org --}}
+                    <div style="margin-bottom:.875rem;">
+                        <p style="font-size:1rem;font-weight:700;color:#0d2b6e;margin:0 0 .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $name }}</p>
+                        @if($inv->designation)<p style="font-size:.75rem;color:#8d98a1;margin:0 0 .1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>@endif
+                        @if($inv->organization)<p style="font-size:.7rem;color:#8d98a1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">🏢 {{ $inv->organization }}</p>@endif
                     </div>
 
-                    {{-- Badges --}}
+                    {{-- Stage badge --}}
                     <div style="display:flex;flex-wrap:wrap;gap:.375rem;margin-bottom:.875rem;">
-                        <span style="font-size:.68rem;font-weight:600;padding:.2rem .6rem;border-radius:9999px;{{ $typeBg[$inv->investor_type]??'background:#f1f5f9;color:#475569;' }}">{{ $typeLabel[$inv->investor_type]??$inv->investor_type }}</span>
                         @if($inv->investment_stage)<span style="font-size:.68rem;background:#f1f5f9;color:#475569;padding:.2rem .6rem;border-radius:9999px;">{{ $stageLabel[$inv->investment_stage]??$inv->investment_stage }}</span>@endif
                     </div>
 
