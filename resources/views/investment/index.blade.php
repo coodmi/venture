@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Investment Opportunities')
+@section('title', 'Investors — Investment Opportunities')
 
 @section('content')
 @php
@@ -14,6 +14,7 @@
         <span style="display:inline-block;background:rgba(249,115,22,.2);border:1px solid rgba(249,115,22,.4);color:#fed7aa;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:.08em;">🚀 Live Opportunities</span>
         <h1 style="font-size:clamp(2.5rem,6vw,4rem);font-weight:800;line-height:1.1;margin:0 0 1.25rem;letter-spacing:-.03em;max-width:40rem;">
             Discover & Invest in <span style="color:#fb923c;">Tomorrow's Ventures</span>
+        </h1>
         </h1>
         <p style="font-size:1.125rem;color:rgba(255,255,255,.8);max-width:36rem;line-height:1.7;margin:0 0 2.5rem;">
             Browse verified, high-potential investment opportunities across sectors. Connect directly with founders and deploy capital with confidence.

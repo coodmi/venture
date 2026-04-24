@@ -12,7 +12,7 @@
     <div style="max-width:80rem;margin:0 auto;">
         <a href="{{ route('investment.index') }}" style="color:rgba(255,255,255,.6);font-size:.8125rem;text-decoration:none;display:inline-flex;align-items:center;gap:.375rem;margin-bottom:1.5rem;">
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-            Investment Opportunities
+            Back to Investors
         </a>
         <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;">
             <div style="display:flex;align-items:center;gap:1.25rem;">
