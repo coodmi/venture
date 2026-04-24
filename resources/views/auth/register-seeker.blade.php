@@ -2,68 +2,66 @@
 @section('title', 'Join as Seeker')
 
 @section('content')
-@php $siteLogo = \App\Models\Setting::get('site_logo'); $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
-<div style="min-height:100vh;background:linear-gradient(135deg,#0d0a04 0%,#1a1208 50%,#241c0a 100%);display:flex;align-items:center;justify-content:center;padding:2rem 1.25rem;position:relative;overflow:hidden;">
-    <div style="position:absolute;top:-8rem;right:-8rem;width:30rem;height:30rem;background:rgba(212,146,15,.06);border-radius:50%;filter:blur(60px);"></div>
-    <div style="position:absolute;bottom:-8rem;left:-8rem;width:25rem;height:25rem;background:rgba(212,146,15,.04);border-radius:50%;filter:blur(60px);"></div>
-
-    <div style="width:100%;max-width:28rem;position:relative;">
+@php $siteLogo=\App\Models\Setting::get('site_logo'); $siteName=\App\Models\Setting::get('site_name',config('app.name')); @endphp
+<div style="min-height:100vh;background:#f4f7fb;display:flex;align-items:center;justify-content:center;padding:2rem 1.25rem;">
+    <div style="width:100%;max-width:28rem;">
         <div style="text-align:center;margin-bottom:2rem;">
             <a href="{{ route('home') }}" style="display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;margin-bottom:1.25rem;">
                 @if($siteLogo)
                     <img src="{{ Storage::url($siteLogo) }}" alt="{{ $siteName }}" style="height:2.25rem;width:auto;object-fit:contain;">
                 @else
-                    <div style="width:2.25rem;height:2.25rem;background:linear-gradient(135deg,#d4920f,#f59e0b);border-radius:.5rem;display:flex;align-items:center;justify-content:center;"><span style="color:#0d0a04;font-weight:800;font-size:.75rem;">{{ strtoupper(substr($siteName,0,2)) }}</span></div>
-                    <span style="font-weight:700;font-size:1.125rem;color:#f0e6c8;">{{ $siteName }}</span>
+                    <div style="width:2.25rem;height:2.25rem;background:#1a3c8f;border-radius:.5rem;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-weight:800;font-size:.75rem;">{{ strtoupper(substr($siteName,0,2)) }}</span></div>
+                    <span style="font-weight:700;font-size:1.125rem;color:#0d2b6e;">{{ $siteName }}</span>
                 @endif
             </a>
-            <div style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(212,146,15,.12);border:1px solid rgba(212,146,15,.25);color:#d4920f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.08em;">💡 Startup Registration</div>
-            <h1 style="font-size:1.75rem;font-weight:800;color:#f0e6c8;margin:0 0 .375rem;letter-spacing:-.02em;">Join as Seeker</h1>
-            <p style="color:#7a6a4a;font-size:.9375rem;margin:0;">Submit your opportunity and connect with investors</p>
+            <div style="display:inline-flex;align-items:center;gap:.5rem;background:#fff7ed;border:1px solid #fed7aa;color:#f97316;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.08em;">💡 Startup Registration</div>
+            <h1 style="font-size:1.75rem;font-weight:800;color:#0d2b6e;margin:0 0 .375rem;letter-spacing:-.02em;">Join as Seeker</h1>
+            <p style="color:#8d98a1;font-size:.9375rem;margin:0;">Submit your opportunity and connect with investors</p>
         </div>
 
-        <div style="background:#1a1408;border:1px solid rgba(212,146,15,.2);border-radius:1.25rem;padding:2rem;box-shadow:0 20px 60px rgba(0,0,0,.4);">
+        <div style="background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08);">
             @if($errors->any())
-            <div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;padding:.875rem 1rem;border-radius:.75rem;margin-bottom:1.25rem;font-size:.875rem;">
+            <div style="background:#fef2f2;border:1px solid #fecaca;color:#dc2626;padding:.875rem 1rem;border-radius:.75rem;margin-bottom:1.25rem;font-size:.875rem;">
                 <ul style="margin:0;padding-left:1.25rem;">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul>
             </div>
             @endif
 
             <form method="POST" action="{{ route('register.seeker') }}">
                 @csrf
-                @php $inputStyle = "width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;font-size:.9375rem;border-radius:.625rem;padding:.75rem 1rem;outline:none;box-sizing:border-box;"; $labelStyle = "display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;"; @endphp
+                @php $inp="width:100%;background:#f4f7fb;border:1px solid #dde3ea;color:#374151;font-size:.9375rem;border-radius:.625rem;padding:.75rem 1rem;outline:none;box-sizing:border-box;"; $lbl="display:block;font-size:.8125rem;font-weight:600;color:#374151;margin-bottom:.5rem;"; @endphp
 
                 <div style="margin-bottom:1.125rem;">
-                    <label style="{{ $labelStyle }}">Full Name <span style="color:#f87171;">*</span></label>
-                    <input type="text" name="name" value="{{ old('name') }}" required style="{{ $inputStyle }}" onfocus="this.style.borderColor='rgba(212,146,15,.6)';" onblur="this.style.borderColor='rgba(212,146,15,.2)';">
+                    <label style="{{ $lbl }}">Full Name <span style="color:#ef4444;">*</span></label>
+                    <input type="text" name="name" value="{{ old('name') }}" required style="{{ $inp }}" onfocus="this.style.borderColor='#f97316';" onblur="this.style.borderColor='#dde3ea';">
                 </div>
                 <div style="margin-bottom:1.125rem;">
-                    <label style="{{ $labelStyle }}">Email Address <span style="color:#f87171;">*</span></label>
-                    <input type="email" name="email" value="{{ old('email') }}" required style="{{ $inputStyle }}" onfocus="this.style.borderColor='rgba(212,146,15,.6)';" onblur="this.style.borderColor='rgba(212,146,15,.2)';">
+                    <label style="{{ $lbl }}">Email Address <span style="color:#ef4444;">*</span></label>
+                    <input type="email" name="email" value="{{ old('email') }}" required style="{{ $inp }}" onfocus="this.style.borderColor='#f97316';" onblur="this.style.borderColor='#dde3ea';">
                 </div>
                 <div style="margin-bottom:1.125rem;">
-                    <label style="{{ $labelStyle }}">Phone Number</label>
-                    <input type="tel" name="phone" value="{{ old('phone') }}" style="{{ $inputStyle }}" onfocus="this.style.borderColor='rgba(212,146,15,.6)';" onblur="this.style.borderColor='rgba(212,146,15,.2)';">
+                    <label style="{{ $lbl }}">Phone Number</label>
+                    <input type="tel" name="phone" value="{{ old('phone') }}" style="{{ $inp }}" onfocus="this.style.borderColor='#f97316';" onblur="this.style.borderColor='#dde3ea';">
                 </div>
                 <div style="margin-bottom:1.125rem;">
-                    <label style="{{ $labelStyle }}">Password <span style="color:#f87171;">*</span></label>
-                    <input type="password" name="password" required style="{{ $inputStyle }}" onfocus="this.style.borderColor='rgba(212,146,15,.6)';" onblur="this.style.borderColor='rgba(212,146,15,.2)';">
+                    <label style="{{ $lbl }}">Password <span style="color:#ef4444;">*</span></label>
+                    <input type="password" name="password" required style="{{ $inp }}" onfocus="this.style.borderColor='#f97316';" onblur="this.style.borderColor='#dde3ea';">
+                    <p style="font-size:.75rem;color:#8d98a1;margin:.375rem 0 0;">Min 8 characters</p>
                 </div>
                 <div style="margin-bottom:1.5rem;">
-                    <label style="{{ $labelStyle }}">Confirm Password <span style="color:#f87171;">*</span></label>
-                    <input type="password" name="password_confirmation" required style="{{ $inputStyle }}" onfocus="this.style.borderColor='rgba(212,146,15,.6)';" onblur="this.style.borderColor='rgba(212,146,15,.2)';">
+                    <label style="{{ $lbl }}">Confirm Password <span style="color:#ef4444;">*</span></label>
+                    <input type="password" name="password_confirmation" required style="{{ $inp }}" onfocus="this.style.borderColor='#f97316';" onblur="this.style.borderColor='#dde3ea';">
                 </div>
-                <button type="submit" style="width:100%;background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;font-size:1rem;padding:.875rem;border-radius:.75rem;border:none;cursor:pointer;letter-spacing:.01em;" onmouseover="this.style.opacity='.9';" onmouseout="this.style.opacity='1';">
+                <button type="submit" style="width:100%;background:linear-gradient(135deg,#f97316,#fb923c);color:#fff;font-weight:700;font-size:1rem;padding:.875rem;border-radius:.75rem;border:none;cursor:pointer;" onmouseover="this.style.opacity='.9';" onmouseout="this.style.opacity='1';">
                     Create Seeker Account →
                 </button>
             </form>
 
-            <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(212,146,15,.1);text-align:center;">
-                <p style="font-size:.875rem;color:#6b5c3e;margin:0 0 .5rem;">Already have an account? <a href="{{ route('login') }}" style="color:#d4920f;font-weight:600;text-decoration:none;">Sign in</a></p>
-                <p style="font-size:.875rem;color:#6b5c3e;margin:0;">Looking to invest? <a href="{{ route('register.investor') }}" style="color:#d4920f;font-weight:600;text-decoration:none;">Join as Investor</a></p>
+            <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #f1f5f9;text-align:center;">
+                <p style="font-size:.875rem;color:#8d98a1;margin:0 0 .5rem;">Already have an account? <a href="{{ route('login') }}" style="color:#1a3c8f;font-weight:600;text-decoration:none;">Sign in</a></p>
+                <p style="font-size:.875rem;color:#8d98a1;margin:0;">Looking to invest? <a href="{{ route('register.investor') }}" style="color:#1a3c8f;font-weight:600;text-decoration:none;">Join as Investor</a></p>
             </div>
         </div>
-        <p style="text-align:center;margin-top:1.5rem;"><a href="{{ route('home') }}" style="font-size:.8125rem;color:rgba(212,146,15,.4);text-decoration:none;" onmouseover="this.style.color='#d4920f';" onmouseout="this.style.color='rgba(212,146,15,.4)';">← Back to Home</a></p>
+        <p style="text-align:center;margin-top:1.5rem;"><a href="{{ route('home') }}" style="font-size:.8125rem;color:#8d98a1;text-decoration:none;" onmouseover="this.style.color='#1a3c8f';" onmouseout="this.style.color='#8d98a1';">← Back to Home</a></p>
     </div>
 </div>
 @endsection
