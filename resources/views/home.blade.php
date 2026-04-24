@@ -178,10 +178,10 @@
             </div>
         </div>
         @php $sectorColors=['FinTech'=>'#1a3c8f','AgriTech'=>'#16a34a','HealthTech'=>'#dc2626','EdTech'=>'#f97316','CleanTech'=>'#7c3aed']; @endphp
-        <div id="startupTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
+        <div id="startupTrack" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($topStartups as $s)
             @php $sc = $sectorColors[$s->sector] ?? '#1a3c8f'; @endphp
-            <a href="{{ route('startups.show', $s->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:280px;transition:all .25s;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+            <a href="{{ route('startups.show', $s->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;min-width:0;transition:all .25s;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
                 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:{{ $sc }};"></div>
                 <div style="display:flex;align-items:flex-start;gap:.75rem;margin-bottom:.875rem;">
                     <div style="width:2.5rem;height:2.5rem;border-radius:.75rem;background:{{ $sc }}18;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:.875rem;color:{{ $sc }};">{{ strtoupper(substr($s->title,0,2)) }}</div>
