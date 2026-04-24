@@ -182,55 +182,7 @@
 </section>
 @endif
 
-{{-- ═══ TOP INVESTORS ═══ --}}
-@if($topInvestors->count())
-<section style="background:#fff;padding:4rem 0;">
-    <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem;">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
-            <div>
-                <span style="display:inline-block;background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a;font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:9999px;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em;">✓ Verified</span>
-                <h2 style="font-size:2rem;font-weight:800;color:#0d2b6e;margin:0;letter-spacing:-.02em;">Top Investors</h2>
-            </div>
-            <div style="display:flex;align-items:center;gap:.75rem;">
-                <button onclick="slideScroll('investorTrack',-1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:2px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg></button>
-                <button onclick="slideScroll('investorTrack',1)" style="width:2.5rem;height:2.5rem;border-radius:50%;border:2px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
-                <a href="{{ route('investors.index') }}" style="color:#1a3c8f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
-            </div>
-        </div>
-        @php $invColors=['angel'=>'#f97316','vc'=>'#1a3c8f','corporate'=>'#6366f1','family_office'=>'#a855f7','impact'=>'#16a34a']; $invLabels=['angel'=>'Angel','vc'=>'Venture Capital','corporate'=>'Corporate','family_office'=>'Family Office','impact'=>'Impact']; $invBadge=['angel'=>'background:#fff7ed;color:#f97316;','vc'=>'background:#eff6ff;color:#1a3c8f;','corporate'=>'background:#eef2ff;color:#4f46e5;','family_office'=>'background:#faf5ff;color:#7c3aed;','impact'=>'background:#f0fdf4;color:#16a34a;']; @endphp
-        <div id="investorTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
-            @foreach($topInvestors as $inv)
-            @php $ic = $invColors[$inv->investor_type] ?? '#1a3c8f'; @endphp
-            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;padding:1.5rem;display:flex;flex-direction:column;flex-shrink:0;width:270px;transition:all .25s;overflow:hidden;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
-                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:{{ $ic }};"></div>
-                <div style="display:flex;align-items:flex-start;gap:.875rem;margin-bottom:1rem;">
-                    <div style="width:2.75rem;height:2.75rem;border-radius:.75rem;background:{{ $ic }};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:.9375rem;color:#fff;">{{ strtoupper(substr($inv->user->name??'IN',0,2)) }}</div>
-                    <div style="flex:1;min-width:0;">
-                        <span style="font-size:.9rem;font-weight:700;color:#0d2b6e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;">{{ $inv->user->name }}</span>
-                        <p style="font-size:.72rem;color:#8d98a1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>
-                        <p style="font-size:.68rem;color:#8d98a1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->organization }}</p>
-                    </div>
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.75rem;">
-                    <span style="font-size:.68rem;font-weight:600;padding:.2rem .55rem;border-radius:9999px;{{ $invBadge[$inv->investor_type]??'background:#f1f5f9;color:#8d98a1;' }}">{{ $invLabels[$inv->investor_type]??$inv->investor_type }}</span>
-                    @if($inv->sector_preferences)
-                        @foreach(array_slice($inv->sector_preferences,0,2) as $sec)
-                        <span style="font-size:.68rem;background:#eff6ff;color:#1a3c8f;padding:.2rem .5rem;border-radius:9999px;">{{ $sec }}</span>
-                        @endforeach
-                    @endif
-                </div>
-                @if($inv->ticket_size_min && $inv->ticket_size_max)
-                <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid #f1f5f9;margin-top:auto;">
-                    <span style="font-size:.68rem;color:#8d98a1;">Ticket</span>
-                    <span style="font-size:.78rem;font-weight:700;color:#1a3c8f;">৳{{ number_format($inv->ticket_size_min/100000,0) }}L–৳{{ number_format($inv->ticket_size_max/100000,0) }}L</span>
-                </div>
-                @endif
-            </a>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
+
 
 {{-- ═══ EVENTS ═══ --}}
 @if($events->count())
