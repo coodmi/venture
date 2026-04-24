@@ -338,9 +338,10 @@
             </div>
         </div>
         @php $newsGrads=['Deal News'=>'linear-gradient(135deg,#1a3c8f,#2563eb)','Market Insights'=>'linear-gradient(135deg,#7c3aed,#a78bfa)','Platform Update'=>'linear-gradient(135deg,#16a34a,#34d399)','Press Release'=>'linear-gradient(135deg,#374151,#6b7280)','Founder Resources'=>'linear-gradient(135deg,#f97316,#fb923c)','Event Recap'=>'linear-gradient(135deg,#dc2626,#f87171)','Startup Spotlight'=>'linear-gradient(135deg,#0891b2,#22d3ee)']; @endphp
+        <div style="overflow:hidden;">
         <div id="newsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($latestNews as $article)
-            <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;flex-shrink:0;width:300px;display:flex;flex-direction:column;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
+            <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:220px;display:flex;flex-direction:column;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
                 @if($article->cover_image)
                     <img src="{{ Storage::url($article->cover_image) }}" alt="{{ $article->title }}" style="width:100%;height:10rem;object-fit:cover;display:block;">
                 @else
@@ -359,8 +360,21 @@
             </a>
             @endforeach
         </div>
+        </div>
     </div>
 </section>
+@push('scripts')
+<script>
+(function(){
+    var track=document.getElementById('newsTrack');
+    if(!track) return;
+    var btn1=document.querySelector('[onclick="slideScroll(\'newsTrack\',-1)"]');
+    var btn2=document.querySelector('[onclick="slideScroll(\'newsTrack\',1)"]');
+    if(btn1) btn1.onclick=function(){ track.scrollLeft -= track.offsetWidth; };
+    if(btn2) btn2.onclick=function(){ track.scrollLeft += track.offsetWidth; };
+})();
+</script>
+@endpush
 @endif
 
 {{-- ═══ CTA ═══ --}}
