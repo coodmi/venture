@@ -80,35 +80,23 @@
 @endif
 
 {{-- ═══ HOW IT WORKS ═══ --}}
-<section style="background:#fff;padding:5rem 1.5rem;">
+<section style="background:#f4f7fb;padding:5rem 1.5rem;">
     <div style="max-width:80rem;margin:0 auto;">
-        <div style="text-align:center;margin-bottom:4rem;">
-            <span style="display:inline-block;background:#eff6ff;border:1px solid #bfdbfe;color:#1a3c8f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.08em;">How It Works</span>
+        <div style="text-align:center;margin-bottom:3.5rem;">
+            <span style="display:inline-block;background:#eff6ff;border:1px solid #bfdbfe;color:#1a3c8f;font-size:.75rem;font-weight:700;padding:.3rem .875rem;border-radius:9999px;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.08em;">How It Works</span>
             <h2 style="font-size:2.25rem;font-weight:800;color:#0d2b6e;margin:0 0 .75rem;letter-spacing:-.02em;">Simple. Powerful. Effective.</h2>
             <p style="color:#8d98a1;font-size:1.0625rem;max-width:32rem;margin:0 auto;line-height:1.6;">A connected ecosystem where every stakeholder finds value.</p>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;position:relative;">
-            {{-- Connector line --}}
-            <div style="position:absolute;top:3rem;left:calc(16.66% + 1rem);right:calc(16.66% + 1rem);height:2px;background:linear-gradient(to right,#bfdbfe,#fed7aa,#bfdbfe);z-index:0;"></div>
-
-            @php $steps=[
-                ['num'=>'01','numColor'=>'#1a3c8f','numBg'=>'#eff6ff','border'=>'#bfdbfe','color'=>'#1a3c8f','iconBg'=>'#eff6ff','title'=>'Discover','desc'=>'Browse curated, admin-verified investment opportunities filtered by sector, stage, and ticket size.','icon'=>'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'],
-                ['num'=>'02','numColor'=>'#f97316','numBg'=>'#fff7ed','border'=>'#fed7aa','color'=>'#f97316','iconBg'=>'#fff7ed','title'=>'Connect','desc'=>'Express interest, request meetings, and engage directly with founders and investors — no middlemen.','icon'=>'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z'],
-                ['num'=>'03','numColor'=>'#16a34a','numBg'=>'#f0fdf4','border'=>'#bbf7d0','color'=>'#16a34a','iconBg'=>'#f0fdf4','title'=>'Grow','desc'=>'Close deals, join bootcamps, attend conferences, and scale your venture together.','icon'=>'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'],
-            ]; @endphp
-
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;">
+            @php $steps=[['num'=>'01','numColor'=>'#1a3c8f','color'=>'#1a3c8f','bg'=>'rgba(26,60,143,.08)','title'=>'Discover','desc'=>'Browse curated investment opportunities filtered by sector, stage, and ticket size.','icon'=>'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'],['num'=>'02','numColor'=>'#f97316','color'=>'#f97316','bg'=>'rgba(249,115,22,.08)','title'=>'Connect','desc'=>'Express interest, request meetings, and engage directly with founders and investors.','icon'=>'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z'],['num'=>'03','numColor'=>'#16a34a','color'=>'#1a3c8f','bg'=>'rgba(26,60,143,.08)','title'=>'Grow','desc'=>'Close deals, join bootcamps, attend conferences, and scale your venture together.','icon'=>'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6']]; @endphp
             @foreach($steps as $step)
-            <div style="background:#fff;border-radius:1.5rem;padding:2rem;border:1px solid {{ $step['border'] }};position:relative;z-index:1;box-shadow:0 4px 20px rgba(0,0,0,.06);text-align:center;">
-                {{-- Step number circle --}}
-                <div style="width:4rem;height:4rem;border-radius:50%;background:{{ $step['numBg'] }};border:2px solid {{ $step['border'] }};display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;position:relative;">
-                    <span style="font-size:1.25rem;font-weight:900;color:{{ $step['numColor'] }};">{{ $step['num'] }}</span>
-                </div>
-                {{-- Icon --}}
-                <div style="width:3.5rem;height:3.5rem;background:{{ $step['iconBg'] }};border-radius:1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;">
+            <div style="background:#fff;border-radius:1.25rem;padding:2rem;border:1px solid #dde3ea;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+                <div style="position:absolute;top:1.25rem;right:1.25rem;font-size:3.5rem;font-weight:900;color:{{ $step['numColor'] }};opacity:.15;line-height:1;user-select:none;">{{ $step['num'] }}</div>
+                <div style="width:3rem;height:3rem;background:{{ $step['bg'] }};border-radius:.875rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
                     <svg width="22" height="22" fill="none" stroke="{{ $step['color'] }}" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $step['icon'] }}"/></svg>
                 </div>
-                <h3 style="font-size:1.25rem;font-weight:800;color:#0d2b6e;margin:0 0 .75rem;">{{ $step['title'] }}</h3>
-                <p style="font-size:.9rem;color:#8d98a1;line-height:1.7;margin:0;">{{ $step['desc'] }}</p>
+                <h3 style="font-size:1.125rem;font-weight:700;color:#0d2b6e;margin:0 0 .5rem;">{{ $step['title'] }}</h3>
+                <p style="font-size:.875rem;color:#8d98a1;line-height:1.6;margin:0;">{{ $step['desc'] }}</p>
             </div>
             @endforeach
         </div>
