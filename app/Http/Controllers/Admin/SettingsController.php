@@ -143,9 +143,51 @@ class SettingsController extends Controller
         foreach ($request->input('sections', []) as $section => $data) {
             AboutContent::updateOrCreate(
                 ['section' => $section],
-                ['title' => $data['title'] ?? null, 'content' => $data['content'] ?? null, 'is_published' => true]
+                [
+                    'title'        => $data['title'] ?? null,
+                    'content'      => $data['content'] ?? null,
+                    'extra'        => isset($data['extra']) ? $data['extra'] : null,
+                    'is_published' => true,
+                ]
             );
         }
+
+        // Handle board members (JSON array)
+        if ($request->has('board_members')) {
+            $members = [];
+            foreach ($request->input('board_members.name', []) as $i => $name) {
+                if (trim($name)) {
+                    $members[] = [
+                        'name' => $name,
+                        'role' => $request->input('board_members.role')[$i] ?? '',
+                        'org'  => $request->input('board_members.org')[$i] ?? '',
+                        'bio'  => $request->input('board_members.bio')[$i] ?? '',
+                    ];
+                }
+            }
+            AboutContent::updateOrCreate(
+                ['section' => 'board_members'],
+                ['title' => 'Board Members', 'extra' => $members, 'is_published' => true]
+            );
+        }
+
+        // Handle highlights (stats boxes)
+        if ($request->has('highlights')) {
+            $highlights = [];
+            foreach ($request->input('highlights.value', []) as $i => $val) {
+                if (trim($val)) {
+                    $highlights[] = [
+                        'value' => $val,
+                        'label' => $request->input('highlights.label')[$i] ?? '',
+                    ];
+                }
+            }
+            AboutContent::updateOrCreate(
+                ['section' => 'highlights'],
+                ['title' => 'Highlights', 'extra' => $highlights, 'is_published' => true]
+            );
+        }
+
         return back()->with('success', 'About content updated.');
     }
 }
