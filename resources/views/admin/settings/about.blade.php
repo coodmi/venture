@@ -19,7 +19,7 @@
     ];
 @endphp
 
-<form method="POST" action="{{ route('admin.settings.about.update') }}" x-data="boardManager()" x-init="init({{ json_encode($board) }})">
+<form method="POST" action="{{ route('admin.settings.about.update') }}" enctype="multipart/form-data" x-data="boardManager()" x-init="init({{ json_encode($board) }})">
     @csrf
 
     {{-- ── Section Cards ── --}}
@@ -113,7 +113,24 @@
                                     style="background:#fef2f2;border:none;cursor:pointer;color:#dc2626;border-radius:.375rem;padding:.25rem .5rem;font-size:.75rem;font-weight:600;transition:background .15s;"
                                     onmouseover="this.style.background='#fee2e2';" onmouseout="this.style.background='#fef2f2';">Remove</button>
                         </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.625rem;margin-bottom:.625rem;">
+                        <div style="display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:.625rem;align-items:start;margin-bottom:.625rem;">
+                            {{-- Photo --}}
+                            <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem;">
+                                <div style="width:4rem;height:4rem;border-radius:50%;overflow:hidden;background:#e5e7eb;border:2px solid #e5e7eb;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                                    <template x-if="m.photo || m._preview">
+                                        <img :src="m._preview || '/storage/' + m.photo" style="width:100%;height:100%;object-fit:cover;">
+                                    </template>
+                                    <template x-if="!m.photo && !m._preview">
+                                        <svg width="20" height="20" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                    </template>
+                                </div>
+                                <label style="display:inline-flex;align-items:center;gap:.25rem;cursor:pointer;background:#eef2ff;border:1px solid #c7d2fe;color:#6366f1;border-radius:.375rem;padding:.2rem .5rem;font-size:.7rem;font-weight:600;">
+                                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12V4m0 0L8 8m4-4l4 4"/></svg>
+                                    Photo
+                                    <input type="file" :name="'board_member_photos[' + i + ']'" accept="image/*" style="display:none;" @change="previewPhoto($event, i)">
+                                </label>
+                                <input type="hidden" :name="'board_members[photo][]'" x-model="m.photo">
+                            </div>
                             <div>
                                 <label style="{{ $lbl }}">Full Name</label>
                                 <input type="text" :name="'board_members[name][]'" x-model="m.name" placeholder="Dr. John Doe" style="{{ $inp }}" onfocus="this.style.borderColor='#6366f1';" onblur="this.style.borderColor='#e5e7eb';">
@@ -157,8 +174,18 @@ function boardManager() {
     return {
         members: [],
         init(data) { this.members = data && data.length ? data : []; },
-        addMember() { this.members.push({ name:'', role:'', org:'', bio:'' }); },
-        removeMember(i) { this.members.splice(i, 1); }
+        addMember() { this.members.push({ name:'', role:'', org:'', bio:'', photo:'' }); },
+        removeMember(i) { this.members.splice(i, 1); },
+        previewPhoto(event, i) {
+            var file = event.target.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = (e) => { this.members[i].photo = ''; this.members[i]._preview = e.target.result; };
+            reader.readAsDataURL(file);
+            // Update the img src directly since x-model won't work for blob URLs
+            var img = event.target.closest('div').previousElementSibling;
+            if (img && img.tagName === 'IMG') { img.src = URL.createObjectURL(file); }
+        }
     }
 }
 </script>

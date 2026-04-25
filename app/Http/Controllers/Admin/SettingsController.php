@@ -157,11 +157,17 @@ class SettingsController extends Controller
             $members = [];
             foreach ($request->input('board_members.name', []) as $i => $name) {
                 if (trim($name)) {
+                    $photo = $request->input('board_members.photo')[$i] ?? '';
+                    // Handle new photo upload
+                    if ($request->hasFile("board_member_photos.$i")) {
+                        $photo = $request->file("board_member_photos.$i")->store('board_members', 'public');
+                    }
                     $members[] = [
-                        'name' => $name,
-                        'role' => $request->input('board_members.role')[$i] ?? '',
-                        'org'  => $request->input('board_members.org')[$i] ?? '',
-                        'bio'  => $request->input('board_members.bio')[$i] ?? '',
+                        'name'  => $name,
+                        'role'  => $request->input('board_members.role')[$i] ?? '',
+                        'org'   => $request->input('board_members.org')[$i] ?? '',
+                        'bio'   => $request->input('board_members.bio')[$i] ?? '',
+                        'photo' => $photo,
                     ];
                 }
             }

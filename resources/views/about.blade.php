@@ -137,7 +137,12 @@
             <div style="flex-shrink:0;width:calc(25% - 1.125rem);min-width:220px;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .25s;" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
                 <div style="height:7rem;background:{{ $grads[$idx % 6] }};position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
                     <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:22px 22px;"></div>
-                    <div style="position:relative;z-index:2;width:3.5rem;height:3.5rem;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff;">{{ $initials }}</div>
+                    @if(!empty($member['photo']))
+                        <img src="{{ Storage::url($member['photo']) }}" alt="{{ $member['name'] }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.4),transparent);z-index:2;"></div>
+                    @else
+                        <div style="position:relative;z-index:2;width:3.5rem;height:3.5rem;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff;">{{ $initials }}</div>
+                    @endif
                 </div>
                 <div style="padding:1.25rem;">
                     <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:0 0 .25rem;">{{ $member['name'] }}</h3>
