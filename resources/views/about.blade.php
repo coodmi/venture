@@ -20,6 +20,7 @@
 
     $founderContent = $sections['founder_message']->content ?? "I've seen firsthand how difficult it is for brilliant founders to get in front of the right investors. ".e($siteName)." was born to solve exactly that — making the investment ecosystem more accessible, transparent, and impactful for everyone involved.";
     $founderTitle   = $sections['founder_message']->title   ?? 'Founder & CEO';
+    $founderPhoto   = $sections['founder_message']->image   ?? null;
 
     $highlights = $sections['highlights']->extra ?? [
         ['value'=>'500+','label'=>'Registered Investors'],
