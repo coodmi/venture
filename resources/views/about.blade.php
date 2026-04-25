@@ -134,21 +134,47 @@
             @php $grads=['linear-gradient(135deg,#0d2b6e,#2563eb)','linear-gradient(135deg,#14532d,#16a34a)','linear-gradient(135deg,#c2410c,#f97316)','linear-gradient(135deg,#5b21b6,#8b5cf6)','linear-gradient(135deg,#0e7490,#06b6d4)','linear-gradient(135deg,#3b0764,#a855f7)']; @endphp
             @foreach($boardMembers as $idx => $member)
             @php $initials = strtoupper(implode('', array_map(fn($w)=>$w[0], array_filter(explode(' ', $member['name']))))); @endphp
-            <div style="flex-shrink:0;width:calc(25% - 1.125rem);min-width:220px;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .25s;" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
-                <div style="height:7rem;background:{{ $grads[$idx % 6] }};position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-                    <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:22px 22px;"></div>
+            <div style="flex-shrink:0;width:calc(25% - 1.125rem);min-width:240px;background:#fff;border:1px solid #dde3ea;border-radius:1.5rem;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.06);transition:all .3s;" onmouseover="this.style.boxShadow='0 16px 40px rgba(26,60,143,.15)';this.style.transform='translateY(-4px)';" onmouseout="this.style.boxShadow='0 4px 16px rgba(0,0,0,.06)';this.style.transform='translateY(0)';">
+
+                {{-- Portrait area --}}
+                <div style="height:13rem;background:{{ $grads[$idx % 6] }};position:relative;overflow:hidden;">
+                    <div style="position:absolute;inset:0;opacity:.08;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:24px 24px;"></div>
                     @if(!empty($member['photo']))
-                        <img src="{{ Storage::url($member['photo']) }}" alt="{{ $member['name'] }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.4),transparent);z-index:2;"></div>
+                        <img src="{{ Storage::url($member['photo']) }}" alt="{{ $member['name'] }}"
+                             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;z-index:1;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 55%);z-index:2;"></div>
+                        {{-- Name overlay on photo --}}
+                        <div style="position:absolute;bottom:.875rem;left:1rem;right:1rem;z-index:3;">
+                            <p style="font-size:.9375rem;font-weight:800;color:#fff;margin:0 0 .125rem;text-shadow:0 1px 4px rgba(0,0,0,.4);">{{ $member['name'] }}</p>
+                            <p style="font-size:.75rem;font-weight:600;color:rgba(255,255,255,.85);margin:0;text-shadow:0 1px 3px rgba(0,0,0,.3);">{{ $member['role'] }}</p>
+                        </div>
                     @else
-                        <div style="position:relative;z-index:2;width:3.5rem;height:3.5rem;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff;">{{ $initials }}</div>
+                        <div style="position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;">
+                            <div style="width:5rem;height:5rem;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.375rem;color:#fff;">{{ $initials }}</div>
+                            <div style="text-align:center;">
+                                <p style="font-size:.9375rem;font-weight:800;color:#fff;margin:0 0 .125rem;">{{ $member['name'] }}</p>
+                                <p style="font-size:.75rem;font-weight:600;color:rgba(255,255,255,.8);margin:0;">{{ $member['role'] }}</p>
+                            </div>
+                        </div>
                     @endif
                 </div>
+
+                {{-- Body --}}
                 <div style="padding:1.25rem;">
-                    <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:0 0 .25rem;">{{ $member['name'] }}</h3>
-                    <p style="font-size:.75rem;font-weight:600;color:#6366f1;margin:0 0 .2rem;">{{ $member['role'] }}</p>
-                    <p style="font-size:.7rem;color:#8d98a1;margin:0 0 .875rem;">{{ $member['org'] }}</p>
-                    <p style="font-size:.78rem;color:#374151;line-height:1.6;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">{{ $member['bio'] }}</p>
+                    @if(empty($member['photo']))
+                        {{-- name already shown in cover, skip here --}}
+                    @else
+                        {{-- org shown below since name is in cover --}}
+                    @endif
+                    <div style="display:flex;align-items:center;gap:.375rem;margin-bottom:.625rem;">
+                        <svg width="12" height="12" fill="none" stroke="#9ca3af" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <p style="font-size:.75rem;color:#6b7280;margin:0;font-weight:500;">{{ $member['org'] }}</p>
+                    </div>
+                    @if(empty($member['photo']))
+                        <p style="font-size:.9rem;font-weight:700;color:#0d2b6e;margin:0 0 .25rem;">{{ $member['name'] }}</p>
+                        <p style="font-size:.75rem;font-weight:600;color:#6366f1;margin:0 0 .625rem;">{{ $member['role'] }}</p>
+                    @endif
+                    <p style="font-size:.8125rem;color:#374151;line-height:1.65;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">{{ $member['bio'] }}</p>
                 </div>
             </div>
             @endforeach
