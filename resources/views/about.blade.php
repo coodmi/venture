@@ -98,11 +98,11 @@
 <section style="background:#f4f7fb;padding:5rem 1.5rem;">
     <div style="max-width:64rem;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:4rem;align-items:center;">
         <div style="text-align:center;">
-            <div style="width:10rem;height:10rem;border-radius:1.5rem;overflow:hidden;background:linear-gradient(135deg,#1a3c8f,#2563eb);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;box-shadow:0 8px 24px rgba(26,60,143,.25);">
+            <div style="width:14rem;height:14rem;border-radius:1.5rem;overflow:hidden;background:linear-gradient(135deg,#1a3c8f,#2563eb);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;box-shadow:0 8px 24px rgba(26,60,143,.25);">
                 @if($founderPhoto)
                     <img src="{{ Storage::url($founderPhoto) }}" alt="{{ $founderTitle }}" style="width:100%;height:100%;object-fit:cover;object-position:top center;">
                 @else
-                    <span style="color:#fff;font-weight:800;font-size:3rem;">{{ strtoupper(substr($founderTitle,0,1)) }}</span>
+                    <span style="color:#fff;font-weight:800;font-size:4rem;">{{ strtoupper(substr($founderTitle,0,1)) }}</span>
                 @endif
             </div>
             <p style="font-weight:700;color:#0d2b6e;margin:0 0 .25rem;">{{ $founderTitle }}</p>
