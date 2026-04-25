@@ -141,15 +141,17 @@ class SettingsController extends Controller
     public function updateAbout(Request $request)
     {
         foreach ($request->input('sections', []) as $section => $data) {
-            AboutContent::updateOrCreate(
-                ['section' => $section],
-                [
-                    'title'        => $data['title'] ?? null,
-                    'content'      => $data['content'] ?? null,
-                    'extra'        => isset($data['extra']) ? $data['extra'] : null,
-                    'is_published' => true,
-                ]
-            );
+            $updateData = [
+                'title'        => $data['title'] ?? null,
+                'content'      => $data['content'] ?? null,
+                'extra'        => isset($data['extra']) ? $data['extra'] : null,
+                'is_published' => true,
+            ];
+            // Handle founder photo upload
+            if ($section === 'founder_message' && $request->hasFile('founder_photo')) {
+                $updateData['image'] = $request->file('founder_photo')->store('about', 'public');
+            }
+            AboutContent::updateOrCreate(['section' => $section], $updateData);
         }
 
         // Handle board members (JSON array)

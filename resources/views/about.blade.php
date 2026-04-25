@@ -18,8 +18,8 @@
     $missionTitle   = $sections['mission']->title   ?? 'Our Mission';
     $missionContent = $sections['mission']->content ?? 'To democratize access to investment opportunities by building a transparent, efficient, and inclusive platform that empowers investors and founders.';
 
-    $founderTitle   = $sections['founder_message']->title   ?? 'Founder & CEO';
     $founderContent = $sections['founder_message']->content ?? "I've seen firsthand how difficult it is for brilliant founders to get in front of the right investors. ".e($siteName)." was born to solve exactly that — making the investment ecosystem more accessible, transparent, and impactful for everyone involved.";
+    $founderTitle   = $sections['founder_message']->title   ?? 'Founder & CEO';
 
     $highlights = $sections['highlights']->extra ?? [
         ['value'=>'500+','label'=>'Registered Investors'],
@@ -97,8 +97,12 @@
 <section style="background:#f4f7fb;padding:5rem 1.5rem;">
     <div style="max-width:64rem;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:4rem;align-items:center;">
         <div style="text-align:center;">
-            <div style="width:10rem;height:10rem;background:linear-gradient(135deg,#1a3c8f,#2563eb);border-radius:1.5rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;box-shadow:0 8px 24px rgba(26,60,143,.25);">
-                <span style="color:#fff;font-weight:800;font-size:3rem;">{{ strtoupper(substr($founderTitle,0,1)) }}</span>
+            <div style="width:10rem;height:10rem;border-radius:1.5rem;overflow:hidden;background:linear-gradient(135deg,#1a3c8f,#2563eb);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;box-shadow:0 8px 24px rgba(26,60,143,.25);">
+                @if($founderPhoto)
+                    <img src="{{ Storage::url($founderPhoto) }}" alt="{{ $founderTitle }}" style="width:100%;height:100%;object-fit:cover;object-position:top center;">
+                @else
+                    <span style="color:#fff;font-weight:800;font-size:3rem;">{{ strtoupper(substr($founderTitle,0,1)) }}</span>
+                @endif
             </div>
             <p style="font-weight:700;color:#0d2b6e;margin:0 0 .25rem;">{{ $founderTitle }}</p>
             <p style="color:#f97316;font-size:.875rem;margin:0;font-weight:600;">{{ $siteName }}</p>

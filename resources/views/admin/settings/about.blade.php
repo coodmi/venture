@@ -29,7 +29,6 @@
             'overview'        => ['label'=>'Who We Are',         'icon'=>'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4', 'color'=>'#3b82f6', 'bg'=>'#eff6ff', 'subtitle'=>'Organization overview heading and body text'],
             'vision'          => ['label'=>'Vision',             'icon'=>'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z', 'color'=>'#8b5cf6', 'bg'=>'#f5f3ff', 'subtitle'=>'Vision statement title and content'],
             'mission'         => ['label'=>'Mission',            'icon'=>'M13 10V3L4 14h7v7l9-11h-7z', 'color'=>'#10b981', 'bg'=>'#ecfdf5', 'subtitle'=>'Mission statement title and content'],
-            'founder_message' => ['label'=>"Founder's Message",  'icon'=>'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z', 'color'=>'#f59e0b', 'bg'=>'#fffbeb', 'subtitle'=>'Title = Founder name/role, Content = the message quote'],
         ];
     @endphp
 
@@ -57,6 +56,58 @@
             </div>
         </div>
         @endforeach
+
+        {{-- Founder's Message — special card with photo upload --}}
+        @php $founderPhoto = $sections['founder_message']->image ?? ''; @endphp
+        <div style="{{ $card }}">
+            <div style="{{ $cardHead }}">
+                <div style="width:2rem;height:2rem;background:#fffbeb;border-radius:.5rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="13" height="13" fill="none" stroke="#f59e0b" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                </div>
+                <div>
+                    <p style="font-weight:700;color:#111827;font-size:.9rem;margin:0;">Founder's Message</p>
+                    <p style="font-size:.7rem;color:#9ca3af;margin:0;">Title = Founder name/role · Content = the message quote · Photo = portrait</p>
+                </div>
+            </div>
+            <div style="{{ $cardBody }}display:flex;flex-direction:column;gap:.875rem;">
+                {{-- Photo upload --}}
+                <div style="display:flex;align-items:center;gap:1rem;">
+                    <div style="width:5rem;height:5rem;border-radius:1rem;overflow:hidden;background:linear-gradient(135deg,#1a3c8f,#2563eb);flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2px solid #e5e7eb;">
+                        @if($founderPhoto)
+                            <img src="{{ Storage::url($founderPhoto) }}" alt="Founder" style="width:100%;height:100%;object-fit:cover;" id="founderPhotoPreview">
+                        @else
+                            <img id="founderPhotoPreview" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:none;">
+                            <span style="color:#fff;font-weight:800;font-size:1.5rem;" id="founderInitial">F</span>
+                        @endif
+                    </div>
+                    <div>
+                        <label style="{{ $lbl }}">Founder Photo</label>
+                        <label style="display:inline-flex;align-items:center;gap:.375rem;cursor:pointer;background:#eef2ff;border:1px solid #c7d2fe;color:#6366f1;border-radius:.5rem;padding:.4rem .875rem;font-size:.8125rem;font-weight:600;">
+                            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12V4m0 0L8 8m4-4l4 4"/></svg>
+                            Upload Photo
+                            <input type="file" name="founder_photo" accept="image/*" style="display:none;"
+                                   onchange="
+                                       var f=this.files[0]; if(!f) return;
+                                       var url=URL.createObjectURL(f);
+                                       var img=document.getElementById('founderPhotoPreview');
+                                       img.src=url; img.style.display='block';
+                                       var ini=document.getElementById('founderInitial');
+                                       if(ini) ini.style.display='none';
+                                   ">
+                        </label>
+                        <p style="font-size:.7rem;color:#9ca3af;margin:.375rem 0 0;">Recommended: square portrait, min 300×300px</p>
+                    </div>
+                </div>
+                <div>
+                    <label style="{{ $lbl }}">Founder Name / Role (Title)</label>
+                    <input type="text" name="sections[founder_message][title]" value="{{ $sections['founder_message']->title ?? '' }}" placeholder="e.g. Founder & CEO" style="{{ $inp }}" onfocus="this.style.borderColor='#6366f1';" onblur="this.style.borderColor='#e5e7eb';">
+                </div>
+                <div>
+                    <label style="{{ $lbl }}">Message / Quote (Content)</label>
+                    <textarea name="sections[founder_message][content]" rows="4" placeholder="Enter the founder's message..." style="{{ $inp }}resize:vertical;" onfocus="this.style.borderColor='#6366f1';" onblur="this.style.borderColor='#e5e7eb';">{{ $sections['founder_message']->content ?? '' }}</textarea>
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- ── Highlights / Stats Boxes ── --}}
