@@ -406,11 +406,22 @@ function slideScroll(id, dir) {
     $siteName = \App\Models\Setting::get('site_name', config('app.name'));
     $siteLogo = \App\Models\Setting::get('site_logo');
 @endphp
-<div id="welcomePopup" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);opacity:0;transition:opacity .4s ease;">
-    <div style="background:#fff;border-radius:1.25rem;overflow:hidden;max-width:680px;width:100%;display:flex;box-shadow:0 25px 60px rgba(0,0,0,.25);transform:scale(.95);transition:transform .4s ease;" id="welcomePopupInner">
+<style>
+#welcomePopup { position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);opacity:0;transition:opacity .4s ease; }
+#welcomePopupInner { background:#fff;border-radius:1.25rem;overflow:hidden;max-width:820px;width:100%;display:flex;box-shadow:0 25px 60px rgba(0,0,0,.25);transform:scale(.95);transition:transform .4s ease; }
+#popupLeft { width:42%;background:linear-gradient(145deg,#1a3c8f 0%,#2563eb 60%,#6366f1 100%);display:flex;align-items:center;justify-content:center;padding:2.75rem 2rem;position:relative;overflow:hidden;flex-shrink:0; }
+#popupRight { flex:1;padding:2.75rem 2.5rem;display:flex;flex-direction:column;justify-content:center;position:relative; }
+@media(max-width:600px){
+    #welcomePopupInner { flex-direction:column; max-width:95vw; }
+    #popupLeft { width:100%; padding:2rem 1.5rem; }
+    #popupRight { padding:1.75rem 1.5rem; }
+}
+</style>
+<div id="welcomePopup">
+    <div id="welcomePopupInner">
 
         {{-- Left Panel --}}
-        <div style="width:45%;background:linear-gradient(145deg,#1a3c8f 0%,#2563eb 60%,#6366f1 100%);display:flex;align-items:center;justify-content:center;padding:2.5rem;position:relative;overflow:hidden;flex-shrink:0;">
+        <div id="popupLeft">
             <div style="position:absolute;top:-3rem;left:-3rem;width:10rem;height:10rem;background:rgba(255,255,255,.06);border-radius:50%;"></div>
             <div style="position:absolute;bottom:-2rem;right:-2rem;width:8rem;height:8rem;background:rgba(255,255,255,.06);border-radius:50%;"></div>
             <div style="position:relative;z-index:2;text-align:center;">
@@ -440,26 +451,26 @@ function slideScroll(id, dir) {
         </div>
 
         {{-- Right Panel --}}
-        <div style="flex:1;padding:2.5rem;display:flex;flex-direction:column;justify-content:center;position:relative;">
+        <div id="popupRight">
             <button onclick="closePopup()" style="position:absolute;top:1rem;right:1rem;background:#f3f4f6;border:none;cursor:pointer;width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .15s;" onmouseover="this.style.background='#e5e7eb';" onmouseout="this.style.background='#f3f4f6';">
                 <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
 
             <div style="margin-bottom:1.5rem;">
                 <span style="display:inline-block;background:#eef2ff;color:#6366f1;font-size:.7rem;font-weight:700;padding:.25rem .75rem;border-radius:9999px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.875rem;">Investment Platform</span>
-                <h2 style="font-size:1.625rem;font-weight:800;color:#111827;margin:0 0 .75rem;line-height:1.2;">Welcome to <span style="color:#2563eb;">{{ $siteName }}</span></h2>
+                <h2 style="font-size:1.75rem;font-weight:800;color:#111827;margin:0 0 .75rem;line-height:1.2;">Welcome to <span style="color:#2563eb;">{{ $siteName }}</span></h2>
                 <p style="font-size:.9rem;color:#6b7280;line-height:1.65;margin:0;">Connecting investors, founders, and ecosystem stakeholders on Bangladesh's leading venture platform.</p>
             </div>
 
             <div style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:1.75rem;">
                 <a href="{{ route('startups.index') }}" onclick="closePopup()"
-                   style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#2563eb;color:#fff;font-weight:700;padding:.75rem 1.5rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;transition:background .15s;"
+                   style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#2563eb;color:#fff;font-weight:700;padding:.75rem 1.5rem;border-radius:.75rem;text-decoration:none;font-size:.9375rem;transition:background .15s;white-space:nowrap;"
                    onmouseover="this.style.background='#1d4ed8';" onmouseout="this.style.background='#2563eb';">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     Explore Opportunities
                 </a>
                 <a href="{{ route('register.investor') }}" onclick="closePopup()"
-                   style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#f8fafc;border:1px solid #e5e7eb;color:#374151;font-weight:600;padding:.75rem 1.5rem;border-radius:.75rem;text-decoration:none;font-size:.875rem;transition:background .15s;"
+                   style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#f8fafc;border:1px solid #e5e7eb;color:#374151;font-weight:600;padding:.75rem 1.5rem;border-radius:.75rem;text-decoration:none;font-size:.875rem;transition:background .15s;white-space:nowrap;"
                    onmouseover="this.style.background='#f1f5f9';" onmouseout="this.style.background='#f8fafc';">
                     Join as Investor or Startup
                 </a>
