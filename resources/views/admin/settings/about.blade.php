@@ -72,12 +72,12 @@
             <div style="{{ $cardBody }}display:flex;flex-direction:column;gap:.875rem;">
                 {{-- Photo upload --}}
                 <div style="display:flex;align-items:center;gap:1rem;">
-                    <div style="width:5rem;height:5rem;border-radius:1rem;overflow:hidden;background:linear-gradient(135deg,#1a3c8f,#2563eb);flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2px solid #e5e7eb;">
+                    <div style="width:5rem;height:5rem;border-radius:1rem;overflow:hidden;background:linear-gradient(135deg,#1a3c8f,#2563eb);flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2px solid #e5e7eb;" id="founderPhotoWrap">
                         @if($founderPhoto)
                             <img src="{{ Storage::url($founderPhoto) }}" alt="Founder" style="width:100%;height:100%;object-fit:cover;" id="founderPhotoPreview">
                         @else
                             <img id="founderPhotoPreview" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:none;">
-                            <span style="color:#fff;font-weight:800;font-size:1.5rem;" id="founderInitial">F</span>
+                            <span style="color:#fff;font-weight:800;font-size:1.5rem;" id="founderInitial">{{ strtoupper(substr($sections['founder_message']->title ?? 'F', 0, 1)) }}</span>
                         @endif
                     </div>
                     <div>
@@ -85,19 +85,23 @@
                         <label style="display:inline-flex;align-items:center;gap:.375rem;cursor:pointer;background:#eef2ff;border:1px solid #c7d2fe;color:#6366f1;border-radius:.5rem;padding:.4rem .875rem;font-size:.8125rem;font-weight:600;">
                             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12V4m0 0L8 8m4-4l4 4"/></svg>
                             Upload Photo
-                            <input type="file" name="founder_photo" accept="image/*" style="display:none;"
-                                   onchange="
-                                       var f=this.files[0]; if(!f) return;
-                                       var url=URL.createObjectURL(f);
-                                       var img=document.getElementById('founderPhotoPreview');
-                                       img.src=url; img.style.display='block';
-                                       var ini=document.getElementById('founderInitial');
-                                       if(ini) ini.style.display='none';
-                                   ">
+                            <input type="file" name="founder_photo" accept="image/*" style="display:none;" id="founderPhotoInput">
                         </label>
                         <p style="font-size:.7rem;color:#9ca3af;margin:.375rem 0 0;">Recommended: square portrait, min 300×300px</p>
                     </div>
                 </div>
+                <script>
+                document.getElementById('founderPhotoInput').addEventListener('change', function() {
+                    var file = this.files[0];
+                    if (!file) return;
+                    var url = URL.createObjectURL(file);
+                    var img = document.getElementById('founderPhotoPreview');
+                    var ini = document.getElementById('founderInitial');
+                    img.src = url;
+                    img.style.display = 'block';
+                    if (ini) ini.style.display = 'none';
+                });
+                </script>
                 <div>
                     <label style="{{ $lbl }}">Founder Name / Role (Title)</label>
                     <input type="text" name="sections[founder_message][title]" value="{{ $sections['founder_message']->title ?? '' }}" placeholder="e.g. Founder & CEO" style="{{ $inp }}" onfocus="this.style.borderColor='#6366f1';" onblur="this.style.borderColor='#e5e7eb';">
