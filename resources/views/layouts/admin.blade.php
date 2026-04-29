@@ -41,9 +41,15 @@
                     View Site
                 </a>
                 <div style="display:flex;align-items:center;gap:.625rem;">
-                    <div style="width:2rem;height:2rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:50%;display:flex;align-items:center;justify-content:center;">
-                        <span style="color:#fff;font-weight:700;font-size:.75rem;">{{ strtoupper(substr(auth()->user()->name,0,1)) }}</span>
-                    </div>
+                    @php $avatar = auth()->user()->avatar ?? null; @endphp
+                    @if($avatar)
+                        <img src="{{ Storage::url($avatar) }}" alt="{{ auth()->user()->name }}"
+                             style="width:2rem;height:2rem;border-radius:50%;object-fit:cover;border:2px solid #e0e7ff;">
+                    @else
+                        <div style="width:2rem;height:2rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                            <span style="color:#fff;font-weight:700;font-size:.75rem;">{{ strtoupper(substr(auth()->user()->name,0,1)) }}</span>
+                        </div>
+                    @endif
                     <span style="font-size:.8125rem;color:#374151;font-weight:500;">{{ auth()->user()->name }}</span>
                 </div>
                 <form method="POST" action="{{ route('logout') }}" style="display:inline;">

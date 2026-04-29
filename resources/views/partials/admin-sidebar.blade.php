@@ -25,6 +25,7 @@
                 ['route'=>'admin.events.index',         'label'=>'Events',         'icon'=>'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'],
                 ['route'=>'admin.news.index',           'label'=>'News & Media',   'icon'=>'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z'],
                 ['route'=>'admin.settings.header',      'label'=>'Header',         'icon'=>'M4 6h16M4 12h16M4 18h16'],
+                ['route'=>'admin.settings.startups',    'label'=>'Startups Page',  'icon'=>'M13 10V3L4 14h7v7l9-11h-7z'],
                 ['route'=>'admin.settings.hero',        'label'=>'Hero Slider',    'icon'=>'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'],
                 ['route'=>'admin.settings.stats',       'label'=>'Platform Stats', 'icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'],
                 ['route'=>'admin.settings.testimonials','label'=>'Testimonials',   'icon'=>'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z'],
@@ -52,16 +53,37 @@
         @endforeach
     </nav>
 
-    {{-- User --}}
-    <div style="padding:1rem;border-top:1px solid #f3f4f6;">
-        <div style="display:flex;align-items:center;gap:.625rem;">
-            <div style="width:2rem;height:2rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <span style="color:#fff;font-weight:800;font-size:.75rem;">{{ strtoupper(substr(auth()->user()->name,0,1)) }}</span>
-            </div>
-            <div style="min-width:0;">
+    {{-- User Profile + Logout --}}
+    <div style="padding:.875rem 1rem;border-top:1px solid #f3f4f6;background:#fafafa;">
+        <div style="display:flex;align-items:center;gap:.625rem;margin-bottom:.625rem;">
+            {{-- Avatar --}}
+            @php $avatar = auth()->user()->avatar ?? null; @endphp
+            @if($avatar)
+                <img src="{{ Storage::url($avatar) }}" alt="{{ auth()->user()->name }}"
+                     style="width:2.25rem;height:2.25rem;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid #e0e7ff;">
+            @else
+                <div style="width:2.25rem;height:2.25rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(99,102,241,.3);">
+                    <span style="color:#fff;font-weight:800;font-size:.8rem;">{{ strtoupper(substr(auth()->user()->name,0,1)) }}</span>
+                </div>
+            @endif
+            {{-- Info --}}
+            <div style="min-width:0;flex:1;">
                 <p style="font-size:.8125rem;font-weight:600;color:#111827;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ auth()->user()->name }}</p>
-                <p style="font-size:.7rem;color:#9ca3af;margin:0;">Administrator</p>
+                <p style="font-size:.7rem;color:#9ca3af;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ auth()->user()->email }}</p>
             </div>
         </div>
+        {{-- Logout Button --}}
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit"
+                    style="width:100%;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.5rem .75rem;background:#fff;border:1px solid #e5e7eb;border-radius:.625rem;font-size:.8rem;font-weight:600;color:#6b7280;cursor:pointer;transition:all .15s;"
+                    onmouseover="this.style.background='#fef2f2';this.style.borderColor='#fecaca';this.style.color='#ef4444';"
+                    onmouseout="this.style.background='#fff';this.style.borderColor='#e5e7eb';this.style.color='#6b7280';">
+                <svg style="width:.875rem;height:.875rem;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                </svg>
+                Sign Out
+            </button>
+        </form>
     </div>
 </aside>
