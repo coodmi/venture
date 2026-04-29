@@ -4,43 +4,44 @@
 
 @section('content')
 <div class="max-w-2xl space-y-6">
-    <div style="background:#1a1408;" class=" rounded-xl border border-gray-200 p-6">
-        <h3 style="font-weight:700;color:#f0e6c8;margin-bottom:1rem;">Applicant: {{ $membership->user->name }}</h3>
+    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <h3 class="text-base font-bold text-gray-900 mb-4">Applicant: {{ $membership->user->name }}</h3>
         <div class="grid grid-cols-2 gap-3 text-sm mb-4">
-            <div><span style="color:#7a6a4a;">Plan:</span> <strong>{{ $membership->plan->name }}</strong></div>
-            <div><span style="color:#7a6a4a;">Status:</span> {{ ucfirst(str_replace('_', ' ', $membership->status)) }}</div>
-            <div><span style="color:#7a6a4a;">Applied:</span> {{ $membership->created_at->format('M d, Y') }}</div>
+            <div><span class="text-gray-500">Plan:</span> <strong class="text-gray-800">{{ $membership->plan->name }}</strong></div>
+            <div><span class="text-gray-500">Status:</span> <strong class="text-gray-800">{{ ucfirst(str_replace('_', ' ', $membership->status)) }}</strong></div>
+            <div><span class="text-gray-500">Applied:</span> <span class="text-gray-700">{{ $membership->created_at->format('M d, Y') }}</span></div>
         </div>
 
         @if($membership->application_data)
-        <div style="background:#110e05;" class=" rounded-lg p-4 text-sm mb-4">
-            <h4 class="font-medium text-gray-700 mb-2">Application Data</h4>
+        <div class="bg-gray-50 rounded-lg p-4 text-sm mb-4 border border-gray-100">
+            <h4 class="font-semibold text-gray-700 mb-2">Application Data</h4>
             @foreach($membership->application_data as $key => $val)
                 @if($val)
-                <div class="mb-1"><span class="text-gray-500 capitalize">{{ str_replace('_', ' ', $key) }}:</span> {{ $val }}</div>
+                <div class="mb-1"><span class="text-gray-500 capitalize">{{ str_replace('_', ' ', $key) }}:</span> <span class="text-gray-800">{{ $val }}</span></div>
                 @endif
             @endforeach
         </div>
         @endif
 
-        <form method="POST" action="{{ route('admin.memberships.status', $membership) }}" style="display:flex;flex-direction:column;gap:1rem;">
+        <form method="POST" action="{{ route('admin.memberships.status', $membership) }}" class="flex flex-col gap-4">
             @csrf @method('PATCH')
             <div>
-                <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Update Status</label>
-                <select name="status" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Update Status</label>
+                <select name="status" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
                     @foreach(['approved', 'rejected', 'under_review', 'revision_required'] as $s)
                         <option value="{{ $s }}" {{ $membership->status === $s ? 'selected' : '' }}>{{ ucfirst(str_replace('_', ' ', $s)) }}</option>
                     @endforeach
                 </select>
             </div>
             <div>
-                <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Admin Notes</label>
-                <textarea name="admin_notes" rows="3"
-                          class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">{{ $membership->admin_notes }}</textarea>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Admin Notes</label>
+                <textarea name="admin_notes" rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">{{ $membership->admin_notes }}</textarea>
             </div>
-            <button type="submit" style="background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;padding:.5rem 1.5rem;border-radius:.5rem;border:none;cursor:pointer;font-size:.875rem;text-decoration:none;display:inline-block;">
-                Update Status
-            </button>
+            <div>
+                <button type="submit" class="px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg text-sm transition-colors">
+                    Update Status
+                </button>
+            </div>
         </form>
     </div>
 </div>

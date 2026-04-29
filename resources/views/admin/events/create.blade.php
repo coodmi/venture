@@ -4,76 +4,93 @@
 
 @section('content')
 <div class="max-w-3xl">
-    <div style="background:#1a1408;" class=" rounded-xl border border-gray-200 p-8">
-        <form method="POST" action="{{ route('admin.events.store') }}" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:1.25rem;">
+    <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+        @if($errors->any())
+            <div class="mb-5 p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                <ul class="list-disc list-inside space-y-1">
+                    @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+                </ul>
+            </div>
+        @endif
+        <form method="POST" action="{{ route('admin.events.store') }}" enctype="multipart/form-data" class="flex flex-col gap-5">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div class="md:col-span-2">
-                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Title <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Title <span class="text-red-500">*</span></label>
                     <input type="text" name="title" value="{{ old('title') }}" required
-                           style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem 1rem;font-size:.875rem;outline:none;box-sizing:border-box;">
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
                 </div>
                 <div>
-                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Event Type <span class="text-red-500">*</span></label>
-                    <select name="event_type" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Event Type <span class="text-red-500">*</span></label>
+                    <select name="event_type" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
                         <option value="offline">Offline</option>
                         <option value="online">Online</option>
                         <option value="hybrid">Hybrid</option>
                     </select>
                 </div>
                 <div>
-                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Category</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Category</label>
                     <input type="text" name="category" value="{{ old('category') }}"
-                           style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem 1rem;font-size:.875rem;outline:none;box-sizing:border-box;">
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
                 </div>
                 <div>
-                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Start Date <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Start Date <span class="text-red-500">*</span></label>
                     <input type="datetime-local" name="start_date" value="{{ old('start_date') }}" required
-                           style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem 1rem;font-size:.875rem;outline:none;box-sizing:border-box;">
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
                 </div>
                 <div>
-                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">End Date</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">End Date</label>
                     <input type="datetime-local" name="end_date" value="{{ old('end_date') }}"
-                           style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem 1rem;font-size:.875rem;outline:none;box-sizing:border-box;">
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
                 </div>
                 <div>
-                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Venue</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Venue</label>
                     <input type="text" name="venue" value="{{ old('venue') }}"
-                           style="width:100%;background:#0d0a04;border:1px solid rgba(212,146,15,.2);color:#f0e6c8;border-radius:.5rem;padding:.5rem 1rem;font-size:.875rem;outline:none;box-sizing:border-box;">
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
                 </div>
                 <div>
-                    <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Status</label>
-                    <select name="status" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Max Attendees</label>
+                    <input type="number" name="max_attendees" value="{{ old('max_attendees') }}" min="0"
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Status</label>
+                    <select name="status" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
                         <option value="draft">Draft</option>
                         <option value="published">Published</option>
                     </select>
                 </div>
             </div>
             <div>
-                <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Summary</label>
-                <textarea name="summary" rows="2"
-                          class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">{{ old('summary') }}</textarea>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Summary</label>
+                <textarea name="summary" rows="2" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('summary') }}</textarea>
             </div>
             <div>
-                <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Description</label>
-                <textarea name="description" rows="6"
-                          class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">{{ old('description') }}</textarea>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Description</label>
+                <textarea name="description" rows="6" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('description') }}</textarea>
             </div>
             <div class="flex items-center gap-4">
-                <label class="flex items-center gap-2 text-sm text-gray-700">
-                    <input type="checkbox" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }} class="rounded border-gray-300 text-primary-600">
+                <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                    <input type="checkbox" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }} class="rounded border-gray-300">
                     Feature on Homepage
                 </label>
-                <label class="flex items-center gap-2 text-sm text-gray-700">
-                    <input type="checkbox" name="registration_open" value="1" checked class="rounded border-gray-300 text-primary-600">
+                <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                    <input type="checkbox" name="registration_open" value="1" checked class="rounded border-gray-300">
                     Registration Open
                 </label>
             </div>
             <div>
-                <label style="display:block;font-size:.8125rem;font-weight:600;color:rgba(212,146,15,.7);margin-bottom:.375rem;">Banner Image</label>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Banner Image</label>
                 <input type="file" name="banner" accept="image/*" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm">
             </div>
-            <button type="submit" style="background:linear-gradient(135deg,#d4920f,#f59e0b);color:#0d0a04;font-weight:700;padding:.5rem 1.5rem;border-radius:.5rem;border:none;cursor:pointer;font-size:.875rem;text-decoration:none;display:inline-block;">Save Event</button>
+            <div class="flex items-center gap-3 pt-2">
+                <button type="submit" class="px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg text-sm transition-colors">
+                    Save Event
+                </button>
+                <a href="{{ route('admin.events.index') }}" class="px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg text-sm transition-colors">
+                    Cancel
+                </a>
+            </div>
         </form>
     </div>
 </div>

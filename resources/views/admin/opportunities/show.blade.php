@@ -4,14 +4,14 @@
 
 @section('content')
 <div class="max-w-4xl space-y-6">
-    <div style="background:#1a1408;" class=" rounded-xl border border-gray-200 p-6">
-        <div class="flex items-start justify-between mb-4">
+    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div class="flex items-start justify-between mb-5">
             <div>
                 <h2 class="text-xl font-bold text-gray-900">{{ $opportunity->title }}</h2>
-                <p class="text-sm text-gray-400">{{ $opportunity->sector }} · {{ $opportunity->stage }} · {{ $opportunity->location }}</p>
-                <p class="text-sm text-gray-500 mt-1">Submitted by: <strong>{{ $opportunity->user->name }}</strong></p>
+                <p class="text-sm text-gray-500 mt-1">{{ $opportunity->sector }} · {{ $opportunity->stage }} · {{ $opportunity->location }}</p>
+                <p class="text-sm text-gray-500 mt-0.5">Submitted by: <strong class="text-gray-700">{{ $opportunity->user->name }}</strong></p>
             </div>
-            <span class="text-xs px-3 py-1 rounded-full font-medium
+            <span class="text-xs px-3 py-1 rounded-full font-semibold
                 {{ $opportunity->status === 'approved' ? 'bg-green-100 text-green-700' :
                    ($opportunity->status === 'submitted' ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-600') }}">
                 {{ ucfirst(str_replace('_', ' ', $opportunity->status)) }}
@@ -19,24 +19,35 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm mb-6">
-            <div><h4 class="font-medium text-gray-700 mb-1">Business Problem</h4><p style="color:#9a8a6a;">{{ $opportunity->business_problem }}</p></div>
-            <div><h4 class="font-medium text-gray-700 mb-1">Solution</h4><p style="color:#9a8a6a;">{{ $opportunity->solution }}</p></div>
-            <div><h4 class="font-medium text-gray-700 mb-1">Target Market</h4><p style="color:#9a8a6a;">{{ $opportunity->target_market }}</p></div>
-            <div><h4 class="font-medium text-gray-700 mb-1">Use of Funds</h4><p style="color:#9a8a6a;">{{ $opportunity->use_of_funds }}</p></div>
+            <div class="bg-gray-50 rounded-lg p-4">
+                <h4 class="font-semibold text-gray-700 mb-1">Business Problem</h4>
+                <p class="text-gray-600">{{ $opportunity->business_problem }}</p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4">
+                <h4 class="font-semibold text-gray-700 mb-1">Solution</h4>
+                <p class="text-gray-600">{{ $opportunity->solution }}</p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4">
+                <h4 class="font-semibold text-gray-700 mb-1">Target Market</h4>
+                <p class="text-gray-600">{{ $opportunity->target_market }}</p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4">
+                <h4 class="font-semibold text-gray-700 mb-1">Use of Funds</h4>
+                <p class="text-gray-600">{{ $opportunity->use_of_funds }}</p>
+            </div>
         </div>
 
-        <div class="p-4 bg-primary-50 rounded-xl mb-6">
+        <div class="p-4 bg-primary-50 rounded-xl mb-6 border border-primary-100">
             <span class="text-sm font-medium text-gray-700">Funding Ask: </span>
-            <span class="text-lg font-bold text-primary-700">${{ number_format($opportunity->ask_amount) }}</span>
+            <span class="text-lg font-bold text-primary-700">৳{{ number_format($opportunity->ask_amount) }}</span>
         </div>
 
-        {{-- Status Actions --}}
         <div class="flex flex-wrap gap-3">
             @foreach(['approved', 'rejected', 'under_review'] as $status)
             <form method="POST" action="{{ route('admin.opportunities.status', $opportunity) }}">
                 @csrf @method('PATCH')
                 <input type="hidden" name="status" value="{{ $status }}">
-                <button type="submit" class="text-sm font-medium px-4 py-2 rounded-lg border
+                <button type="submit" class="text-sm font-semibold px-4 py-2 rounded-lg border transition-colors
                     {{ $status === 'approved' ? 'bg-green-600 text-white border-green-600 hover:bg-green-700' :
                        ($status === 'rejected' ? 'bg-red-600 text-white border-red-600 hover:bg-red-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50') }}">
                     {{ ucfirst(str_replace('_', ' ', $status)) }}
@@ -46,14 +57,14 @@
 
             <form method="POST" action="{{ route('admin.opportunities.featured', $opportunity) }}">
                 @csrf @method('PATCH')
-                <button type="submit" class="text-sm font-medium px-4 py-2 rounded-lg border {{ $opportunity->is_featured ? 'bg-amber-500 text-white border-amber-500' : 'border-gray-300 text-gray-700 hover:bg-gray-50' }}">
+                <button type="submit" class="text-sm font-semibold px-4 py-2 rounded-lg border transition-colors {{ $opportunity->is_featured ? 'bg-amber-500 text-white border-amber-500 hover:bg-amber-600' : 'border-gray-300 text-gray-700 hover:bg-gray-50' }}">
                     {{ $opportunity->is_featured ? '⭐ Featured' : 'Mark Featured' }}
                 </button>
             </form>
 
             <form method="POST" action="{{ route('admin.opportunities.hot-deal', $opportunity) }}">
                 @csrf @method('PATCH')
-                <button type="submit" class="text-sm font-medium px-4 py-2 rounded-lg border {{ $opportunity->is_hot_deal ? 'bg-red-500 text-white border-red-500' : 'border-gray-300 text-gray-700 hover:bg-gray-50' }}">
+                <button type="submit" class="text-sm font-semibold px-4 py-2 rounded-lg border transition-colors {{ $opportunity->is_hot_deal ? 'bg-red-500 text-white border-red-500 hover:bg-red-600' : 'border-gray-300 text-gray-700 hover:bg-gray-50' }}">
                     {{ $opportunity->is_hot_deal ? '🔥 Hot Deal' : 'Mark Hot Deal' }}
                 </button>
             </form>
