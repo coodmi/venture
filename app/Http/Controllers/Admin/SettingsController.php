@@ -132,9 +132,22 @@ class SettingsController extends Controller
         return back()->with('success', 'Hero slider saved.');
     }
 
+    public function startupsPage()
+    {
+        return view('admin.settings.startups');
+    }
+
+    public function updateStartupsPage(Request $request)
+    {
+        $keys = ['startups_hero_badge','startups_hero_title','startups_hero_subtitle','startups_cta_title','startups_cta_subtitle','startups_sectors'];
+        foreach ($keys as $key) {
+            if ($request->has($key)) Setting::set($key, $request->input($key), 'startups');
+        }
+        return back()->with('success', 'Startups page settings saved.');
+    }
+
     public function about()
     {
-        $sections = AboutContent::orderBy('sort_order')->get()->keyBy('section');
         return view('admin.settings.about', compact('sections'));
     }
 

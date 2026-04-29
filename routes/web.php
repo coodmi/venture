@@ -86,7 +86,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Opportunities
     Route::get('/opportunities', [AdminOpportunity::class, 'index'])->name('opportunities.index');
+    Route::get('/opportunities/create', [AdminOpportunity::class, 'create'])->name('opportunities.create');
+    Route::post('/opportunities', [AdminOpportunity::class, 'store'])->name('opportunities.store');
     Route::get('/opportunities/{opportunity}', [AdminOpportunity::class, 'show'])->name('opportunities.show');
+    Route::get('/opportunities/{opportunity}/edit', [AdminOpportunity::class, 'edit'])->name('opportunities.edit');
+    Route::put('/opportunities/{opportunity}', [AdminOpportunity::class, 'update'])->name('opportunities.update');
+    Route::delete('/opportunities/{opportunity}', [AdminOpportunity::class, 'destroy'])->name('opportunities.destroy');
     Route::patch('/opportunities/{opportunity}/status', [AdminOpportunity::class, 'updateStatus'])->name('opportunities.status');
     Route::patch('/opportunities/{opportunity}/featured', [AdminOpportunity::class, 'toggleFeatured'])->name('opportunities.featured');
     Route::patch('/opportunities/{opportunity}/hot-deal', [AdminOpportunity::class, 'toggleHotDeal'])->name('opportunities.hot-deal');
@@ -111,4 +116,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/settings/testimonials', [AdminSettings::class, 'storeTestimonial'])->name('settings.testimonials.store');
     Route::get('/settings/about', [AdminSettings::class, 'about'])->name('settings.about');
     Route::post('/settings/about', [AdminSettings::class, 'updateAbout'])->name('settings.about.update');
+    Route::get('/settings/startups-page', [AdminSettings::class, 'startupsPage'])->name('settings.startups');
+    Route::post('/settings/startups-page', [AdminSettings::class, 'updateStartupsPage'])->name('settings.startups.update');
+
+    // Startup Management
+    Route::resource('/startups', \App\Http\Controllers\Admin\StartupController::class);
+    Route::patch('/startups/{startup}/featured', [\App\Http\Controllers\Admin\StartupController::class, 'toggleFeatured'])->name('startups.featured');
+    Route::patch('/startups/{startup}/hot-deal', [\App\Http\Controllers\Admin\StartupController::class, 'toggleHotDeal'])->name('startups.hot-deal');
+    Route::post('/startups/bulk-publish', [\App\Http\Controllers\Admin\StartupController::class, 'bulkPublish'])->name('startups.bulk-publish');
+    Route::post('/startups/bulk-unpublish', [\App\Http\Controllers\Admin\StartupController::class, 'bulkUnpublish'])->name('startups.bulk-unpublish');
+    Route::delete('/startups/{startup}/logo', [\App\Http\Controllers\Admin\StartupController::class, 'deleteLogo'])->name('startups.delete-logo');
+    Route::delete('/startups/{startup}/cover', [\App\Http\Controllers\Admin\StartupController::class, 'deleteCoverImage'])->name('startups.delete-cover');
+
+    // Startup Categories
+    Route::resource('/startup-categories', \App\Http\Controllers\Admin\StartupCategoryController::class);
 });
