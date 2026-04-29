@@ -2,13 +2,13 @@
     Options +FollowSymLinks
     RewriteEngine On
 
-    # Serve build assets from public/build
-    RewriteCond %{REQUEST_URI} ^/build/(.*)$
-    RewriteRule ^build/(.*)$ public/build/$1 [L]
+    # Serve build assets directly from public/build
+    RewriteCond %{REQUEST_URI} ^/build/
+    RewriteRule ^build/(.*)$ public/build/$1 [L,QSA]
 
-    # Serve storage files from public/storage
-    RewriteCond %{REQUEST_URI} ^/storage/(.*)$
-    RewriteRule ^storage/(.*)$ public/storage/$1 [L]
+    # Serve storage files directly from public/storage
+    RewriteCond %{REQUEST_URI} ^/storage/
+    RewriteRule ^storage/(.*)$ public/storage/$1 [L,QSA]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
