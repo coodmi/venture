@@ -8,6 +8,8 @@
     {{-- Toolbar --}}
     <div style="padding:1rem 1.25rem;border-bottom:1px solid #f3f4f6;background:#fafafa;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;">
         <form method="GET" style="display:flex;gap:.625rem;flex-wrap:wrap;align-items:center;">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search startup name…"
+                style="background:#fff;border:1px solid #e5e7eb;color:#374151;border-radius:.5rem;padding:.5rem .75rem;font-size:.8125rem;outline:none;width:200px;">
             <select name="status" style="background:#fff;border:1px solid #e5e7eb;color:#374151;border-radius:.5rem;padding:.5rem .75rem;font-size:.8125rem;outline:none;cursor:pointer;">
                 <option value="">All Status</option>
                 @foreach(['draft','submitted','under_review','approved','rejected','archived'] as $s)

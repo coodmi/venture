@@ -20,6 +20,9 @@ class OpportunityController extends Controller
         if ($request->filled('sector')) {
             $query->where('sector', $request->sector);
         }
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
 
         $opportunities = $query->latest()->paginate(20);
         return view('admin.opportunities.index', compact('opportunities'));
