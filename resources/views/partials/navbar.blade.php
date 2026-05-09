@@ -40,16 +40,79 @@
         <div style="display:flex;align-items:center;gap:.625rem;">
             <div id="desktopAuth" style="display:flex;align-items:center;gap:.625rem;">
                 @auth
-                    @if(auth()->user()->hasRole('admin'))
-                        <a href="{{ route('admin.dashboard') }}" style="font-size:.8125rem;font-weight:600;color:#1a3c8f;text-decoration:none;">Admin Panel</a>
-                    @elseif(auth()->user()->hasRole('investor'))
-                        <a href="{{ route('investor.dashboard') }}" style="font-size:.8125rem;font-weight:600;color:#1a3c8f;text-decoration:none;">Dashboard</a>
-                    @elseif(auth()->user()->hasRole('seeker'))
-                        <a href="{{ route('seeker.dashboard') }}" style="font-size:.8125rem;font-weight:600;color:#1a3c8f;text-decoration:none;">Dashboard</a>
-                    @endif
-                    <form method="POST" action="{{ route('logout') }}" style="display:inline;">@csrf
-                        <button type="submit" style="font-size:.8125rem;color:#6b7280;background:none;border:none;cursor:pointer;">Logout</button>
-                    </form>
+                    @php $navAvatar = auth()->user()->avatar ?? null; @endphp
+                    <div style="position:relative;" id="navUserMenu">
+                        <button onclick="toggleNavMenu()" style="display:flex;align-items:center;gap:.5rem;background:none;border:1px solid #e5e7eb;border-radius:.75rem;padding:.3rem .5rem .3rem .3rem;cursor:pointer;transition:all .15s;" onmouseover="this.style.background='#f9fafb';" onmouseout="this.style.background='none';">
+                            @if($navAvatar)
+                                <img src="{{ Storage::url($navAvatar) }}" alt="{{ auth()->user()->name }}"
+                                     style="width:1.875rem;height:1.875rem;border-radius:50%;object-fit:cover;border:2px solid #e0e7ff;flex-shrink:0;">
+                            @else
+                                <div style="width:1.875rem;height:1.875rem;background:linear-gradient(135deg,#1a3c8f,#3b5fc0);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                    <span style="color:#fff;font-weight:700;font-size:.6875rem;">{{ strtoupper(substr(auth()->user()->name,0,1)) }}</span>
+                                </div>
+                            @endif
+                            <span style="font-size:.8125rem;font-weight:600;color:#1a3c8f;">{{ explode(' ', auth()->user()->name)[0] }}</span>
+                            <svg width="12" height="12" fill="none" stroke="#9ca3af" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+
+                        <div id="navMenuDropdown" style="display:none;position:absolute;right:0;top:calc(100% + .5rem);width:13rem;background:#fff;border:1px solid #e5e7eb;border-radius:.875rem;box-shadow:0 10px 25px rgba(0,0,0,.1);z-index:999;overflow:hidden;">
+                            <div style="padding:.875rem 1rem;border-bottom:1px solid #f3f4f6;">
+                                <div style="font-size:.8125rem;font-weight:600;color:#111827;">{{ auth()->user()->name }}</div>
+                                <div style="font-size:.75rem;color:#9ca3af;margin-top:.125rem;">{{ auth()->user()->email }}</div>
+                            </div>
+                            <div style="padding:.375rem;">
+                                @if(auth()->user()->hasRole('admin'))
+                                    <a href="{{ route('admin.dashboard') }}"
+                                       style="display:flex;align-items:center;gap:.625rem;padding:.5rem .75rem;border-radius:.5rem;font-size:.8125rem;color:#374151;text-decoration:none;"
+                                       onmouseover="this.style.background='#f9fafb';" onmouseout="this.style.background='transparent';">
+                                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                                        Admin Panel
+                                    </a>
+                                @elseif(auth()->user()->hasRole('investor'))
+                                    <a href="{{ route('investor.dashboard') }}"
+                                       style="display:flex;align-items:center;gap:.625rem;padding:.5rem .75rem;border-radius:.5rem;font-size:.8125rem;color:#374151;text-decoration:none;"
+                                       onmouseover="this.style.background='#f9fafb';" onmouseout="this.style.background='transparent';">
+                                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                                        Dashboard
+                                    </a>
+                                    <a href="{{ route('investor.profile.edit') }}"
+                                       style="display:flex;align-items:center;gap:.625rem;padding:.5rem .75rem;border-radius:.5rem;font-size:.8125rem;color:#374151;text-decoration:none;"
+                                       onmouseover="this.style.background='#f9fafb';" onmouseout="this.style.background='transparent';">
+                                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                        My Profile
+                                    </a>
+                                @elseif(auth()->user()->hasRole('seeker'))
+                                    <a href="{{ route('seeker.dashboard') }}"
+                                       style="display:flex;align-items:center;gap:.625rem;padding:.5rem .75rem;border-radius:.5rem;font-size:.8125rem;color:#374151;text-decoration:none;"
+                                       onmouseover="this.style.background='#f9fafb';" onmouseout="this.style.background='transparent';">
+                                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                                        Dashboard
+                                    </a>
+                                    <a href="{{ route('seeker.profile.edit') }}"
+                                       style="display:flex;align-items:center;gap:.625rem;padding:.5rem .75rem;border-radius:.5rem;font-size:.8125rem;color:#374151;text-decoration:none;"
+                                       onmouseover="this.style.background='#f9fafb';" onmouseout="this.style.background='transparent';">
+                                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                        My Profile
+                                    </a>
+                                @endif
+                            </div>
+                            <div style="padding:.375rem;border-top:1px solid #f3f4f6;">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                            style="display:flex;align-items:center;gap:.625rem;width:100%;padding:.5rem .75rem;border-radius:.5rem;font-size:.8125rem;color:#ef4444;background:none;border:none;cursor:pointer;text-align:left;"
+                                            onmouseover="this.style.background='#fef2f2';" onmouseout="this.style.background='transparent';">
+                                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                                        Sign Out
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                    function toggleNavMenu(){var d=document.getElementById('navMenuDropdown');d.style.display=d.style.display==='none'?'block':'none';}
+                    document.addEventListener('click',function(e){var m=document.getElementById('navUserMenu');if(m&&!m.contains(e.target)){var d=document.getElementById('navMenuDropdown');if(d)d.style.display='none';}});
+                    </script>
                 @else
                     <a href="{{ route('login') }}" style="font-size:.8125rem;font-weight:600;color:#1a3c8f;text-decoration:none;padding:.45rem .875rem;border-radius:.5rem;border:1px solid #1a3c8f;" onmouseover="this.style.background='#1a3c8f';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#1a3c8f';">Login</a>
                     <a href="{{ route('register.investor') }}" style="background:#f97316;color:#fff;font-size:.8125rem;font-weight:700;padding:.45rem 1.125rem;border-radius:.5rem;text-decoration:none;white-space:nowrap;" onmouseover="this.style.background='#ea6c0a';" onmouseout="this.style.background='#f97316';">Join as Investor</a>
