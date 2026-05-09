@@ -12,7 +12,7 @@
     ];
 @endphp
 
-<nav style="background:#fff;border-bottom:2px solid #1a3c8f;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,60,143,.1);font-family:'Plus Jakarta Sans',sans-serif;">
+<nav style="background:#1a3c8f;border-bottom:2px solid #0d2b6e;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,60,143,.3);font-family:'Plus Jakarta Sans',sans-serif;">
     <div style="max-width:80rem;margin:0 auto;padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;height:4.25rem;">
 
         {{-- Logo --}}
@@ -24,7 +24,7 @@
                     <div style="width:2.25rem;height:2.25rem;background:linear-gradient(135deg,#1a3c8f,#0d2b6e);border-radius:.5rem;display:flex;align-items:center;justify-content:center;">
                         <span style="color:#fff;font-weight:800;font-size:.75rem;">{{ strtoupper(substr($siteName,0,2)) }}</span>
                     </div>
-                    <span style="font-weight:800;font-size:1.125rem;color:#0d2b6e;">{{ $siteName }}</span>
+                    <span style="font-weight:800;font-size:1.125rem;color:#fff;">{{ $siteName }}</span>
                 </div>
             @endif
         </a>
@@ -32,7 +32,7 @@
         {{-- Desktop Nav --}}
         <div id="desktopNav" style="display:flex;align-items:center;gap:1.75rem;">
             @foreach($navItems as $item)
-            <a href="{{ $item['url'] }}" style="font-size:.875rem;font-weight:600;color:#374151;text-decoration:none;white-space:nowrap;padding:.25rem 0;border-bottom:2px solid transparent;transition:all .2s;" onmouseover="this.style.color='#1a3c8f';this.style.borderBottomColor='#f97316';" onmouseout="this.style.color='#374151';this.style.borderBottomColor='transparent';">{{ $item['label'] }}</a>
+            <a href="{{ $item['url'] }}" style="font-size:.875rem;font-weight:600;color:rgba(255,255,255,.85);text-decoration:none;white-space:nowrap;padding:.25rem 0;border-bottom:2px solid transparent;transition:all .2s;" onmouseover="this.style.color='#fff';this.style.borderBottomColor='#f97316';" onmouseout="this.style.color='rgba(255,255,255,.85)';this.style.borderBottomColor='transparent';">{{ $item['label'] }}</a>
             @endforeach
         </div>
 
@@ -42,17 +42,17 @@
                 @auth
                     @php $navAvatar = auth()->user()->avatar ?? null; @endphp
                     <div style="position:relative;" id="navUserMenu">
-                        <button onclick="toggleNavMenu()" style="display:flex;align-items:center;gap:.5rem;background:none;border:1px solid #e5e7eb;border-radius:.75rem;padding:.3rem .5rem .3rem .3rem;cursor:pointer;transition:all .15s;" onmouseover="this.style.background='#f9fafb';" onmouseout="this.style.background='none';">
+                        <button onclick="toggleNavMenu()" style="display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:.75rem;padding:.3rem .5rem .3rem .3rem;cursor:pointer;transition:all .15s;" onmouseover="this.style.background='rgba(255,255,255,.2)';" onmouseout="this.style.background='rgba(255,255,255,.1)';">
                             @if($navAvatar)
                                 <img src="{{ Storage::url($navAvatar) }}" alt="{{ auth()->user()->name }}"
-                                     style="width:1.875rem;height:1.875rem;border-radius:50%;object-fit:cover;border:2px solid #e0e7ff;flex-shrink:0;">
+                                     style="width:1.875rem;height:1.875rem;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.4);flex-shrink:0;">
                             @else
-                                <div style="width:1.875rem;height:1.875rem;background:linear-gradient(135deg,#1a3c8f,#3b5fc0);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <div style="width:1.875rem;height:1.875rem;background:linear-gradient(135deg,#f97316,#fb923c);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                                     <span style="color:#fff;font-weight:700;font-size:.6875rem;">{{ strtoupper(substr(auth()->user()->name,0,1)) }}</span>
                                 </div>
                             @endif
-                            <span style="font-size:.8125rem;font-weight:600;color:#1a3c8f;">{{ explode(' ', auth()->user()->name)[0] }}</span>
-                            <svg width="12" height="12" fill="none" stroke="#9ca3af" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            <span style="font-size:.8125rem;font-weight:600;color:#fff;">{{ explode(' ', auth()->user()->name)[0] }}</span>
+                            <svg width="12" height="12" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                         </button>
 
                         <div id="navMenuDropdown" style="display:none;position:absolute;right:0;top:calc(100% + .5rem);width:13rem;background:#fff;border:1px solid #e5e7eb;border-radius:.875rem;box-shadow:0 10px 25px rgba(0,0,0,.1);z-index:999;overflow:hidden;">
@@ -114,9 +114,9 @@
                     document.addEventListener('click',function(e){var m=document.getElementById('navUserMenu');if(m&&!m.contains(e.target)){var d=document.getElementById('navMenuDropdown');if(d)d.style.display='none';}});
                     </script>
                 @else
-                    <a href="{{ route('login') }}" style="font-size:.8125rem;font-weight:600;color:#1a3c8f;text-decoration:none;padding:.45rem .875rem;border-radius:.5rem;border:1px solid #1a3c8f;" onmouseover="this.style.background='#1a3c8f';this.style.color='#fff';" onmouseout="this.style.background='transparent';this.style.color='#1a3c8f';">Login</a>
+                    <a href="{{ route('login') }}" style="font-size:.8125rem;font-weight:600;color:#fff;text-decoration:none;padding:.45rem .875rem;border-radius:.5rem;border:1px solid rgba(255,255,255,.4);" onmouseover="this.style.background='rgba(255,255,255,.15)';" onmouseout="this.style.background='transparent';">Login</a>
                     <a href="{{ route('register.investor') }}" style="background:#f97316;color:#fff;font-size:.8125rem;font-weight:700;padding:.45rem 1.125rem;border-radius:.5rem;text-decoration:none;white-space:nowrap;" onmouseover="this.style.background='#ea6c0a';" onmouseout="this.style.background='#f97316';">Join as Investor</a>
-                    <a id="seekerBtn" href="{{ route('register.seeker') }}" style="background:#1a3c8f;color:#fff;font-size:.8125rem;font-weight:700;padding:.45rem 1.125rem;border-radius:.5rem;text-decoration:none;white-space:nowrap;" onmouseover="this.style.background='#0d2b6e';" onmouseout="this.style.background='#1a3c8f';">Join as Seeker</a>
+                    <a id="seekerBtn" href="{{ route('register.seeker') }}" style="background:rgba(255,255,255,.15);color:#fff;font-size:.8125rem;font-weight:700;padding:.45rem 1.125rem;border-radius:.5rem;text-decoration:none;white-space:nowrap;border:1px solid rgba(255,255,255,.3);" onmouseover="this.style.background='rgba(255,255,255,.25)';" onmouseout="this.style.background='rgba(255,255,255,.15)';">Join as Seeker</a>
                 @endauth
             </div>
 
