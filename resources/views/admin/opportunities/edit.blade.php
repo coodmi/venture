@@ -105,6 +105,36 @@
             </div>
 
             <div style="background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.04);">
+                <h3 style="font-weight:700;color:#111827;font-size:.9375rem;margin:0 0 1rem;">Company Logo</h3>
+                <div style="display:flex;align-items:center;gap:1rem;">
+                    <div style="position:relative;flex-shrink:0;">
+                        @if($o->seekerProfile?->company_logo)
+                            <img id="logoPreview" src="{{ Storage::url($o->seekerProfile->company_logo) }}"
+                                 style="width:5rem;height:5rem;border-radius:.75rem;object-fit:contain;border:2px solid #e5e7eb;background:#f9fafb;padding:.25rem;display:block;">
+                        @else
+                            <div id="logoPreview" style="width:5rem;height:5rem;border-radius:.75rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;border:2px solid #e0e7ff;">
+                                <span style="color:#fff;font-weight:800;font-size:1.25rem;">{{ strtoupper(substr($o->title,0,2)) }}</span>
+                            </div>
+                        @endif
+                        <label for="logoInput" style="position:absolute;bottom:-4px;right:-4px;width:1.5rem;height:1.5rem;background:#6366f1;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2);">
+                            <svg width="10" height="10" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
+                        </label>
+                    </div>
+                    <div style="flex:1;">
+                        <p style="font-size:.8125rem;font-weight:600;color:#374151;margin:0 0 .25rem;">{{ $o->title }}</p>
+                        <p style="font-size:.75rem;color:#9ca3af;margin:0 0 .625rem;">PNG, JPG — max 2MB</p>
+                        <input type="file" id="logoInput" name="company_logo" accept="image/*"
+                               style="display:none;"
+                               onchange="previewAdminLogo(this)">
+                        <label for="logoInput" style="display:inline-flex;align-items:center;gap:.375rem;font-size:.75rem;font-weight:600;color:#6366f1;cursor:pointer;padding:.35rem .875rem;background:#eef2ff;border-radius:.5rem;">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                            Upload Logo
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.04);">
                 <h3 style="font-weight:700;color:#111827;font-size:.9375rem;margin:0 0 .75rem;">Pitch Deck</h3>
                 @if($o->pitch_deck)
                 <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;padding:.5rem .75rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:.5rem;">
@@ -126,4 +156,27 @@
         </div>
     </div>
 </form>
+
+@push('scripts')
+<script>
+function previewAdminLogo(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var el = document.getElementById('logoPreview');
+            if (el.tagName === 'IMG') {
+                el.src = e.target.result;
+            } else {
+                var img = document.createElement('img');
+                img.id = 'logoPreview';
+                img.src = e.target.result;
+                img.style.cssText = 'width:5rem;height:5rem;border-radius:.75rem;object-fit:contain;border:2px solid #e5e7eb;background:#f9fafb;padding:.25rem;display:block;';
+                el.parentNode.replaceChild(img, el);
+            }
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+@endpush
 @endsection

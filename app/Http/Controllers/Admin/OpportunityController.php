@@ -75,6 +75,7 @@ class OpportunityController extends Controller
 
     public function edit(Opportunity $opportunity)
     {
+        $opportunity->load('seekerProfile');
         return view('admin.opportunities.edit', compact('opportunity'));
     }
 
@@ -96,9 +97,10 @@ class OpportunityController extends Controller
             'key_metrics'      => 'nullable|string',
             'status'           => 'required|in:draft,submitted,under_review,approved,rejected,archived',
             'pitch_deck'       => 'nullable|file|mimes:pdf|max:10240',
+            'company_logo'     => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->except(['pitch_deck', '_token', '_method']);
+        $data = $request->except(['pitch_deck', 'company_logo', '_token', '_method']);
         $data['is_featured'] = $request->boolean('is_featured');
         $data['is_hot_deal']  = $request->boolean('is_hot_deal');
 
@@ -110,6 +112,17 @@ class OpportunityController extends Controller
         }
 
         $opportunity->update($data);
+
+        // Update company logo on the seeker profile if uploaded
+        if ($request->hasFile('company_logo') && $opportunity->seekerProfile) {
+            $seekerProfile = $opportunity->seekerProfile;
+            if ($seekerProfile->company_logo) {
+                Storage::disk('public')->delete($seekerProfile->company_logo);
+            }
+            $seekerProfile->update([
+                'company_logo' => $request->file('company_logo')->store('seekers/logos', 'public'),
+            ]);
+        }
 
         return redirect()->route('admin.opportunities.index')
             ->with('success', 'Startup updated successfully.');
