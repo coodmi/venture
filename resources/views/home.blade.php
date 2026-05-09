@@ -133,11 +133,16 @@
                 $sectors = json_decode($inv->sector_preferences ?? '[]', true) ?: [];
             @endphp
             <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:220px;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
-                <div style="height:6rem;background:{{ $ig }};position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                <div style="height:9rem;background:{{ $ig }};position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
                     <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:20px 20px;"></div>
-                    <div style="position:relative;z-index:2;width:3rem;height:3rem;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff;">{{ $initials }}</div>
+                    @if(!empty($inv->photo))
+                        <img src="{{ Storage::url($inv->photo) }}" alt="{{ $inv->user_name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;z-index:1;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 60%);z-index:2;"></div>
+                    @else
+                        <div style="position:relative;z-index:2;width:3.5rem;height:3.5rem;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.125rem;color:#fff;">{{ $initials }}</div>
+                    @endif
                     @if(($inv->verification_status??'')==='verified')
-                    <div style="position:absolute;bottom:.5rem;right:.5rem;background:rgba(22,163,74,.9);color:#fff;font-size:.6rem;font-weight:700;padding:.15rem .5rem;border-radius:9999px;">✓ Verified</div>
+                    <div style="position:absolute;bottom:.5rem;right:.5rem;background:rgba(22,163,74,.9);color:#fff;font-size:.6rem;font-weight:700;padding:.15rem .5rem;border-radius:9999px;z-index:3;">✓ Verified</div>
                     @endif
                 </div>
                 <div style="padding:1rem;flex:1;display:flex;flex-direction:column;">
