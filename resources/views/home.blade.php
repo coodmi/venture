@@ -215,15 +215,15 @@
                     <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:22px 22px;"></div>
                     {{-- Logo or initials --}}
                     @if(!empty($s->company_logo))
-                        <div style="position:relative;z-index:2;width:4rem;height:4rem;border-radius:1rem;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);overflow:hidden;">
-                            <img src="{{ Storage::url($s->company_logo) }}" alt="{{ $s->title }}" style="width:100%;height:100%;object-fit:contain;padding:.25rem;">
-                        </div>
+                        <img src="{{ Storage::url($s->company_logo) }}" alt="{{ $s->title }}"
+                             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.35) 0%,transparent 60%);z-index:2;"></div>
                     @else
                         <div style="position:relative;z-index:2;width:4rem;height:4rem;border-radius:1rem;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.15);">
                             <span style="color:#fff;font-weight:800;font-size:1.125rem;">{{ strtoupper(substr($s->title,0,2)) }}</span>
                         </div>
                     @endif
-                    @if($s->is_featured)<span style="position:absolute;top:.5rem;right:.5rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(4px);">⭐ Featured</span>@endif
+                    @if($s->is_featured)<span style="position:absolute;top:.5rem;right:.5rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(4px);z-index:3;">⭐ Featured</span>@endif
                 </div>
                 {{-- Body --}}
                 <div style="padding:1rem;flex:1;display:flex;flex-direction:column;">

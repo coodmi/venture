@@ -124,9 +124,9 @@
                     <div style="position:absolute;inset:0;opacity:.08;background-image:radial-gradient(circle at 20% 50%,#fff 1px,transparent 1px),radial-gradient(circle at 80% 20%,#fff 1px,transparent 1px);background-size:30px 30px;"></div>
                     {{-- Logo circle --}}
                     @if(!empty($opp->company_logo))
-                        <div style="position:relative;z-index:2;width:4.5rem;height:4.5rem;background:#fff;border-radius:1.25rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);overflow:hidden;">
-                            <img src="{{ Storage::url($opp->company_logo) }}" alt="{{ $opp->title }}" style="width:100%;height:100%;object-fit:contain;padding:.25rem;">
-                        </div>
+                        <img src="{{ Storage::url($opp->company_logo) }}" alt="{{ $opp->title }}"
+                             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.4) 0%,transparent 60%);z-index:2;"></div>
                     @else
                         <div style="position:relative;z-index:2;width:4.5rem;height:4.5rem;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);border-radius:1.25rem;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
                             <span style="color:#fff;font-weight:800;font-size:1.375rem;letter-spacing:-.02em;">{{ strtoupper(substr($opp->title,0,2)) }}</span>

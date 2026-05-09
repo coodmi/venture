@@ -86,11 +86,11 @@
                     <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:24px 24px;"></div>
                     <div style="position:absolute;top:-2rem;right:-2rem;width:7rem;height:7rem;background:rgba(255,255,255,.06);border-radius:50%;"></div>
                     @if(!empty($opp->company_logo))
-                        <div style="position:relative;z-index:2;width:4rem;height:4rem;border-radius:1rem;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);overflow:hidden;">
-                            <img src="{{ Storage::url($opp->company_logo) }}" alt="{{ $opp->title }}" style="width:100%;height:100%;object-fit:contain;padding:.25rem;">
-                        </div>
+                        <img src="{{ Storage::url($opp->company_logo) }}" alt="{{ $opp->title }}"
+                             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.35) 0%,transparent 60%);z-index:2;"></div>
                     @else
-                        <div style="position:relative;z-index:2;width:3.5rem;height:3.5rem;border-radius:1rem;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;">
+                        <div style="position:relative;z-index:2;width:4rem;height:4rem;border-radius:1rem;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;">
                             <span style="color:#fff;font-weight:800;font-size:1.125rem;">{{ strtoupper(substr($opp->title,0,2)) }}</span>
                         </div>
                     @endif
