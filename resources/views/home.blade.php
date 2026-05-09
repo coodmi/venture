@@ -88,15 +88,15 @@
             <p style="color:#8d98a1;font-size:1.0625rem;max-width:32rem;margin:0 auto;line-height:1.6;">A connected ecosystem where every stakeholder finds value.</p>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;">
-            @php $steps=[['num'=>'01','numColor'=>'#1a3c8f','color'=>'#1a3c8f','bg'=>'rgba(26,60,143,.08)','title'=>'Discover','desc'=>'Browse curated investment opportunities filtered by sector, stage, and ticket size.','icon'=>'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'],['num'=>'02','numColor'=>'#f97316','color'=>'#f97316','bg'=>'rgba(249,115,22,.08)','title'=>'Connect','desc'=>'Express interest, request meetings, and engage directly with founders and investors.','icon'=>'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z'],['num'=>'03','numColor'=>'#16a34a','color'=>'#1a3c8f','bg'=>'rgba(26,60,143,.08)','title'=>'Grow','desc'=>'Close deals, join bootcamps, attend conferences, and scale your venture together.','icon'=>'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6']]; @endphp
+            @php $steps=[['num'=>'01','numColor'=>'rgba(255,255,255,.25)','color'=>'#fff','bg'=>'rgba(255,255,255,.15)','title'=>'Discover','desc'=>'Browse curated investment opportunities filtered by sector, stage, and ticket size.','icon'=>'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'],['num'=>'02','numColor'=>'rgba(255,255,255,.25)','color'=>'#fff','bg'=>'rgba(255,255,255,.15)','title'=>'Connect','desc'=>'Express interest, request meetings, and engage directly with founders and investors.','icon'=>'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z'],['num'=>'03','numColor'=>'rgba(255,255,255,.25)','color'=>'#fff','bg'=>'rgba(255,255,255,.15)','title'=>'Grow','desc'=>'Close deals, join bootcamps, attend conferences, and scale your venture together.','icon'=>'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6']]; @endphp
             @foreach($steps as $step)
-            <div style="background:#fff;border-radius:1.25rem;padding:2rem;border:1px solid #dde3ea;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);">
-                <div style="position:absolute;top:1.25rem;right:1.25rem;font-size:3.5rem;font-weight:900;color:{{ $step['numColor'] }};opacity:.15;line-height:1;user-select:none;">{{ $step['num'] }}</div>
-                <div style="width:3rem;height:3rem;background:{{ $step['bg'] }};border-radius:.875rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
-                    <svg width="22" height="22" fill="none" stroke="{{ $step['color'] }}" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $step['icon'] }}"/></svg>
+            <div style="background:linear-gradient(135deg,#1a3c8f,#2a52b0);border-radius:1.25rem;padding:2rem;border:1px solid rgba(255,255,255,.15);position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(26,60,143,.35);">
+                <div style="position:absolute;top:1.25rem;right:1.25rem;font-size:3.5rem;font-weight:900;color:#fff;opacity:.12;line-height:1;user-select:none;">{{ $step['num'] }}</div>
+                <div style="width:3rem;height:3rem;background:rgba(255,255,255,.15);border-radius:.875rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;border:1px solid rgba(255,255,255,.2);">
+                    <svg width="22" height="22" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $step['icon'] }}"/></svg>
                 </div>
-                <h3 style="font-size:1.125rem;font-weight:700;color:#0d2b6e;margin:0 0 .5rem;">{{ $step['title'] }}</h3>
-                <p style="font-size:.875rem;color:#8d98a1;line-height:1.6;margin:0;">{{ $step['desc'] }}</p>
+                <h3 style="font-size:1.125rem;font-weight:700;color:#fff;margin:0 0 .5rem;">{{ $step['title'] }}</h3>
+                <p style="font-size:.875rem;color:rgba(255,255,255,.75);line-height:1.6;margin:0;">{{ $step['desc'] }}</p>
             </div>
             @endforeach
         </div>
