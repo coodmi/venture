@@ -12,7 +12,7 @@ class OpportunityController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Opportunity::with(['user', 'seekerProfile']);
+        $query = Opportunity::with(['user.seekerProfile', 'seekerProfile']);
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);

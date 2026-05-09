@@ -49,7 +49,7 @@
         <tbody>
             @forelse($opportunities as $opp)
             @php
-                $seekerProfile = $opp->seekerProfile;
+                $seekerProfile = $opp->seekerProfile ?? $opp->user?->seekerProfile;
                 $founderPhoto  = $seekerProfile?->photo;
                 $companyLogo   = $seekerProfile?->company_logo;
                 $founderName   = $opp->user?->name ?? '—';
