@@ -34,7 +34,7 @@ class ProfileController extends Controller
         ]);
 
         $user    = Auth::user();
-        $profile = $user->investorProfile;
+        $profile = $user->investorProfile ?? InvestorProfile::create(['user_id' => $user->id]);
 
         $data = $request->except(['photo', '_token', '_method']);
         $data['sector_preferences']  = $request->input('sector_preferences', []);

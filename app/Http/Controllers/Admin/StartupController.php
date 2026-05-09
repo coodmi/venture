@@ -4,25 +4,28 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Opportunity;
-use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class OpportunityController extends Controller
+/**
+ * Admin Startup Controller
+ * Manages startup/opportunity listings from the admin panel.
+ * Startups are stored as Opportunity records (same model, admin view).
+ */
+class StartupController extends Controller
 {
     public function index(Request $request)
     {
         $query = Opportunity::with('user');
 
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-        if ($request->filled('sector')) {
-            $query->where('sector', $request->sector);
+        if ($request->filled('status'))  $query->where('status', $request->status);
+        if ($request->filled('sector'))  $query->where('sector', $request->sector);
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
         }
 
-        $opportunities = $query->latest()->paginate(20);
-        return view('admin.opportunities.index', compact('opportunities'));
+        $startups = $query->latest()->paginate(20);
+        return view('admin.opportunities.index', ['opportunities' => $startups]);
     }
 
     public function create()
@@ -64,18 +67,18 @@ class OpportunityController extends Controller
             ->with('success', 'Startup created successfully.');
     }
 
-    public function show(Opportunity $opportunity)
+    public function show(Opportunity $startup)
     {
-        $opportunity->load(['user', 'seekerProfile', 'interests.investorProfile.user']);
-        return view('admin.opportunities.show', compact('opportunity'));
+        $startup->load(['user', 'seekerProfile', 'interests.investorProfile.user']);
+        return view('admin.opportunities.show', ['opportunity' => $startup]);
     }
 
-    public function edit(Opportunity $opportunity)
+    public function edit(Opportunity $startup)
     {
-        return view('admin.opportunities.edit', compact('opportunity'));
+        return view('admin.opportunities.edit', ['opportunity' => $startup]);
     }
 
-    public function update(Request $request, Opportunity $opportunity)
+    public function update(Request $request, Opportunity $startup)
     {
         $request->validate([
             'title'            => 'required|string|max:255',
@@ -100,45 +103,67 @@ class OpportunityController extends Controller
         $data['is_hot_deal']  = $request->boolean('is_hot_deal');
 
         if ($request->hasFile('pitch_deck')) {
-            if ($opportunity->pitch_deck) {
-                Storage::disk('public')->delete($opportunity->pitch_deck);
+            if ($startup->pitch_deck) {
+                Storage::disk('public')->delete($startup->pitch_deck);
             }
             $data['pitch_deck'] = $request->file('pitch_deck')->store('opportunities/decks', 'public');
         }
 
-        $opportunity->update($data);
+        $startup->update($data);
 
         return redirect()->route('admin.opportunities.index')
             ->with('success', 'Startup updated successfully.');
     }
 
-    public function destroy(Opportunity $opportunity)
+    public function destroy(Opportunity $startup)
     {
-        if ($opportunity->pitch_deck) {
-            Storage::disk('public')->delete($opportunity->pitch_deck);
+        if ($startup->pitch_deck) {
+            Storage::disk('public')->delete($startup->pitch_deck);
         }
-        $opportunity->delete();
+        $startup->delete();
 
         return redirect()->route('admin.opportunities.index')
             ->with('success', 'Startup deleted.');
     }
 
-    public function updateStatus(Request $request, Opportunity $opportunity)
+    public function toggleFeatured(Opportunity $startup)
     {
-        $request->validate(['status' => 'required|in:approved,rejected,under_review,archived']);
-        $opportunity->update(['status' => $request->status]);
-        return back()->with('success', 'Opportunity status updated.');
-    }
-
-    public function toggleFeatured(Opportunity $opportunity)
-    {
-        $opportunity->update(['is_featured' => !$opportunity->is_featured]);
+        $startup->update(['is_featured' => !$startup->is_featured]);
         return back()->with('success', 'Featured status toggled.');
     }
 
-    public function toggleHotDeal(Opportunity $opportunity)
+    public function toggleHotDeal(Opportunity $startup)
     {
-        $opportunity->update(['is_hot_deal' => !$opportunity->is_hot_deal]);
+        $startup->update(['is_hot_deal' => !$startup->is_hot_deal]);
         return back()->with('success', 'Hot deal status toggled.');
+    }
+
+    public function bulkPublish(Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (!empty($ids)) {
+            Opportunity::whereIn('id', $ids)->update(['status' => 'approved']);
+        }
+        return back()->with('success', 'Selected startups published.');
+    }
+
+    public function bulkUnpublish(Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (!empty($ids)) {
+            Opportunity::whereIn('id', $ids)->update(['status' => 'archived']);
+        }
+        return back()->with('success', 'Selected startups unpublished.');
+    }
+
+    public function deleteLogo(Opportunity $startup)
+    {
+        // Logo is stored as pitch_deck for now; extend if a separate logo field is added
+        return back()->with('info', 'No logo field configured.');
+    }
+
+    public function deleteCoverImage(Opportunity $startup)
+    {
+        return back()->with('info', 'No cover image field configured.');
     }
 }

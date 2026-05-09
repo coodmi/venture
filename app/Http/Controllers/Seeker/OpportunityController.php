@@ -60,7 +60,25 @@ class OpportunityController extends Controller
     {
         abort_if($opportunity->user_id !== Auth::id(), 403);
 
-        $data = $request->except(['pitch_deck', '_token', '_method']);
+        $request->validate([
+            'title'            => 'required|string|max:255',
+            'sector'           => 'required|string',
+            'stage'            => 'required|string',
+            'business_problem' => 'required|string',
+            'solution'         => 'required|string',
+            'target_market'    => 'required|string',
+            'ask_amount'       => 'required|numeric|min:1',
+            'use_of_funds'     => 'required|string',
+            'pitch_deck'       => 'nullable|file|mimes:pdf,ppt,pptx|max:20480',
+        ]);
+
+        // Only allow editing drafts or revision_required opportunities
+        abort_if(!in_array($opportunity->status, ['draft', 'revision_required']), 403, 'This opportunity cannot be edited in its current status.');
+
+        $data = $request->except(['pitch_deck', '_token', '_method',
+            // Prevent seekers from manipulating these fields
+            'status', 'is_featured', 'is_hot_deal', 'user_id', 'seeker_profile_id',
+        ]);
         $data['status'] = $request->input('action') === 'submit' ? 'submitted' : 'draft';
 
         if ($request->hasFile('pitch_deck')) {

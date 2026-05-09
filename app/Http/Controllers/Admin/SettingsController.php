@@ -122,8 +122,8 @@ class SettingsController extends Controller
                 'video_url'=> $slide['video_url'] ?? '',
                 'image'    => $slide['existing_image'] ?? '',
             ];
-            if (isset($request->file('slides')[$i]['image'])) {
-                $path = $request->file('slides')[$i]['image']->store('hero', 'public');
+            if ($request->hasFile("slides.$i.image")) {
+                $path = $request->file("slides.$i.image")->store('hero', 'public');
                 $item['image'] = $path;
             }
             $slides[] = $item;
@@ -158,7 +158,7 @@ class SettingsController extends Controller
             $updateData = [
                 'title'        => $data['title'] ?? null,
                 'content'      => $data['content'] ?? null,
-                'extra'        => isset($data['extra']) ? $data['extra'] : null,
+                'extra'        => isset($data['extra']) ? (is_array($data['extra']) ? $data['extra'] : json_decode($data['extra'], true)) : null,
                 'is_published' => true,
             ];
             // Handle founder photo upload

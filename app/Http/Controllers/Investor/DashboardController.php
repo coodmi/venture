@@ -26,7 +26,7 @@ class DashboardController extends Controller
         $hotDeals    = Opportunity::approved()->hotDeals()->latest()->take(4)->get();
         $upcomingEvents = Event::published()->upcoming()->orderBy('start_date')->take(3)->get();
         $latestNews  = News::published()->ofType('news')->latest('published_at')->take(4)->get();
-        $notifications = $user->notifications()->where('is_read', false)->latest()->take(5)->get();
+        $notifications = $user->userNotifications()->where('is_read', false)->latest()->take(5)->get();
 
         return view('investor.dashboard', compact(
             'user', 'profile', 'savedOpportunities', 'interestedOpportunities',

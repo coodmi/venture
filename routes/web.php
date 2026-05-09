@@ -19,10 +19,12 @@ use App\Http\Controllers\Admin\OpportunityController as AdminOpportunity;
 use App\Http\Controllers\Admin\NewsController as AdminNews;
 use App\Http\Controllers\Admin\EventController as AdminEvent;
 use App\Http\Controllers\Admin\SettingsController as AdminSettings;
+use App\Http\Controllers\Admin\MembershipController as AdminMembership;
 
 use App\Http\Controllers\StartupController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\InvestorPageController;
+use App\Http\Controllers\MembershipController;
 
 // ─── Public Routes ────────────────────────────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -39,12 +41,20 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/demo/{slug}', [EventController::class, 'demo'])->name('events.demo');
 Route::get('/events/{event:slug}', [EventController::class, 'show'])->name('events.show');
-Route::post('/events/{event}/register', [EventController::class, 'register'])->name('events.register');
+Route::post('/events/{event}/register', [EventController::class, 'register'])->name('events.register')->middleware('auth');
 
 // News & Media
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{news:slug}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/notices', [NewsController::class, 'notices'])->name('notices.index');
+
+// Membership
+Route::get('/membership/plans', [MembershipController::class, 'plans'])->name('membership.plans');
+Route::middleware('auth')->group(function () {
+    Route::get('/membership/apply/{plan:slug}', [MembershipController::class, 'apply'])->name('membership.apply');
+    Route::post('/membership/apply/{plan:slug}', [MembershipController::class, 'store'])->name('membership.store');
+    Route::get('/membership/status', [MembershipController::class, 'status'])->name('membership.status');
+});
 
 // ─── Auth Routes ──────────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -88,13 +98,19 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/opportunities', [AdminOpportunity::class, 'index'])->name('opportunities.index');
     Route::get('/opportunities/create', [AdminOpportunity::class, 'create'])->name('opportunities.create');
     Route::post('/opportunities', [AdminOpportunity::class, 'store'])->name('opportunities.store');
-    Route::get('/opportunities/{opportunity}', [AdminOpportunity::class, 'show'])->name('opportunities.show');
     Route::get('/opportunities/{opportunity}/edit', [AdminOpportunity::class, 'edit'])->name('opportunities.edit');
     Route::put('/opportunities/{opportunity}', [AdminOpportunity::class, 'update'])->name('opportunities.update');
     Route::delete('/opportunities/{opportunity}', [AdminOpportunity::class, 'destroy'])->name('opportunities.destroy');
+    Route::get('/opportunities/{opportunity}', [AdminOpportunity::class, 'show'])->name('opportunities.show');
     Route::patch('/opportunities/{opportunity}/status', [AdminOpportunity::class, 'updateStatus'])->name('opportunities.status');
     Route::patch('/opportunities/{opportunity}/featured', [AdminOpportunity::class, 'toggleFeatured'])->name('opportunities.featured');
     Route::patch('/opportunities/{opportunity}/hot-deal', [AdminOpportunity::class, 'toggleHotDeal'])->name('opportunities.hot-deal');
+
+    // Memberships
+    Route::get('/memberships', [AdminMembership::class, 'index'])->name('memberships.index');
+    Route::get('/memberships/plans', [AdminMembership::class, 'plans'])->name('memberships.plans');
+    Route::get('/memberships/{membership}', [AdminMembership::class, 'show'])->name('memberships.show');
+    Route::patch('/memberships/{membership}/status', [AdminMembership::class, 'updateStatus'])->name('memberships.status');
 
     // News & Media
     Route::resource('/news', AdminNews::class);

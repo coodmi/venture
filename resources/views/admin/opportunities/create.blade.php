@@ -116,7 +116,7 @@
                     <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                     Create Startup
                 </button>
-                <a href="{{ route('admin.settings.startups') }}" style="display:flex;align-items:center;justify-content:center;color:#6b7280;text-decoration:none;font-size:.875rem;font-weight:500;padding:.625rem;background:#f3f4f6;border-radius:.75rem;transition:background .15s;" onmouseover="this.style.background='#e5e7eb';" onmouseout="this.style.background='#f3f4f6';">Cancel</a>
+                <a href="{{ route('admin.opportunities.index') }}" style="display:flex;align-items:center;justify-content:center;color:#6b7280;text-decoration:none;font-size:.875rem;font-weight:500;padding:.625rem;background:#f3f4f6;border-radius:.75rem;transition:background .15s;" onmouseover="this.style.background='#e5e7eb';" onmouseout="this.style.background='#f3f4f6';">Cancel</a>
             </div>
         </div>
     </div>

@@ -35,7 +35,7 @@ class ProfileController extends Controller
         ]);
 
         $user    = Auth::user();
-        $profile = $user->seekerProfile;
+        $profile = $user->seekerProfile ?? SeekerProfile::create(['user_id' => $user->id]);
         $data    = $request->except(['photo', 'company_logo', '_token', '_method']);
 
         if ($request->hasFile('photo')) {

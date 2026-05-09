@@ -24,6 +24,18 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
+
+            // Block suspended or pending users
+            if ($user->status === 'suspended') {
+                Auth::logout();
+                return back()->withErrors(['email' => 'Your account has been suspended. Please contact support.'])->onlyInput('email');
+            }
+
+            if ($user->status === 'pending') {
+                Auth::logout();
+                return back()->withErrors(['email' => 'Your account is pending approval. You will be notified once approved.'])->onlyInput('email');
+            }
+
             $user->update(['last_login_at' => now()]);
 
             return $this->redirectBasedOnRole($user);

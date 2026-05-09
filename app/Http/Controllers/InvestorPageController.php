@@ -12,7 +12,8 @@ class InvestorPageController extends Controller
         try {
             $query = DB::table('investor_profiles')
                 ->join('users', 'investor_profiles.user_id', '=', 'users.id')
-                ->select('investor_profiles.*', 'users.name as user_name', 'users.email as user_email');
+                ->select('investor_profiles.*', 'users.name as user_name', 'users.email as user_email')
+                ->where('investor_profiles.is_visible', true);
 
             if ($request->filled('type'))   $query->where('investor_type', $request->type);
             if ($request->filled('stage'))  $query->where('investment_stage', $request->stage);
@@ -28,7 +29,7 @@ class InvestorPageController extends Controller
 
             $counts = [];
             foreach (array_keys($types) as $t) {
-                $counts[$t] = DB::table('investor_profiles')->where('investor_type', $t)->count();
+                $counts[$t] = DB::table('investor_profiles')->where('investor_type', $t)->where('is_visible', true)->count();
             }
             $total = array_sum($counts);
 
@@ -50,6 +51,7 @@ class InvestorPageController extends Controller
                 ->join('users', 'investor_profiles.user_id', '=', 'users.id')
                 ->select('investor_profiles.*', 'users.name as user_name', 'users.email as user_email')
                 ->where('investor_profiles.id', $id)
+                ->where('investor_profiles.is_visible', true)
                 ->firstOrFail();
         } catch (\Exception $e) {
             abort(404);

@@ -34,7 +34,9 @@ class MembershipController extends Controller
 
         if ($request->status === 'approved') {
             $data['approved_at'] = now();
-            $data['expires_at']  = now()->addMonths($membership->plan->duration_months);
+            if ($membership->plan && $membership->plan->duration_months) {
+                $data['expires_at'] = now()->addMonths($membership->plan->duration_months);
+            }
         }
 
         $membership->update($data);

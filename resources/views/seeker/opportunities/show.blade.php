@@ -48,8 +48,8 @@
         @forelse($interests as $interest)
         <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
             <div>
-                <p class="text-sm font-medium text-gray-900">{{ $interest->investorProfile->user->name }}</p>
-                <p class="text-xs text-gray-400">{{ $interest->investorProfile->organization }}</p>
+                <p class="text-sm font-medium text-gray-900">{{ $interest->investorProfile?->user?->name ?? 'Unknown Investor' }}</p>
+                <p class="text-xs text-gray-400">{{ $interest->investorProfile?->organization ?? '' }}</p>
             </div>
             <span class="text-xs bg-primary-50 text-primary-700 px-2 py-1 rounded-full font-medium">
                 {{ ucfirst(str_replace('_', ' ', $interest->action)) }}

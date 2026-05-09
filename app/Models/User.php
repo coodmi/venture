@@ -53,7 +53,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function activeMembership()
     {
-        return $this->hasOne(Membership::class)->where('status', 'approved')->latest();
+        return $this->hasOne(Membership::class)
+            ->where('status', 'approved')
+            ->where(function ($q) {
+                $q->whereNull('expires_at')->orWhere('expires_at', '>', now());
+            })
+            ->latest();
     }
 
     public function opportunities()
@@ -61,7 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Opportunity::class);
     }
 
-    public function notifications()
+    public function userNotifications()
     {
         return $this->hasMany(UserNotification::class);
     }

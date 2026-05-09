@@ -30,6 +30,11 @@ class MembershipPlan extends Model
             ->saveSlugsTo('slug');
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function memberships()
     {
         return $this->hasMany(Membership::class);

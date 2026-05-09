@@ -13,14 +13,15 @@ class DashboardController extends Controller
         $user    = Auth::user();
         $profile = $user->seekerProfile;
 
-        $opportunities = $user->opportunities()->latest()->take(5)->get();
-        $notifications = $user->notifications()->where('is_read', false)->latest()->take(5)->get();
+        $opportunities    = $user->opportunities()->latest()->take(5)->get();
+        $totalOpportunities = $user->opportunities()->count();
+        $notifications    = $user->userNotifications()->where('is_read', false)->latest()->take(5)->get();
 
         $interestCounts = [];
         foreach ($opportunities as $opp) {
             $interestCounts[$opp->id] = $opp->interests()->count();
         }
 
-        return view('seeker.dashboard', compact('user', 'profile', 'opportunities', 'notifications', 'interestCounts'));
+        return view('seeker.dashboard', compact('user', 'profile', 'opportunities', 'totalOpportunities', 'notifications', 'interestCounts'));
     }
 }
