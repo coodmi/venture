@@ -148,8 +148,10 @@
                 <div style="padding:1rem;flex:1;display:flex;flex-direction:column;">
                     <p style="font-size:.9rem;font-weight:700;color:#0d2b6e;margin:0 0 .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->user_name ?? 'Investor' }}</p>
                     @if($inv->designation)<p style="font-size:.72rem;color:#8d98a1;margin:0 0 .125rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>@endif
-                    @if($inv->organization)<p style="font-size:.68rem;color:#8d98a1;margin:0 0 .75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->organization }}</p>@endif
-                    <span style="font-size:.65rem;font-weight:600;padding:.2rem .55rem;border-radius:9999px;background:{{ $ic }}15;color:{{ $ic }};border:1px solid {{ $ic }}25;display:inline-block;margin-bottom:.75rem;align-self:flex-start;">{{ $invTypeLabel[$inv->investor_type]??$inv->investor_type }}</span>
+                    @if($inv->organization)<p style="font-size:.68rem;color:#8d98a1;margin:0 0 .5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">🏢 {{ $inv->organization }}</p>@endif
+                    @if($inv->investor_type)
+                    <span style="font-size:.65rem;font-weight:600;padding:.2rem .55rem;border-radius:9999px;background:{{ $ic }}18;color:{{ $ic }};border:1px solid {{ $ic }}30;display:inline-block;margin-bottom:.75rem;align-self:flex-start;">{{ $invTypeLabel[$inv->investor_type] ?? ucfirst(str_replace('_',' ',$inv->investor_type)) }}</span>
+                    @endif
                     @if(!empty($sectors))
                     <div style="display:flex;flex-wrap:wrap;gap:.25rem;margin-bottom:.75rem;">
                         @foreach(array_slice($sectors,0,2) as $sec)
