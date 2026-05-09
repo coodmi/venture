@@ -42,8 +42,12 @@
                 </div>
                 {{-- Avatar --}}
                 <div style="padding:0 1.5rem 1.5rem;position:relative;">
-                    <div style="width:5rem;height:5rem;border-radius:50%;background:{{ $ic }};border:4px solid #fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.5rem;color:#fff;margin-top:-2.5rem;box-shadow:0 4px 16px {{ $ic }}50;position:relative;z-index:1;">
-                        {{ $initials }}
+                    <div style="width:5rem;height:5rem;border-radius:50%;border:4px solid #fff;overflow:hidden;margin-top:-2.5rem;box-shadow:0 4px 16px {{ $ic }}50;position:relative;z-index:1;flex-shrink:0;">
+                        @if(!empty($investor->photo))
+                            <img src="{{ Storage::url($investor->photo) }}" alt="{{ $name }}" style="width:100%;height:100%;object-fit:cover;display:block;">
+                        @else
+                            <div style="width:100%;height:100%;background:{{ $ic }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.5rem;color:#fff;">{{ $initials }}</div>
+                        @endif
                     </div>
                     <div style="margin-top:.875rem;">
                         <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.25rem;">

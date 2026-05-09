@@ -112,8 +112,14 @@
                     <div style="position:absolute;top:-2rem;right:-2rem;width:8rem;height:8rem;background:rgba(255,255,255,.06);border-radius:50%;"></div>
                     <div style="position:absolute;bottom:-3rem;left:-2rem;width:10rem;height:10rem;background:rgba(255,255,255,.04);border-radius:50%;"></div>
                     {{-- Avatar --}}
-                    <div style="position:relative;z-index:2;width:4.5rem;height:4.5rem;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.2);">
-                        <span style="color:#fff;font-weight:800;font-size:1.375rem;">{{ $initials }}</span>
+                    <div style="position:relative;z-index:2;width:4.5rem;height:4.5rem;border-radius:50%;border:3px solid rgba(255,255,255,.5);overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.25);">
+                        @if(!empty($inv->photo))
+                            <img src="{{ Storage::url($inv->photo) }}" alt="{{ $name }}" style="width:100%;height:100%;object-fit:cover;display:block;">
+                        @else
+                            <div style="width:100%;height:100%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;">
+                                <span style="color:#fff;font-weight:800;font-size:1.375rem;">{{ $initials }}</span>
+                            </div>
+                        @endif
                     </div>
                     {{-- Verified badge on cover --}}
                     @if(($inv->verification_status??'') === 'verified')
