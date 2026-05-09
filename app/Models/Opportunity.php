@@ -16,7 +16,7 @@ class Opportunity extends Model
         'user_id', 'seeker_profile_id', 'title', 'slug', 'sector', 'stage',
         'location', 'country', 'business_problem', 'solution', 'target_market',
         'traction', 'ask_amount', 'ask_currency', 'use_of_funds', 'key_metrics',
-        'pitch_deck', 'documents', 'status', 'is_featured', 'is_hot_deal',
+        'pitch_deck', 'company_logo', 'documents', 'status', 'is_featured', 'is_hot_deal',
         'featured_until', 'views',
     ];
 

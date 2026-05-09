@@ -53,12 +53,16 @@ class OpportunityController extends Controller
             'pitch_deck'       => 'nullable|file|mimes:pdf|max:10240',
         ]);
 
-        $data = $request->except(['pitch_deck', '_token']);
+        $data = $request->except(['pitch_deck', 'company_logo', '_token']);
         $data['is_featured'] = $request->boolean('is_featured');
         $data['is_hot_deal']  = $request->boolean('is_hot_deal');
 
         if ($request->hasFile('pitch_deck')) {
             $data['pitch_deck'] = $request->file('pitch_deck')->store('opportunities/decks', 'public');
+        }
+
+        if ($request->hasFile('company_logo')) {
+            $data['company_logo'] = $request->file('company_logo')->store('opportunities/logos', 'public');
         }
 
         Opportunity::create($data);
@@ -111,23 +115,14 @@ class OpportunityController extends Controller
             $data['pitch_deck'] = $request->file('pitch_deck')->store('opportunities/decks', 'public');
         }
 
-        $opportunity->update($data);
-
-        // Update company logo on the seeker profile if uploaded
         if ($request->hasFile('company_logo')) {
-            // Find seeker profile via the opportunity's user or direct relationship
-            $seekerProfile = $opportunity->seekerProfile
-                ?? $opportunity->user?->seekerProfile;
-
-            if ($seekerProfile) {
-                if ($seekerProfile->company_logo) {
-                    Storage::disk('public')->delete($seekerProfile->company_logo);
-                }
-                $seekerProfile->update([
-                    'company_logo' => $request->file('company_logo')->store('seekers/logos', 'public'),
-                ]);
+            if ($opportunity->company_logo) {
+                Storage::disk('public')->delete($opportunity->company_logo);
             }
+            $data['company_logo'] = $request->file('company_logo')->store('opportunities/logos', 'public');
         }
+
+        $opportunity->update($data);
 
         return redirect()->route('admin.opportunities.index')
             ->with('success', 'Startup updated successfully.');

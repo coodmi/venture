@@ -108,7 +108,7 @@
                 <h3 style="font-weight:700;color:#111827;font-size:.9375rem;margin:0 0 1rem;">Company Logo</h3>
                 <div style="display:flex;align-items:center;gap:1rem;">
                     <div style="position:relative;flex-shrink:0;">
-                        @php $currentLogo = $o->seekerProfile?->company_logo ?? $o->user?->seekerProfile?->company_logo; @endphp
+                        @php $currentLogo = $o->company_logo ?? $o->seekerProfile?->company_logo ?? $o->user?->seekerProfile?->company_logo; @endphp
                         @if($currentLogo)
                             <img id="logoPreview" src="{{ Storage::url($currentLogo) }}"
                                  style="width:5rem;height:5rem;border-radius:.75rem;object-fit:contain;border:2px solid #e5e7eb;background:#f9fafb;padding:.25rem;display:block;">

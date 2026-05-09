@@ -106,6 +106,23 @@
             </div>
 
             <div style="background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.04);">
+                <h3 style="font-weight:700;color:#111827;font-size:.9375rem;margin:0 0 1rem;">Company Logo</h3>
+                <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem;">
+                    <div id="logoPreviewCreate" style="width:3.5rem;height:3.5rem;border-radius:.75rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <svg width="20" height="20" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div>
+                        <input type="file" id="logoInputCreate" name="company_logo" accept="image/*" style="display:none;" onchange="previewCreateLogo(this)">
+                        <label for="logoInputCreate" style="display:inline-flex;align-items:center;gap:.375rem;font-size:.8125rem;font-weight:600;color:#6366f1;cursor:pointer;padding:.4rem .875rem;background:#eef2ff;border-radius:.5rem;">
+                            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                            Upload Logo
+                        </label>
+                        <p style="font-size:.7rem;color:#9ca3af;margin:.25rem 0 0;">PNG, JPG — max 2MB</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.04);">
                 <h3 style="font-weight:700;color:#111827;font-size:.9375rem;margin:0 0 1rem;">Pitch Deck</h3>
                 <input type="file" name="pitch_deck" accept=".pdf" style="width:100%;background:#f8fafc;border:1px solid #e5e7eb;color:#6b7280;border-radius:.5rem;padding:.4rem .75rem;font-size:.875rem;box-sizing:border-box;cursor:pointer;">
                 <p style="font-size:.7rem;color:#9ca3af;margin:.375rem 0 0;">PDF only, max 10MB</p>
@@ -121,4 +138,23 @@
         </div>
     </div>
 </form>
+
+@push('scripts')
+<script>
+function previewCreateLogo(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var el = document.getElementById('logoPreviewCreate');
+            var img = document.createElement('img');
+            img.id = 'logoPreviewCreate';
+            img.src = e.target.result;
+            img.style.cssText = 'width:3.5rem;height:3.5rem;border-radius:.75rem;object-fit:contain;border:2px solid #e5e7eb;background:#f9fafb;padding:.25rem;display:block;flex-shrink:0;';
+            el.parentNode.replaceChild(img, el);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+@endpush
 @endsection

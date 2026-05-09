@@ -51,7 +51,7 @@
             @php
                 $seekerProfile = $opp->seekerProfile ?? $opp->user?->seekerProfile;
                 $founderPhoto  = $seekerProfile?->photo;
-                $companyLogo   = $seekerProfile?->company_logo;
+                $companyLogo   = $opp->company_logo ?? $seekerProfile?->company_logo;
                 $founderName   = $opp->user?->name ?? '—';
                 $statusStyle   = match($opp->status) {
                     'approved'     => 'background:#ecfdf5;color:#059669;',
