@@ -75,7 +75,7 @@ class OpportunityController extends Controller
 
     public function edit(Opportunity $opportunity)
     {
-        $opportunity->load('seekerProfile');
+        $opportunity->load(['seekerProfile', 'user.seekerProfile']);
         return view('admin.opportunities.edit', compact('opportunity'));
     }
 
@@ -114,14 +114,19 @@ class OpportunityController extends Controller
         $opportunity->update($data);
 
         // Update company logo on the seeker profile if uploaded
-        if ($request->hasFile('company_logo') && $opportunity->seekerProfile) {
-            $seekerProfile = $opportunity->seekerProfile;
-            if ($seekerProfile->company_logo) {
-                Storage::disk('public')->delete($seekerProfile->company_logo);
+        if ($request->hasFile('company_logo')) {
+            // Find seeker profile via the opportunity's user or direct relationship
+            $seekerProfile = $opportunity->seekerProfile
+                ?? $opportunity->user?->seekerProfile;
+
+            if ($seekerProfile) {
+                if ($seekerProfile->company_logo) {
+                    Storage::disk('public')->delete($seekerProfile->company_logo);
+                }
+                $seekerProfile->update([
+                    'company_logo' => $request->file('company_logo')->store('seekers/logos', 'public'),
+                ]);
             }
-            $seekerProfile->update([
-                'company_logo' => $request->file('company_logo')->store('seekers/logos', 'public'),
-            ]);
         }
 
         return redirect()->route('admin.opportunities.index')
