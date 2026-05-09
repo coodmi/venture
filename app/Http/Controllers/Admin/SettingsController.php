@@ -148,6 +148,7 @@ class SettingsController extends Controller
 
     public function about()
     {
+        $sections = AboutContent::all()->keyBy('section');
         return view('admin.settings.about', compact('sections'));
     }
 
