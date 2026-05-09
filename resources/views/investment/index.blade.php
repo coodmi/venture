@@ -123,9 +123,15 @@
                     {{-- Background pattern --}}
                     <div style="position:absolute;inset:0;opacity:.08;background-image:radial-gradient(circle at 20% 50%,#fff 1px,transparent 1px),radial-gradient(circle at 80% 20%,#fff 1px,transparent 1px);background-size:30px 30px;"></div>
                     {{-- Logo circle --}}
-                    <div style="position:relative;z-index:2;width:4.5rem;height:4.5rem;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);border-radius:1.25rem;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
-                        <span style="color:#fff;font-weight:800;font-size:1.375rem;letter-spacing:-.02em;">{{ strtoupper(substr($opp->title,0,2)) }}</span>
-                    </div>
+                    @if(!empty($opp->company_logo))
+                        <div style="position:relative;z-index:2;width:4.5rem;height:4.5rem;background:#fff;border-radius:1.25rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);overflow:hidden;">
+                            <img src="{{ Storage::url($opp->company_logo) }}" alt="{{ $opp->title }}" style="width:100%;height:100%;object-fit:contain;padding:.25rem;">
+                        </div>
+                    @else
+                        <div style="position:relative;z-index:2;width:4.5rem;height:4.5rem;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);border-radius:1.25rem;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+                            <span style="color:#fff;font-weight:800;font-size:1.375rem;letter-spacing:-.02em;">{{ strtoupper(substr($opp->title,0,2)) }}</span>
+                        </div>
+                    @endif
                     {{-- Badges --}}
                     <div style="position:absolute;top:.75rem;left:.75rem;display:flex;gap:.375rem;">
                         @if($opp->is_hot_deal)<span style="background:rgba(249,115,22,.9);color:#fff;font-size:.65rem;font-weight:700;padding:.25rem .625rem;border-radius:9999px;backdrop-filter:blur(4px);">🔥 Hot Deal</span>@endif

@@ -211,12 +211,19 @@
             @php $sc=$sectorColors[$s->sector]??'#1a3c8f'; $grad=$coverGrads[$s->sector]??'linear-gradient(135deg,#0d2b6e,#2563eb)'; @endphp
             <a href="{{ route('startups.show',$s->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;flex-shrink:0;width:calc(25% - 1rem);min-width:240px;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
                 {{-- Cover --}}
-                <div style="height:7rem;background:{{ $grad }};position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                <div style="height:8rem;background:{{ $grad }};position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
                     <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:22px 22px;"></div>
-                    <div style="position:relative;z-index:2;width:2.75rem;height:2.75rem;border-radius:.875rem;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;">
-                        <span style="color:#fff;font-weight:800;font-size:.9375rem;">{{ strtoupper(substr($s->title,0,2)) }}</span>
-                    </div>
-                    @if($s->is_featured)<span style="position:absolute;top:.5rem;right:.5rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);">⭐ Featured</span>@endif
+                    {{-- Logo or initials --}}
+                    @if(!empty($s->company_logo))
+                        <div style="position:relative;z-index:2;width:4rem;height:4rem;border-radius:1rem;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);overflow:hidden;">
+                            <img src="{{ Storage::url($s->company_logo) }}" alt="{{ $s->title }}" style="width:100%;height:100%;object-fit:contain;padding:.25rem;">
+                        </div>
+                    @else
+                        <div style="position:relative;z-index:2;width:4rem;height:4rem;border-radius:1rem;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.15);">
+                            <span style="color:#fff;font-weight:800;font-size:1.125rem;">{{ strtoupper(substr($s->title,0,2)) }}</span>
+                        </div>
+                    @endif
+                    @if($s->is_featured)<span style="position:absolute;top:.5rem;right:.5rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(4px);">⭐ Featured</span>@endif
                 </div>
                 {{-- Body --}}
                 <div style="padding:1rem;flex:1;display:flex;flex-direction:column;">
