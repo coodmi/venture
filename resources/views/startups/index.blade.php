@@ -77,46 +77,50 @@
             $sectorColors=['FinTech'=>'#3b82f6','AgriTech'=>'#10b981','HealthTech'=>'#ef4444','EdTech'=>'#f97316','CleanTech'=>'#8b5cf6'];
             $coverGrads=['FinTech'=>'linear-gradient(135deg,#1a3c8f,#2563eb)','AgriTech'=>'linear-gradient(135deg,#14532d,#16a34a)','HealthTech'=>'linear-gradient(135deg,#991b1b,#ef4444)','EdTech'=>'linear-gradient(135deg,#c2410c,#f97316)','CleanTech'=>'linear-gradient(135deg,#5b21b6,#8b5cf6)','E-Commerce'=>'linear-gradient(135deg,#0e7490,#06b6d4)','FoodTech'=>'linear-gradient(135deg,#92400e,#f59e0b)','LogiTech'=>'linear-gradient(135deg,#1e1b4b,#6366f1)'];
         @endphp
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;">
             @foreach($opportunities as $opp)
             @php $sc=$sectorColors[$opp->sector]??'#1a3c8f'; $grad=$coverGrads[$opp->sector]??'linear-gradient(135deg,#0d2b6e,#2563eb)'; @endphp
-            <a href="{{ route('startups.show',$opp->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 16px 40px rgba(26,60,143,.14)';this.style.transform='translateY(-4px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
-                {{-- Cover --}}
-                <div style="position:relative;height:9rem;background:{{ $grad }};display:flex;align-items:center;justify-content:center;overflow:hidden;">
-                    <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:24px 24px;"></div>
-                    <div style="position:absolute;top:-2rem;right:-2rem;width:7rem;height:7rem;background:rgba(255,255,255,.06);border-radius:50%;"></div>
-                    @if(!empty($opp->company_logo))
-                        <img src="{{ Storage::url($opp->company_logo) }}" alt="{{ $opp->title }}"
-                             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.35) 0%,transparent 60%);z-index:2;"></div>
-                    @else
-                        <div style="position:relative;z-index:2;width:4rem;height:4rem;border-radius:1rem;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;">
-                            <span style="color:#fff;font-weight:800;font-size:1.125rem;">{{ strtoupper(substr($opp->title,0,2)) }}</span>
+            <a href="{{ route('startups.show',$opp->slug) }}"
+               style="text-decoration:none;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 4px 16px rgba(0,0,0,.1);position:relative;aspect-ratio:3/4;min-height:320px;"
+               onmouseover="this.style.boxShadow='0 16px 40px rgba(0,0,0,.2)';this.style.transform='translateY(-4px)';"
+               onmouseout="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)';this.style.transform='translateY(0)';">
+
+                {{-- Full background --}}
+                @if(!empty($opp->company_logo))
+                    <img src="{{ Storage::url($opp->company_logo) }}" alt="{{ $opp->title }}"
+                         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;">
+                @else
+                    <div style="position:absolute;inset:0;background:{{ $grad }};z-index:0;">
+                        <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:24px 24px;"></div>
+                        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                            <div style="width:5rem;height:5rem;border-radius:1.25rem;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;">
+                                <span style="color:#fff;font-weight:800;font-size:1.5rem;">{{ strtoupper(substr($opp->title,0,2)) }}</span>
+                            </div>
                         </div>
-                    @endif
-                    <div style="position:absolute;top:.625rem;left:.625rem;display:flex;gap:.3rem;">
-                        @if($opp->is_hot_deal)<span style="background:rgba(249,115,22,.9);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:9999px;">🔥 Hot</span>@endif
-                        @if($opp->is_featured)<span style="background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);">⭐ Featured</span>@endif
                     </div>
+                @endif
+
+                {{-- Dark gradient overlay --}}
+                <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(5,10,30,.92) 0%,rgba(5,10,30,.45) 45%,transparent 75%);z-index:1;"></div>
+
+                {{-- Badges top --}}
+                <div style="position:absolute;top:.75rem;left:.75rem;display:flex;gap:.375rem;z-index:2;">
+                    @if($opp->is_hot_deal)<span style="background:rgba(249,115,22,.9);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .55rem;border-radius:9999px;">🔥 Hot</span>@endif
+                    @if($opp->is_featured)<span style="background:rgba(255,255,255,.15);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .55rem;border-radius:9999px;border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(4px);">⭐ Featured</span>@endif
                 </div>
-                {{-- Body --}}
-                <div style="padding:1.25rem;flex:1;display:flex;flex-direction:column;">
-                <div style="display:flex;flex-wrap:wrap;gap:.375rem;margin-bottom:.625rem;">
-                    @if($opp->sector)<span style="font-size:.68rem;font-weight:600;padding:.2rem .55rem;border-radius:9999px;background:{{ $sc }}15;color:{{ $sc }};border:1px solid {{ $sc }}25;">{{ $opp->sector }}</span>@endif
-                    @if($opp->stage)<span style="font-size:.68rem;background:#f1f5f9;color:#8d98a1;padding:.2rem .55rem;border-radius:9999px;">{{ $opp->stage }}</span>@endif
-                    @if($opp->location)<span style="font-size:.68rem;color:#8d98a1;">📍 {{ $opp->location }}</span>@endif
-                </div>
-                <h3 style="font-weight:700;color:#0d2b6e;font-size:1rem;margin:0 0 .5rem;line-height:1.4;">{{ $opp->title }}</h3>
-                <p style="font-size:.8125rem;color:#8d98a1;line-height:1.55;flex:1;margin:0 0 1rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $opp->business_problem }}</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.875rem;border-top:1px solid #f1f5f9;">
-                    @if($opp->ask_amount)
-                    <div>
-                        <p style="font-size:.68rem;color:#8d98a1;margin:0 0 .125rem;">Seeking</p>
-                        <p style="font-weight:800;color:#1a3c8f;font-size:.9375rem;margin:0;">৳{{ number_format($opp->ask_amount) }}</p>
+
+                {{-- Text overlay at bottom --}}
+                <div style="position:absolute;bottom:0;left:0;right:0;padding:1.25rem 1.125rem 1.125rem;z-index:2;">
+                    <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.5rem;">
+                        @if($opp->sector)<span style="font-size:.62rem;font-weight:600;padding:.15rem .5rem;border-radius:9999px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.2);">{{ $opp->sector }}</span>@endif
+                        @if($opp->stage)<span style="font-size:.62rem;padding:.15rem .5rem;border-radius:9999px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);">{{ $opp->stage }}</span>@endif
                     </div>
-                    @else<span></span>@endif
-                    <span style="font-size:.78rem;color:#f97316;font-weight:600;">View Details →</span>
-                </div>
+                    <p style="font-size:1rem;font-weight:700;color:#fff;margin:0 0 .25rem;line-height:1.3;">{{ $opp->title }}</p>
+                    @if($opp->location)<p style="font-size:.72rem;color:rgba(255,255,255,.6);margin:0 0 .625rem;">📍 {{ $opp->location }}</p>@endif
+                    <div style="display:flex;align-items:center;justify-content:space-between;">
+                        @if($opp->ask_amount)<span style="font-size:.9375rem;font-weight:800;color:#fb923c;">৳{{ number_format($opp->ask_amount) }}</span>@else<span></span>@endif
+                        <span style="font-size:.72rem;color:rgba(255,255,255,.8);font-weight:600;">View Details →</span>
+                    </div>
                 </div>
             </a>
             @endforeach

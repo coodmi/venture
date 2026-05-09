@@ -209,33 +209,42 @@
         <div id="startupTrack" style="display:flex;gap:1.25rem;transition:transform .4s ease;padding-bottom:1rem;">
             @foreach($topStartups as $s)
             @php $sc=$sectorColors[$s->sector]??'#1a3c8f'; $grad=$coverGrads[$s->sector]??'linear-gradient(135deg,#0d2b6e,#2563eb)'; @endphp
-            <a href="{{ route('startups.show',$s->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;flex-shrink:0;width:calc(25% - 1rem);min-width:240px;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
-                {{-- Cover --}}
-                <div style="height:8rem;background:{{ $grad }};position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-                    <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:22px 22px;"></div>
-                    {{-- Logo or initials --}}
-                    @if(!empty($s->company_logo))
-                        <img src="{{ Storage::url($s->company_logo) }}" alt="{{ $s->title }}"
-                             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.35) 0%,transparent 60%);z-index:2;"></div>
-                    @else
-                        <div style="position:relative;z-index:2;width:4rem;height:4rem;border-radius:1rem;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.15);">
-                            <span style="color:#fff;font-weight:800;font-size:1.125rem;">{{ strtoupper(substr($s->title,0,2)) }}</span>
-                        </div>
-                    @endif
-                    @if($s->is_featured)<span style="position:absolute;top:.5rem;right:.5rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(4px);z-index:3;">⭐ Featured</span>@endif
-                </div>
-                {{-- Body --}}
-                <div style="padding:1rem;flex:1;display:flex;flex-direction:column;">
-                    <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:0 0 .375rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $s->title }}</h3>
-                    <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.625rem;">
-                        @if($s->sector)<span style="font-size:.65rem;font-weight:600;padding:.15rem .45rem;border-radius:9999px;background:{{ $sc }}18;color:{{ $sc }};">{{ $s->sector }}</span>@endif
-                        @if($s->stage)<span style="font-size:.65rem;background:#f1f5f9;color:#8d98a1;padding:.15rem .45rem;border-radius:9999px;">{{ $s->stage }}</span>@endif
+            <a href="{{ route('startups.show',$s->slug) }}"
+               style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:220px;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 4px 16px rgba(0,0,0,.1);position:relative;aspect-ratio:3/4;min-height:300px;"
+               onmouseover="this.style.boxShadow='0 16px 40px rgba(0,0,0,.2)';this.style.transform='translateY(-4px)';"
+               onmouseout="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)';this.style.transform='translateY(0)';">
+
+                {{-- Full background: logo image or gradient --}}
+                @if(!empty($s->company_logo))
+                    <img src="{{ Storage::url($s->company_logo) }}" alt="{{ $s->title }}"
+                         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;">
+                @else
+                    <div style="position:absolute;inset:0;background:{{ $grad }};z-index:0;">
+                        <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:22px 22px;"></div>
                     </div>
-                    <p style="font-size:.78rem;color:#8d98a1;line-height:1.55;flex:1;margin:0 0 .875rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $s->business_problem }}</p>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid #f1f5f9;">
-                        @if($s->ask_amount)<span style="font-size:.9375rem;font-weight:800;color:#1a3c8f;">৳{{ number_format($s->ask_amount) }}</span>@else<span></span>@endif
-                        <span style="font-size:.75rem;color:#f97316;font-weight:600;">Invest →</span>
+                @endif
+
+                {{-- Dark gradient overlay --}}
+                <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(5,10,30,.92) 0%,rgba(5,10,30,.5) 45%,transparent 75%);z-index:1;"></div>
+
+                {{-- Featured badge top-right --}}
+                @if($s->is_featured)
+                <div style="position:absolute;top:.75rem;right:.75rem;background:rgba(255,255,255,.15);color:#fff;font-size:.6rem;font-weight:700;padding:.25rem .625rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(6px);z-index:2;">⭐ Featured</div>
+                @endif
+                @if($s->is_hot_deal)
+                <div style="position:absolute;top:.75rem;left:.75rem;background:rgba(249,115,22,.85);color:#fff;font-size:.6rem;font-weight:700;padding:.25rem .625rem;border-radius:9999px;z-index:2;">🔥 Hot</div>
+                @endif
+
+                {{-- Text overlay at bottom --}}
+                <div style="position:absolute;bottom:0;left:0;right:0;padding:1.25rem 1rem 1rem;z-index:2;">
+                    <p style="font-size:.9375rem;font-weight:700;color:#fff;margin:0 0 .375rem;line-height:1.3;">{{ $s->title }}</p>
+                    <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.5rem;">
+                        @if($s->sector)<span style="font-size:.62rem;font-weight:600;padding:.15rem .5rem;border-radius:9999px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.2);">{{ $s->sector }}</span>@endif
+                        @if($s->stage)<span style="font-size:.62rem;padding:.15rem .5rem;border-radius:9999px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);">{{ $s->stage }}</span>@endif
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;">
+                        @if($s->ask_amount)<span style="font-size:.875rem;font-weight:800;color:#fb923c;">৳{{ number_format($s->ask_amount) }}</span>@else<span></span>@endif
+                        <span style="font-size:.72rem;color:rgba(255,255,255,.8);font-weight:600;">Invest →</span>
                     </div>
                 </div>
             </a>
