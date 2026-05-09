@@ -20,6 +20,8 @@ use App\Http\Controllers\Admin\NewsController as AdminNews;
 use App\Http\Controllers\Admin\EventController as AdminEvent;
 use App\Http\Controllers\Admin\SettingsController as AdminSettings;
 use App\Http\Controllers\Admin\MembershipController as AdminMembership;
+use App\Http\Controllers\Admin\InvestorProfileController as AdminInvestorProfile;
+use App\Http\Controllers\Admin\SeekerProfileController as AdminSeekerProfile;
 
 use App\Http\Controllers\StartupController;
 use App\Http\Controllers\InvestmentController;
@@ -93,6 +95,16 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/users', [AdminUser::class, 'index'])->name('users.index');
     Route::get('/users/{user}', [AdminUser::class, 'show'])->name('users.show');
     Route::patch('/users/{user}/status', [AdminUser::class, 'updateStatus'])->name('users.status');
+
+    // Investor Profiles
+    Route::get('/investors', [AdminInvestorProfile::class, 'index'])->name('investors.index');
+    Route::get('/investors/{investor}/edit', [AdminInvestorProfile::class, 'edit'])->name('investors.edit');
+    Route::put('/investors/{investor}', [AdminInvestorProfile::class, 'update'])->name('investors.update');
+
+    // Seeker / Startup Profiles
+    Route::get('/startups-profiles', [AdminSeekerProfile::class, 'index'])->name('startups-profiles.index');
+    Route::get('/startups-profiles/{startup}/edit', [AdminSeekerProfile::class, 'edit'])->name('startups-profiles.edit');
+    Route::put('/startups-profiles/{startup}', [AdminSeekerProfile::class, 'update'])->name('startups-profiles.update');
 
     // Opportunities
     Route::get('/opportunities', [AdminOpportunity::class, 'index'])->name('opportunities.index');

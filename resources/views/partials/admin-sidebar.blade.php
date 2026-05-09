@@ -51,6 +51,32 @@
             {{ $item['label'] }}
         </a>
         @endforeach
+
+        {{-- People Section --}}
+        <p style="font-size:.65rem;font-weight:700;color:#d1d5db;text-transform:uppercase;letter-spacing:.1em;padding:1rem .75rem .5rem;margin:0;">People</p>
+
+        @php
+        $peopleItems = [
+            ['route'=>'admin.investors.index',        'label'=>'Investors',  'color'=>'#1a3c8f', 'activeBg'=>'#eff6ff', 'icon'=>'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z'],
+            ['route'=>'admin.startups-profiles.index','label'=>'Startups',   'color'=>'#f97316', 'activeBg'=>'#fff7ed', 'icon'=>'M13 10V3L4 14h7v7l9-11h-7z'],
+        ];
+        @endphp
+
+        @foreach($peopleItems as $item)
+        @php $active = request()->routeIs($item['route'].'*'); @endphp
+        <a href="{{ route($item['route']) }}"
+           style="display:flex;align-items:center;gap:.625rem;padding:.5rem .75rem;border-radius:.625rem;font-size:.8125rem;font-weight:{{ $active?'600':'500' }};text-decoration:none;margin-bottom:.125rem;transition:all .15s;{{ $active?'background:'.$item['activeBg'].';color:'.$item['color'].';':'color:#6b7280;' }}"
+           onmouseover="{{ $active?'':'this.style.background=\'#f9fafb\';this.style.color=\'#374151\';' }}"
+           onmouseout="{{ $active?'':'this.style.background=\'transparent\';this.style.color=\'#6b7280\';' }}">
+            @if($active)
+            <span style="width:3px;height:1rem;background:{{ $item['color'] }};border-radius:2px;flex-shrink:0;margin-left:-3px;margin-right:3px;"></span>
+            @endif
+            <svg style="width:1rem;height:1rem;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="{{ $item['icon'] }}"/>
+            </svg>
+            {{ $item['label'] }}
+        </a>
+        @endforeach
     </nav>
 
     {{-- User Profile + Logout --}}
