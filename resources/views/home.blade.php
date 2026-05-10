@@ -285,18 +285,37 @@
         <div style="overflow:hidden;">
         <div id="eventsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($events as $event)
-            <a href="{{ route('events.show', $event->slug) }}" style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:220px;background:#fff;border-radius:1.25rem;overflow:hidden;border:1px solid #dde3ea;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
-                @if($event->banner)
-                    <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}" style="width:100%;height:9rem;object-fit:cover;display:block;">
-                @else
-                    <div style="width:100%;height:9rem;background:{{ $gradients[$loop->index % 6] }};display:flex;align-items:center;justify-content:center;">
-                        <svg width="36" height="36" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    </div>
-                @endif
-                <div style="padding:1rem;flex:1;display:flex;flex-direction:column;">
-                    <span style="font-size:.7rem;color:#1a3c8f;font-weight:600;margin-bottom:.25rem;display:block;">{{ $event->start_date->format('M d, Y') }}</span>
-                    <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:0 0 .5rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;">{{ $event->title }}</h3>
-                    <p style="font-size:.75rem;color:#8d98a1;margin:0;">📍 {{ $event->venue ?? 'Online' }}</p>
+            @php $grad = $gradients[$loop->index % 6]; @endphp
+            <a href="{{ route('events.show', $event->slug) }}"
+               style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:240px;background:#fff;border-radius:1.25rem;overflow:hidden;border:1px solid #e5e7eb;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 12px rgba(0,0,0,.06);"
+               onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.12)';this.style.transform='translateY(-3px)';"
+               onmouseout="this.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';this.style.transform='translateY(0)';">
+
+                {{-- Cover --}}
+                <div style="width:100%;height:10rem;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                    @if($event->banner)
+                        <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}"
+                             style="width:100%;height:100%;object-fit:cover;display:block;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.1),rgba(0,0,0,.3));"></div>
+                    @else
+                        <div style="position:absolute;inset:0;background:{{ $grad }};"></div>
+                        <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:20px 20px;"></div>
+                        <svg width="40" height="40" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.5" viewBox="0 0 24 24" style="position:relative;z-index:1;"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    @endif
+                    {{-- Type badge --}}
+                    @if($event->event_type)
+                    <span style="position:absolute;top:.625rem;right:.625rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .55rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(4px);text-transform:uppercase;letter-spacing:.05em;">{{ $event->event_type }}</span>
+                    @endif
+                </div>
+
+                {{-- Info --}}
+                <div style="padding:1rem 1.125rem 1.125rem;">
+                    <p style="font-size:.72rem;color:#6b7280;font-weight:500;margin:0 0 .375rem;">{{ $event->start_date->format('M d, Y') }}</p>
+                    <h3 style="font-size:.9375rem;font-weight:700;color:#111827;margin:0 0 .5rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ $event->title }}</h3>
+                    <p style="font-size:.75rem;color:#9ca3af;margin:0;display:flex;align-items:center;gap:.25rem;">
+                        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        {{ $event->venue ?? 'Online' }}
+                    </p>
                 </div>
             </a>
             @endforeach
