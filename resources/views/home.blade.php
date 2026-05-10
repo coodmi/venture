@@ -281,30 +281,39 @@
                 <a href="{{ route('events.index') }}" style="color:#1a3c8f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
             </div>
         </div>
-        @php $gradients=['linear-gradient(135deg,#1a3c8f,#2563eb)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#16a34a,#34d399)','linear-gradient(135deg,#f97316,#fb923c)','linear-gradient(135deg,#dc2626,#f87171)','linear-gradient(135deg,#0891b2,#22d3ee)']; @endphp
+        @php
+        $gradients=['linear-gradient(135deg,#1a3c8f,#2563eb)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#16a34a,#34d399)','linear-gradient(135deg,#f97316,#fb923c)','linear-gradient(135deg,#dc2626,#f87171)','linear-gradient(135deg,#0891b2,#22d3ee)'];
+        $demoImages=[
+            'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80',
+            'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=80',
+            'https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&q=80',
+            'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=600&q=80',
+            'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&q=80',
+            'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80',
+        ];
+        @endphp
         <div style="overflow:hidden;">
         <div id="eventsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($events as $event)
-            @php $grad = $gradients[$loop->index % 6]; @endphp
+            @php $idx = $loop->index % 6; $grad = $gradients[$idx]; $demo = $demoImages[$idx]; @endphp
             <a href="{{ route('events.show', $event->slug) }}"
                style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:240px;background:#fff;border-radius:1.25rem;overflow:hidden;border:1px solid #e5e7eb;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 12px rgba(0,0,0,.06);"
                onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.12)';this.style.transform='translateY(-3px)';"
                onmouseout="this.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';this.style.transform='translateY(0)';">
 
                 {{-- Cover --}}
-                <div style="width:100%;height:10rem;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                <div style="width:100%;height:10rem;position:relative;overflow:hidden;">
                     @if($event->banner)
                         <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}"
                              style="width:100%;height:100%;object-fit:cover;display:block;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.1),rgba(0,0,0,.3));"></div>
                     @else
-                        <div style="position:absolute;inset:0;background:{{ $grad }};"></div>
-                        <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:20px 20px;"></div>
-                        <svg width="40" height="40" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.5" viewBox="0 0 24 24" style="position:relative;z-index:1;"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <img src="{{ $demo }}" alt="{{ $event->title }}"
+                             style="width:100%;height:100%;object-fit:cover;display:block;">
+                        <div style="position:absolute;inset:0;background:{{ $grad }};opacity:.55;"></div>
                     @endif
                     {{-- Type badge --}}
                     @if($event->event_type)
-                    <span style="position:absolute;top:.625rem;right:.625rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .55rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(4px);text-transform:uppercase;letter-spacing:.05em;">{{ $event->event_type }}</span>
+                    <span style="position:absolute;top:.625rem;right:.625rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .55rem;border-radius:9999px;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);text-transform:uppercase;letter-spacing:.05em;">{{ $event->event_type }}</span>
                     @endif
                 </div>
 

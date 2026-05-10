@@ -66,25 +66,33 @@
             </form>
         </div>
 
-        @php $gradients=['linear-gradient(135deg,#1a3c8f,#2563eb)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#16a34a,#34d399)','linear-gradient(135deg,#f97316,#fb923c)','linear-gradient(135deg,#d97706,#fbbf24)','linear-gradient(135deg,#0891b2,#22d3ee)']; @endphp
+        @php
+        $gradients=['linear-gradient(135deg,#1a3c8f,#2563eb)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#16a34a,#34d399)','linear-gradient(135deg,#f97316,#fb923c)','linear-gradient(135deg,#d97706,#fbbf24)','linear-gradient(135deg,#0891b2,#22d3ee)'];
+        $demoImages=[
+            'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80',
+            'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=80',
+            'https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&q=80',
+            'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=600&q=80',
+            'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&q=80',
+            'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=600&q=80',
+        ];
+        @endphp
 
         @forelse($upcoming as $event)
         @if($loop->first)<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;">@endif
+        @php $idx = $loop->index % 6; @endphp
 
-        <a href="{{ route('events.show', $event->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
-            @if($event->banner)
-                <div style="position:relative;height:12rem;overflow:hidden;">
+        <a href="{{ route('events.show', $event->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #e5e7eb;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 12px rgba(0,0,0,.06);" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';this.style.transform='translateY(0)';">
+            <div style="position:relative;height:12rem;overflow:hidden;">
+                @if($event->banner)
                     <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
-                    <div style="position:absolute;top:.75rem;left:.75rem;background:rgba(0,0,0,.5);color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;backdrop-filter:blur(4px);">{{ ucfirst($event->event_type) }}</div>
-                    @if($event->is_featured)<div style="position:absolute;top:.75rem;right:.75rem;background:#f97316;color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;">⭐ Featured</div>@endif
-                </div>
-            @else
-                <div style="position:relative;height:12rem;background:{{ $gradients[$loop->index % 6] }};display:flex;align-items:center;justify-content:center;">
-                    <svg width="40" height="40" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    <div style="position:absolute;top:.75rem;left:.75rem;background:rgba(0,0,0,.35);color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;border:1px solid rgba(255,255,255,.2);">{{ ucfirst($event->event_type) }}</div>
-                    @if($event->is_featured)<div style="position:absolute;top:.75rem;right:.75rem;background:#f97316;color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;">⭐ Featured</div>@endif
-                </div>
-            @endif
+                @else
+                    <img src="{{ $demoImages[$idx] }}" alt="{{ $event->title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
+                    <div style="position:absolute;inset:0;background:{{ $gradients[$idx] }};opacity:.55;"></div>
+                @endif
+                <div style="position:absolute;top:.75rem;left:.75rem;background:rgba(255,255,255,.2);color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.04em;">{{ $event->event_type }}</div>
+                @if($event->is_featured)<div style="position:absolute;top:.75rem;right:.75rem;background:#f97316;color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;">⭐ Featured</div>@endif
+            </div>
             <div style="padding:1.25rem;flex:1;display:flex;flex-direction:column;">
                 <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap;">
                     @if($event->category)<span style="font-size:.68rem;background:#eff6ff;color:#1a3c8f;font-weight:600;padding:.2rem .6rem;border-radius:9999px;">{{ $event->category }}</span>@endif
