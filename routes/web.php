@@ -146,6 +146,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/settings/about', [AdminSettings::class, 'updateAbout'])->name('settings.about.update');
     Route::get('/settings/startups-page', [AdminSettings::class, 'startupsPage'])->name('settings.startups');
     Route::post('/settings/startups-page', [AdminSettings::class, 'updateStartupsPage'])->name('settings.startups.update');
+    Route::get('/settings/popup', [AdminSettings::class, 'popup'])->name('settings.popup');
+    Route::post('/settings/popup', [AdminSettings::class, 'updatePopup'])->name('settings.popup.update');
+    Route::get('/settings/popup/remove-image', [AdminSettings::class, 'removePopupImage'])->name('settings.popup.remove-image');
 
     // Startup Management
     Route::resource('/startups', \App\Http\Controllers\Admin\StartupController::class);

@@ -137,6 +137,40 @@ class SettingsController extends Controller
         return view('admin.settings.startups');
     }
 
+    public function popup()
+    {
+        return view('admin.settings.popup');
+    }
+
+    public function updatePopup(Request $request)
+    {
+        Setting::set('popup_enabled',  $request->has('popup_enabled') ? '1' : '0', 'general');
+        Setting::set('popup_badge',    $request->input('popup_badge', ''), 'general');
+        Setting::set('popup_title',    $request->input('popup_title', 'Welcome to'), 'general');
+        Setting::set('popup_desc',     $request->input('popup_desc', ''), 'general');
+        Setting::set('popup_btn1_text',$request->input('popup_btn1_text', ''), 'general');
+        Setting::set('popup_btn1_url', $request->input('popup_btn1_url', '/startups'), 'general');
+        Setting::set('popup_btn2_text',$request->input('popup_btn2_text', ''), 'general');
+        Setting::set('popup_btn2_url', $request->input('popup_btn2_url', '/register/investor'), 'general');
+
+        if ($request->hasFile('popup_image')) {
+            $old = Setting::get('popup_image');
+            if ($old) Storage::disk('public')->delete($old);
+            $path = $request->file('popup_image')->store('settings/popup', 'public');
+            Setting::set('popup_image', $path, 'general');
+        }
+
+        return back()->with('success', 'Popup settings saved.');
+    }
+
+    public function removePopupImage()
+    {
+        $old = Setting::get('popup_image');
+        if ($old) Storage::disk('public')->delete($old);
+        Setting::set('popup_image', '', 'general');
+        return back()->with('success', 'Popup image removed.');
+    }
+
     public function updateStartupsPage(Request $request)
     {
         $keys = ['startups_hero_badge','startups_hero_title','startups_hero_subtitle','startups_cta_title','startups_cta_subtitle','startups_sectors'];

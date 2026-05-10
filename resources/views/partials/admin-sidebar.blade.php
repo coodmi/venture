@@ -27,6 +27,7 @@
                 ['route'=>'admin.settings.header',      'label'=>'Header',         'icon'=>'M4 6h16M4 12h16M4 18h16'],
                 ['route'=>'admin.settings.startups',    'label'=>'Startups Page',  'icon'=>'M13 10V3L4 14h7v7l9-11h-7z'],
                 ['route'=>'admin.settings.hero',        'label'=>'Hero Slider',    'icon'=>'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'],
+                ['route'=>'admin.settings.popup',       'label'=>'Popup Settings', 'icon'=>'M7 4v16M17 4v16M3 8h4m10 0h4M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z'],
                 ['route'=>'admin.settings.stats',       'label'=>'Platform Stats', 'icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'],
                 ['route'=>'admin.settings.testimonials','label'=>'Testimonials',   'icon'=>'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z'],
                 ['route'=>'admin.settings.about',       'label'=>'About Content',  'icon'=>'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'],
