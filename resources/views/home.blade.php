@@ -132,38 +132,46 @@
                 $initials = strtoupper(substr($inv->user_name ?? 'IN', 0, 2));
                 $sectors = json_decode($inv->sector_preferences ?? '[]', true) ?: [];
             @endphp
-            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:220px;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 4px 16px rgba(0,0,0,.12);position:relative;aspect-ratio:3/4;min-height:300px;" onmouseover="this.style.boxShadow='0 16px 40px rgba(0,0,0,.25)';this.style.transform='translateY(-4px)';" onmouseout="this.style.boxShadow='0 4px 16px rgba(0,0,0,.12)';this.style.transform='translateY(0)';">
+            <a href="{{ route('investors.show', $inv->id) }}" style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:220px;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.08);background:#fff;border:1px solid #dde3ea;" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.15)';this.style.transform='translateY(-3px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.08)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
 
-                {{-- Full photo background --}}
-                @if(!empty($inv->photo))
-                    <img src="{{ Storage::url($inv->photo) }}" alt="{{ $inv->user_name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;z-index:0;">
-                @else
-                    <div style="position:absolute;inset:0;background:{{ $ig }};z-index:0;">
-                        <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:20px 20px;"></div>
-                        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-                            <div style="width:5rem;height:5rem;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.5rem;color:#fff;">{{ $initials }}</div>
-                        </div>
+                {{-- Gradient cover with avatar --}}
+                <div style="position:relative;height:9rem;background:{{ $ig }};overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                    <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle at 25% 50%,#fff 1px,transparent 1px),radial-gradient(circle at 75% 25%,#fff 1px,transparent 1px);background-size:28px 28px;"></div>
+                    <div style="position:absolute;top:-2rem;right:-2rem;width:8rem;height:8rem;background:rgba(255,255,255,.06);border-radius:50%;"></div>
+                    <div style="position:absolute;bottom:-3rem;left:-2rem;width:10rem;height:10rem;background:rgba(255,255,255,.04);border-radius:50%;"></div>
+                    {{-- Avatar --}}
+                    <div style="position:relative;z-index:2;width:4.5rem;height:4.5rem;border-radius:50%;border:3px solid rgba(255,255,255,.5);overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.25);">
+                        @if(!empty($inv->photo))
+                            <img src="{{ Storage::url($inv->photo) }}" alt="{{ $inv->user_name }}" style="width:100%;height:100%;object-fit:cover;display:block;">
+                        @else
+                            <div style="width:100%;height:100%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;">
+                                <span style="color:#fff;font-weight:800;font-size:1.375rem;">{{ $initials }}</span>
+                            </div>
+                        @endif
                     </div>
-                @endif
-
-                {{-- Dark gradient overlay at bottom --}}
-                <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,40,.92) 0%,rgba(10,15,40,.5) 40%,transparent 70%);z-index:1;"></div>
-
-                {{-- Verified badge top-right --}}
-                @if(($inv->verification_status??'')==='verified')
-                <div style="position:absolute;top:.75rem;right:.75rem;background:rgba(22,163,74,.9);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;z-index:2;display:flex;align-items:center;gap:.25rem;">
-                    <svg width="8" height="8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                    Verified
+                    {{-- Type badge top-left --}}
+                    <div style="position:absolute;top:.75rem;left:.75rem;background:rgba(0,0,0,.3);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;backdrop-filter:blur(4px);">{{ $invTypeLabel[$inv->investor_type] ?? ucfirst(str_replace('_',' ',$inv->investor_type)) }}</div>
+                    {{-- Verified badge bottom-right --}}
+                    @if(($inv->verification_status??'')==='verified')
+                    <div style="position:absolute;bottom:.75rem;right:.75rem;background:rgba(22,163,74,.9);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;display:flex;align-items:center;gap:.25rem;">
+                        <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        Verified
+                    </div>
+                    @endif
                 </div>
-                @endif
 
-                {{-- Text overlay at bottom --}}
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:1.25rem 1rem 1rem;z-index:2;">
-                    <p style="font-size:.9375rem;font-weight:700;color:#fff;margin:0 0 .2rem;line-height:1.3;">{{ $inv->user_name ?? 'Investor' }}</p>
-                    @if($inv->designation)<p style="font-size:.75rem;color:#f97316;font-weight:600;margin:0 0 .15rem;">{{ $inv->designation }}</p>@endif
-                    @if($inv->organization)<p style="font-size:.72rem;color:rgba(255,255,255,.6);margin:0 0 .625rem;">{{ $inv->organization }}</p>@endif
-                    @if($inv->investor_type)
-                    <span style="font-size:.65rem;font-weight:600;padding:.2rem .6rem;border-radius:9999px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);display:inline-block;">{{ $invTypeLabel[$inv->investor_type] ?? ucfirst(str_replace('_',' ',$inv->investor_type)) }}</span>
+                {{-- Card body --}}
+                <div style="padding:1rem 1.125rem 1.125rem;flex:1;display:flex;flex-direction:column;">
+                    <p style="font-size:1rem;font-weight:700;color:#0d2b6e;margin:0 0 .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->user_name ?? 'Investor' }}</p>
+                    @if($inv->designation)<p style="font-size:.75rem;color:#f97316;font-weight:600;margin:0 0 .1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>@endif
+                    @if($inv->organization)<p style="font-size:.7rem;color:#8d98a1;margin:0 0 .625rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">🏢 {{ $inv->organization }}</p>@endif
+                    @if(!empty($sectors))
+                    <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-top:auto;padding-top:.5rem;">
+                        @foreach(array_slice($sectors,0,2) as $sec)
+                        <span style="font-size:.65rem;background:#eff6ff;color:#1a3c8f;padding:.15rem .5rem;border-radius:9999px;border:1px solid #bfdbfe;">{{ $sec }}</span>
+                        @endforeach
+                        @if(count($sectors)>2)<span style="font-size:.65rem;color:#8d98a1;">+{{ count($sectors)-2 }}</span>@endif
+                    </div>
                     @endif
                 </div>
             </a>
