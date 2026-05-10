@@ -6,33 +6,34 @@
         ['label'=>'Home','url'=>'/'],
         ['label'=>'About','url'=>'/about'],
         ['label'=>'Top Startups','url'=>'/startups'],
-        ['label'=>'Investments','url'=>'/investment'],
         ['label'=>'Investors','url'=>'/investors'],
         ['label'=>'Events','url'=>'/events'],
         ['label'=>'News','url'=>'/news'],
     ];
-    // Fix legacy nav: rename "Investors" pointing to /investment → "Investments"
-    // and add a proper "Investors" → /investors entry if missing
+    // Remove any "Investments" → /investment entry from saved nav
+    $navItems = array_values(array_filter($navItems, function($item) {
+        return !(rtrim($item['url'], '/') === '/investment');
+    }));
+    // Fix legacy: rename "Investors" pointing to /investment → skip (remove it)
+    $navItems = array_values(array_filter($navItems, function($item) {
+        return !($item['label'] === 'Investors' && rtrim($item['url'], '/') === '/investment');
+    }));
+    // Ensure "Investors" → /investors exists
     $hasInvestorsPage = false;
-    foreach ($navItems as &$navItem) {
-        if ($navItem['label'] === 'Investors' && rtrim($navItem['url'], '/') === '/investment') {
-            $navItem['label'] = 'Investments';
-        }
-        if (rtrim($navItem['url'], '/') === '/investors') {
-            $hasInvestorsPage = true;
-        }
+    foreach ($navItems as $navItem) {
+        if (rtrim($navItem['url'], '/') === '/investors') { $hasInvestorsPage = true; break; }
     }
-    unset($navItem);
     if (!$hasInvestorsPage) {
-        // Insert "Investors" after "Investments" in the nav
         $newNav = [];
+        $inserted = false;
         foreach ($navItems as $navItem) {
             $newNav[] = $navItem;
-            if (rtrim($navItem['url'], '/') === '/investment') {
+            if (!$inserted && in_array($navItem['label'], ['Top Startups','About'])) {
                 $newNav[] = ['label' => 'Investors', 'url' => '/investors'];
+                $inserted = true;
             }
         }
-        $navItems = $newNav;
+        $navItems = $inserted ? $newNav : array_merge($newNav, [['label'=>'Investors','url'=>'/investors']]);
     }
 @endphp
 
