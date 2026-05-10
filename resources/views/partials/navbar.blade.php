@@ -6,10 +6,34 @@
         ['label'=>'Home','url'=>'/'],
         ['label'=>'About','url'=>'/about'],
         ['label'=>'Top Startups','url'=>'/startups'],
-        ['label'=>'Investors','url'=>'/investment'],
+        ['label'=>'Investments','url'=>'/investment'],
+        ['label'=>'Investors','url'=>'/investors'],
         ['label'=>'Events','url'=>'/events'],
         ['label'=>'News','url'=>'/news'],
     ];
+    // Fix legacy nav: rename "Investors" pointing to /investment → "Investments"
+    // and add a proper "Investors" → /investors entry if missing
+    $hasInvestorsPage = false;
+    foreach ($navItems as &$navItem) {
+        if ($navItem['label'] === 'Investors' && rtrim($navItem['url'], '/') === '/investment') {
+            $navItem['label'] = 'Investments';
+        }
+        if (rtrim($navItem['url'], '/') === '/investors') {
+            $hasInvestorsPage = true;
+        }
+    }
+    unset($navItem);
+    if (!$hasInvestorsPage) {
+        // Insert "Investors" after "Investments" in the nav
+        $newNav = [];
+        foreach ($navItems as $navItem) {
+            $newNav[] = $navItem;
+            if (rtrim($navItem['url'], '/') === '/investment') {
+                $newNav[] = ['label' => 'Investors', 'url' => '/investors'];
+            }
+        }
+        $navItems = $newNav;
+    }
 @endphp
 
 <nav style="background:#1a3c8f;border-bottom:2px solid #0d2b6e;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,60,143,.3);font-family:'Plus Jakarta Sans',sans-serif;">
