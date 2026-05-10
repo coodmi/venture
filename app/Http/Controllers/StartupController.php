@@ -9,7 +9,7 @@ class StartupController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Opportunity::approved()->with('seekerProfile');
+        $query = Opportunity::approved()->with(['seekerProfile', 'user']);
 
         if ($request->filled('sector'))  $query->where('sector', $request->sector);
         if ($request->filled('stage'))   $query->where('stage', $request->stage);
