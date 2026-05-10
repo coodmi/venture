@@ -88,7 +88,6 @@
                     <img src="{{ Storage::url($event->banner) }}" alt="{{ $event->title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
                 @else
                     <img src="{{ $demoImages[$idx] }}" alt="{{ $event->title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
-                    <div style="position:absolute;inset:0;background:{{ $gradients[$idx] }};opacity:.55;"></div>
                 @endif
                 <div style="position:absolute;top:.75rem;left:.75rem;background:rgba(255,255,255,.2);color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.04em;">{{ $event->event_type }}</div>
                 @if($event->is_featured)<div style="position:absolute;top:.75rem;right:.75rem;background:#f97316;color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .625rem;border-radius:9999px;">⭐ Featured</div>@endif

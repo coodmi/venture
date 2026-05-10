@@ -101,7 +101,6 @@
                     <img src="{{ Storage::url($article->cover_image) }}" alt="{{ $article->title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
                 @else
                     <img src="{{ $newsDemoImgs[$idx] }}" alt="{{ $article->title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
-                    <div style="position:absolute;inset:0;background:{{ $grad }};opacity:.5;"></div>
                 @endif
                 @if($article->is_featured)<div style="position:absolute;top:.75rem;right:.75rem;background:#f97316;color:#fff;font-size:.68rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;">⭐ Featured</div>@endif
                 @if($article->category)<span style="position:absolute;bottom:.625rem;left:.625rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .55rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(6px);text-transform:uppercase;letter-spacing:.04em;">{{ $article->category }}</span>@endif

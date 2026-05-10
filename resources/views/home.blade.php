@@ -309,7 +309,6 @@
                     @else
                         <img src="{{ $demo }}" alt="{{ $event->title }}"
                              style="width:100%;height:100%;object-fit:cover;display:block;">
-                        <div style="position:absolute;inset:0;background:{{ $grad }};opacity:.55;"></div>
                     @endif
                     {{-- Type badge --}}
                     @if($event->event_type)
@@ -416,7 +415,6 @@
                     @else
                         <img src="{{ $newsDemoImages[$idx] }}" alt="{{ $article->title }}"
                              style="width:100%;height:100%;object-fit:cover;display:block;">
-                        <div style="position:absolute;inset:0;background:{{ $grad }};opacity:.5;"></div>
                     @endif
                     {{-- Category badge --}}
                     @if($article->category)
