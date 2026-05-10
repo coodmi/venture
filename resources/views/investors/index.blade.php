@@ -92,83 +92,57 @@
             <p style="color:#8d98a1;font-size:.875rem;">Try adjusting your filters or check back later.</p>
         </div>
         @else
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;">
             @foreach($investors as $inv)
             @php
                 $ic = $typeColor[$inv->investor_type] ?? '#1a3c8f';
                 $name = $inv->user_name ?? 'Investor';
                 $initials = strtoupper(substr($name,0,2));
                 $sectors = json_decode($inv->sector_preferences ?? '[]', true) ?: [];
+                $coverGrads=['angel'=>'linear-gradient(135deg,#c2410c 0%,#f97316 100%)','vc'=>'linear-gradient(135deg,#0d2b6e 0%,#2563eb 100%)','corporate'=>'linear-gradient(135deg,#3730a3 0%,#6366f1 100%)','family_office'=>'linear-gradient(135deg,#6b21a8 0%,#a855f7 100%)','impact'=>'linear-gradient(135deg,#14532d 0%,#16a34a 100%)'];
+                $ig = $coverGrads[$inv->investor_type] ?? 'linear-gradient(135deg,#0d2b6e 0%,#1a3c8f 100%)';
             @endphp
-            <div style="background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .25s;" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
+            <a href="{{ route('investors.show', $inv->id) }}"
+               style="text-decoration:none;border-radius:1.25rem;overflow:hidden;display:block;transition:all .25s;box-shadow:0 4px 16px rgba(0,0,0,.12);position:relative;aspect-ratio:3/4;min-height:320px;"
+               onmouseover="this.style.boxShadow='0 16px 40px rgba(0,0,0,.25)';this.style.transform='translateY(-4px)';"
+               onmouseout="this.style.boxShadow='0 4px 16px rgba(0,0,0,.12)';this.style.transform='translateY(0)';">
 
-                {{-- Cover Image --}}
-                @php
-                    $coverGrads=['angel'=>'linear-gradient(135deg,#c2410c 0%,#f97316 100%)','vc'=>'linear-gradient(135deg,#0d2b6e 0%,#2563eb 100%)','corporate'=>'linear-gradient(135deg,#3730a3 0%,#6366f1 100%)','family_office'=>'linear-gradient(135deg,#6b21a8 0%,#a855f7 100%)','impact'=>'linear-gradient(135deg,#14532d 0%,#16a34a 100%)'];
-                    $coverGrad = $coverGrads[$inv->investor_type] ?? 'linear-gradient(135deg,#0d2b6e 0%,#1a3c8f 100%)';
-                @endphp
-                <div style="position:relative;height:9rem;background:{{ $coverGrad }};overflow:hidden;display:flex;align-items:center;justify-content:center;">
-                    <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle at 25% 50%,#fff 1px,transparent 1px),radial-gradient(circle at 75% 25%,#fff 1px,transparent 1px);background-size:28px 28px;"></div>
-                    <div style="position:absolute;top:-2rem;right:-2rem;width:8rem;height:8rem;background:rgba(255,255,255,.06);border-radius:50%;"></div>
-                    <div style="position:absolute;bottom:-3rem;left:-2rem;width:10rem;height:10rem;background:rgba(255,255,255,.04);border-radius:50%;"></div>
-                    {{-- Avatar --}}
-                    <div style="position:relative;z-index:2;width:4.5rem;height:4.5rem;border-radius:50%;border:3px solid rgba(255,255,255,.5);overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.25);">
-                        @if(!empty($inv->photo))
-                            <img src="{{ Storage::url($inv->photo) }}" alt="{{ $name }}" style="width:100%;height:100%;object-fit:cover;display:block;">
-                        @else
-                            <div style="width:100%;height:100%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;">
-                                <span style="color:#fff;font-weight:800;font-size:1.375rem;">{{ $initials }}</span>
-                            </div>
-                        @endif
-                    </div>
-                    {{-- Verified badge on cover --}}
-                    @if(($inv->verification_status??'') === 'verified')
-                    <div style="position:absolute;bottom:.75rem;right:.75rem;background:rgba(22,163,74,.9);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;display:flex;align-items:center;gap:.25rem;">
-                        <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                        Verified
-                    </div>
-                    @endif
-                    {{-- Type badge --}}
-                    <div style="position:absolute;top:.75rem;left:.75rem;background:rgba(0,0,0,.3);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;backdrop-filter:blur(4px);">{{ $typeLabel[$inv->investor_type]??$inv->investor_type }}</div>
-                </div>
-                <div style="padding:1.25rem 1.5rem;flex:1;display:flex;flex-direction:column;">
-                    {{-- Name & org --}}
-                    <div style="margin-bottom:.875rem;">
-                        <p style="font-size:1rem;font-weight:700;color:#0d2b6e;margin:0 0 .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $name }}</p>
-                        @if($inv->designation)<p style="font-size:.75rem;color:#8d98a1;margin:0 0 .1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $inv->designation }}</p>@endif
-                        @if($inv->organization)<p style="font-size:.7rem;color:#8d98a1;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">🏢 {{ $inv->organization }}</p>@endif
-                    </div>
-
-                    {{-- Stage badge --}}
-                    <div style="display:flex;flex-wrap:wrap;gap:.375rem;margin-bottom:.875rem;">
-                        @if($inv->investment_stage)<span style="font-size:.68rem;background:#f1f5f9;color:#475569;padding:.2rem .6rem;border-radius:9999px;">{{ $stageLabel[$inv->investment_stage]??$inv->investment_stage }}</span>@endif
-                    </div>
-
-                    {{-- Bio --}}
-                    @if($inv->bio)<p style="font-size:.78rem;color:#8d98a1;line-height:1.55;margin:0 0 .875rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;">{{ $inv->bio }}</p>@endif
-
-                    {{-- Sectors --}}
-                    @if(!empty($sectors))
-                    <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.875rem;">
-                        @foreach(array_slice($sectors,0,3) as $sec)
-                        <span style="font-size:.65rem;background:#eff6ff;color:#1a3c8f;padding:.15rem .5rem;border-radius:9999px;border:1px solid #bfdbfe;">{{ $sec }}</span>
-                        @endforeach
-                        @if(count($sectors)>3)<span style="font-size:.65rem;color:#8d98a1;">+{{ count($sectors)-3 }} more</span>@endif
-                    </div>
-                    @endif
-
-                    {{-- Footer --}}
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.875rem;border-top:1px solid #f1f5f9;margin-top:auto;">
-                        @if($inv->ticket_size_min && $inv->ticket_size_max)
-                        <div>
-                            <p style="font-size:.65rem;color:#8d98a1;margin:0 0 .1rem;text-transform:uppercase;letter-spacing:.04em;">Ticket</p>
-                            <p style="font-size:.8rem;font-weight:700;color:#1a3c8f;margin:0;">৳{{ number_format($inv->ticket_size_min/100000,0) }}L – {{ number_format($inv->ticket_size_max/100000,0) }}L</p>
+                {{-- Full photo or gradient background --}}
+                @if(!empty($inv->photo))
+                    <img src="{{ Storage::url($inv->photo) }}" alt="{{ $name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;z-index:0;">
+                @else
+                    <div style="position:absolute;inset:0;background:{{ $ig }};z-index:0;">
+                        <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:20px 20px;"></div>
+                        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                            <div style="width:5rem;height:5rem;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.5rem;color:#fff;">{{ $initials }}</div>
                         </div>
-                        @else<span></span>@endif
-                        <a href="{{ route('investors.show', $inv->id) }}" style="background:#f97316;color:#fff;font-size:.72rem;font-weight:700;padding:.35rem .875rem;border-radius:.5rem;text-decoration:none;">Connect →</a>
                     </div>
+                @endif
+
+                {{-- Dark gradient overlay at bottom --}}
+                <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,40,.92) 0%,rgba(10,15,40,.5) 40%,transparent 70%);z-index:1;"></div>
+
+                {{-- Type badge top-left --}}
+                <div style="position:absolute;top:.75rem;left:.75rem;background:rgba(0,0,0,.35);color:#fff;font-size:.65rem;font-weight:700;padding:.25rem .7rem;border-radius:9999px;z-index:2;backdrop-filter:blur(4px);">{{ $typeLabel[$inv->investor_type] ?? ucfirst(str_replace('_',' ',$inv->investor_type)) }}</div>
+
+                {{-- Verified badge top-right --}}
+                @if(($inv->verification_status??'')==='verified')
+                <div style="position:absolute;top:.75rem;right:.75rem;background:rgba(22,163,74,.9);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;z-index:2;display:flex;align-items:center;gap:.25rem;">
+                    <svg width="8" height="8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    Verified
                 </div>
-            </div>
+                @endif
+
+                {{-- Text overlay at bottom --}}
+                <div style="position:absolute;bottom:0;left:0;right:0;padding:1.25rem 1rem 1rem;z-index:2;">
+                    <p style="font-size:1rem;font-weight:700;color:#fff;margin:0 0 .2rem;line-height:1.3;">{{ $name }}</p>
+                    @if($inv->designation)<p style="font-size:.75rem;color:#f97316;font-weight:600;margin:0 0 .15rem;">{{ $inv->designation }}</p>@endif
+                    @if($inv->organization)<p style="font-size:.72rem;color:rgba(255,255,255,.65);margin:0 0 .625rem;">{{ $inv->organization }}</p>@endif
+                    @if($inv->investor_type)
+                    <span style="font-size:.65rem;font-weight:600;padding:.25rem .7rem;border-radius:9999px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);display:inline-block;">{{ $typeLabel[$inv->investor_type] ?? ucfirst(str_replace('_',' ',$inv->investor_type)) }}</span>
+                    @endif
+                </div>
+            </a>
             @endforeach
         </div>
         <div style="margin-top:2.5rem;">{{ $investors->withQueryString()->links() }}</div>
