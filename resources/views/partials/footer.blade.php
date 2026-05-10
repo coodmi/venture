@@ -72,8 +72,14 @@
             </form>
         </div>
 
-        <div style="border-top:1px solid #dde3ea;padding-top:1.5rem;text-align:center;font-size:.8125rem;color:#8d98a1;">
-            © {{ date('Y') }} {{ $siteName ?? 'VentureMatch' }}. All rights reserved.
+        <div style="border-top:1px solid #dde3ea;padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-size:.8125rem;color:#8d98a1;">
+            <span>© {{ date('Y') }} {{ $siteName ?? 'VentureMatch' }}. All rights reserved.</span>
+            <a href="https://alphainno.com" target="_blank" rel="noopener"
+               style="color:#8d98a1;text-decoration:none;display:flex;align-items:center;gap:.375rem;transition:color .2s;"
+               onmouseover="this.style.color='#1a3c8f';" onmouseout="this.style.color='#8d98a1';">
+                Design &amp; Develop by
+                <span style="font-weight:700;color:#1a3c8f;">Alphainno</span>
+            </a>
         </div>
     </div>
 </footer>
