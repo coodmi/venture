@@ -86,10 +86,10 @@
                onmouseout="this.style.boxShadow='0 2px 12px rgba(0,0,0,.07)';this.style.transform='translateY(0)';">
 
                 {{-- Logo area --}}
-                <div style="width:100%;height:11rem;position:relative;overflow:hidden;background:#f4f6f8;display:flex;align-items:center;justify-content:center;">
+                <div style="width:100%;height:11rem;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:{{ empty($opp->company_logo) ? '#f4f6f8' : 'transparent' }};">
                     @if(!empty($opp->company_logo))
                         <img src="{{ Storage::url($opp->company_logo) }}" alt="{{ $opp->title }}"
-                             style="width:100%;height:100%;object-fit:contain;padding:1.25rem;">
+                             style="width:100%;height:100%;object-fit:cover;display:block;">
                     @else
                         <div style="width:5rem;height:5rem;border-radius:1.25rem;background:{{ $grad }};display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.15);">
                             <span style="color:#fff;font-weight:800;font-size:1.5rem;">{{ strtoupper(substr($opp->title,0,2)) }}</span>
