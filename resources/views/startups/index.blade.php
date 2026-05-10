@@ -86,19 +86,19 @@
                onmouseout="this.style.boxShadow='0 4px 16px rgba(0,0,0,.08)';this.style.transform='translateY(0)';">
 
                 {{-- Square logo area --}}
-                <div style="width:100%;aspect-ratio:1/1;background:{{ $grad }};position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
-                    <div style="position:absolute;inset:0;opacity:.06;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:24px 24px;"></div>
+                <div style="width:100%;aspect-ratio:1/1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:{{ empty($opp->company_logo) ? $grad : '#f8fafc' }};">
                     @if(!empty($opp->company_logo))
                         <img src="{{ Storage::url($opp->company_logo) }}" alt="{{ $opp->title }}"
-                             style="width:75%;height:75%;object-fit:contain;position:relative;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));">
+                             style="width:100%;height:100%;object-fit:cover;display:block;">
                     @else
-                        <div style="width:5rem;height:5rem;border-radius:1.25rem;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;">
+                        <div style="position:absolute;inset:0;opacity:.06;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:24px 24px;"></div>
+                        <div style="width:5rem;height:5rem;border-radius:1.25rem;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;position:relative;z-index:1;">
                             <span style="color:#fff;font-weight:800;font-size:1.5rem;">{{ strtoupper(substr($opp->title,0,2)) }}</span>
                         </div>
                     @endif
                     <div style="position:absolute;top:.625rem;left:.625rem;display:flex;gap:.3rem;z-index:2;">
-                        @if($opp->is_hot_deal)<span style="background:rgba(249,115,22,.9);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:9999px;">🔥 Hot</span>@endif
-                        @if($opp->is_featured)<span style="background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);">⭐ Featured</span>@endif
+                        @if($opp->is_hot_deal)<span style="background:#f97316;color:#fff;font-size:.6rem;font-weight:700;padding:.25rem .55rem;border-radius:9999px;box-shadow:0 2px 8px rgba(249,115,22,.4);">🔥 Hot</span>@endif
+                        @if($opp->is_featured)<span style="background:rgba(255,255,255,.9);color:#374151;font-size:.6rem;font-weight:700;padding:.25rem .55rem;border-radius:9999px;box-shadow:0 2px 8px rgba(0,0,0,.12);">⭐ Featured</span>@endif
                     </div>
                 </div>
 
