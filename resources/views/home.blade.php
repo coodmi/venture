@@ -388,23 +388,48 @@
                 <a href="{{ route('news.index') }}" style="color:#1a3c8f;font-size:.875rem;font-weight:600;text-decoration:none;white-space:nowrap;">View all →</a>
             </div>
         </div>
-        @php $newsGrads=['Deal News'=>'linear-gradient(135deg,#1a3c8f,#2563eb)','Market Insights'=>'linear-gradient(135deg,#7c3aed,#a78bfa)','Platform Update'=>'linear-gradient(135deg,#16a34a,#34d399)','Press Release'=>'linear-gradient(135deg,#374151,#6b7280)','Founder Resources'=>'linear-gradient(135deg,#f97316,#fb923c)','Event Recap'=>'linear-gradient(135deg,#dc2626,#f87171)','Startup Spotlight'=>'linear-gradient(135deg,#0891b2,#22d3ee)']; @endphp
+        @php
+        $newsGrads=['Deal News'=>'linear-gradient(135deg,#1a3c8f,#2563eb)','Market Insights'=>'linear-gradient(135deg,#7c3aed,#a78bfa)','Platform Update'=>'linear-gradient(135deg,#16a34a,#34d399)','Press Release'=>'linear-gradient(135deg,#374151,#6b7280)','Founder Resources'=>'linear-gradient(135deg,#f97316,#fb923c)','Event Recap'=>'linear-gradient(135deg,#dc2626,#f87171)','Startup Spotlight'=>'linear-gradient(135deg,#0891b2,#22d3ee)'];
+        $newsDemoImages=[
+            'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80',
+            'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80',
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80',
+            'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80',
+            'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=600&q=80',
+            'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80',
+        ];
+        @endphp
         <div style="overflow:hidden;">
         <div id="newsTrack" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;scrollbar-width:none;" class="hide-scroll">
             @foreach($latestNews as $article)
-            <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:220px;display:flex;flex-direction:column;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';">
-                @if($article->cover_image)
-                    <img src="{{ Storage::url($article->cover_image) }}" alt="{{ $article->title }}" style="width:100%;height:10rem;object-fit:cover;display:block;">
-                @else
-                    <div style="width:100%;height:10rem;background:{{ $newsGrads[$article->category] ?? 'linear-gradient(135deg,#1a3c8f,#2563eb)' }};display:flex;align-items:center;justify-content:center;">
-                        <svg width="40" height="40" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
-                    </div>
-                @endif
-                <div style="padding:1.125rem;flex:1;display:flex;flex-direction:column;">
-                    <span style="font-size:.68rem;color:#1a3c8f;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">{{ $article->category }}</span>
-                    <h3 style="font-size:.9375rem;font-weight:700;color:#0d2b6e;margin:.3rem 0 .5rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;">{{ $article->title }}</h3>
+            @php $idx = $loop->index % 6; $grad = $newsGrads[$article->category] ?? 'linear-gradient(135deg,#1a3c8f,#2563eb)'; @endphp
+            <a href="{{ route('news.show', $article->slug) }}"
+               style="text-decoration:none;flex-shrink:0;width:calc(25% - 1rem);min-width:240px;display:flex;flex-direction:column;background:#fff;border:1px solid #e5e7eb;border-radius:1.25rem;overflow:hidden;transition:all .25s;box-shadow:0 2px 12px rgba(0,0,0,.06);"
+               onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.12)';this.style.transform='translateY(-3px)';"
+               onmouseout="this.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';this.style.transform='translateY(0)';">
+
+                {{-- Cover --}}
+                <div style="position:relative;width:100%;height:10rem;overflow:hidden;">
+                    @if($article->cover_image)
+                        <img src="{{ Storage::url($article->cover_image) }}" alt="{{ $article->title }}"
+                             style="width:100%;height:100%;object-fit:cover;display:block;">
+                    @else
+                        <img src="{{ $newsDemoImages[$idx] }}" alt="{{ $article->title }}"
+                             style="width:100%;height:100%;object-fit:cover;display:block;">
+                        <div style="position:absolute;inset:0;background:{{ $grad }};opacity:.5;"></div>
+                    @endif
+                    {{-- Category badge --}}
+                    @if($article->category)
+                    <span style="position:absolute;bottom:.625rem;left:.625rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .55rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(6px);text-transform:uppercase;letter-spacing:.05em;">{{ $article->category }}</span>
+                    @endif
+                </div>
+
+                {{-- Info --}}
+                <div style="padding:1rem 1.125rem 1.125rem;flex:1;display:flex;flex-direction:column;">
+                    @if($article->category)<span style="font-size:.65rem;color:#1a3c8f;font-weight:700;text-transform:uppercase;letter-spacing:.07em;">{{ $article->category }}</span>@endif
+                    <h3 style="font-size:.9375rem;font-weight:700;color:#111827;margin:.3rem 0 .5rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;">{{ $article->title }}</h3>
                     <div style="display:flex;align-items:center;justify-content:space-between;padding-top:.625rem;border-top:1px solid #f1f5f9;">
-                        <span style="font-size:.72rem;color:#8d98a1;">{{ $article->published_at?->format('M d, Y') }}</span>
+                        <span style="font-size:.72rem;color:#9ca3af;">{{ $article->published_at?->format('M d, Y') }}</span>
                         <span style="font-size:.72rem;color:#f97316;font-weight:600;">Read →</span>
                     </div>
                 </div>

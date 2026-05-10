@@ -79,23 +79,33 @@
             <a href="{{ route('notices.index') }}" style="font-size:.875rem;color:#1a3c8f;font-weight:600;text-decoration:none;">View Notices →</a>
         </div>
 
-        @php $catGrads=['Deal News'=>'linear-gradient(135deg,#1d4ed8,#3b82f6)','Market Insights'=>'linear-gradient(135deg,#7c3aed,#a78bfa)','Startup Spotlight'=>'linear-gradient(135deg,#db2777,#f472b6)','Platform Update'=>'linear-gradient(135deg,#059669,#34d399)','Press Release'=>'linear-gradient(135deg,#374151,#6b7280)','Founder Resources'=>'linear-gradient(135deg,#d97706,#fbbf24)','Event Recap'=>'linear-gradient(135deg,#dc2626,#f97316)','System Notice'=>'linear-gradient(135deg,#475569,#64748b)']; @endphp
+        @php
+        $catGrads=['Deal News'=>'linear-gradient(135deg,#1d4ed8,#3b82f6)','Market Insights'=>'linear-gradient(135deg,#7c3aed,#a78bfa)','Startup Spotlight'=>'linear-gradient(135deg,#db2777,#f472b6)','Platform Update'=>'linear-gradient(135deg,#059669,#34d399)','Press Release'=>'linear-gradient(135deg,#374151,#6b7280)','Founder Resources'=>'linear-gradient(135deg,#d97706,#fbbf24)','Event Recap'=>'linear-gradient(135deg,#dc2626,#f97316)','System Notice'=>'linear-gradient(135deg,#475569,#64748b)'];
+        $newsDemoImgs=[
+            'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80',
+            'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80',
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80',
+            'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80',
+            'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=600&q=80',
+            'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80',
+        ];
+        @endphp
 
         @forelse($news as $article)
         @if($loop->first)<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;">@endif
+        @php $idx = $loop->index % 6; $grad = $catGrads[$article->category] ?? 'linear-gradient(135deg,#1d4ed8,#3b82f6)'; @endphp
 
-        <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #dde3ea;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.04);" onmouseover="this.style.boxShadow='0 12px 30px rgba(26,60,143,.12)';this.style.transform='translateY(-3px)';this.style.borderColor='#bfdbfe';" onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,.04)';this.style.transform='translateY(0)';this.style.borderColor='#dde3ea';">
-            @if($article->cover_image)
-                <div style="position:relative;height:11rem;overflow:hidden;">
+        <a href="{{ route('news.show', $article->slug) }}" style="text-decoration:none;background:#fff;border:1px solid #e5e7eb;border-radius:1.25rem;overflow:hidden;display:flex;flex-direction:column;transition:all .25s;box-shadow:0 2px 12px rgba(0,0,0,.06);" onmouseover="this.style.boxShadow='0 12px 30px rgba(0,0,0,.12)';this.style.transform='translateY(-3px)';" onmouseout="this.style.boxShadow='0 2px 12px rgba(0,0,0,.06)';this.style.transform='translateY(0)';">
+            <div style="position:relative;height:11rem;overflow:hidden;">
+                @if($article->cover_image)
                     <img src="{{ Storage::url($article->cover_image) }}" alt="{{ $article->title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
-                    @if($article->is_featured)<div style="position:absolute;top:.75rem;right:.75rem;background:#f97316;color:#fff;font-size:.68rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;">⭐ Featured</div>@endif
-                </div>
-            @else
-                <div style="position:relative;height:11rem;background:{{ $catGrads[$article->category] ?? 'linear-gradient(135deg,#1d4ed8,#3b82f6)' }};display:flex;align-items:center;justify-content:center;">
-                    <svg width="40" height="40" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
-                    @if($article->is_featured)<div style="position:absolute;top:.75rem;right:.75rem;background:#f97316;color:#fff;font-size:.68rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;">⭐ Featured</div>@endif
-                </div>
-            @endif
+                @else
+                    <img src="{{ $newsDemoImgs[$idx] }}" alt="{{ $article->title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
+                    <div style="position:absolute;inset:0;background:{{ $grad }};opacity:.5;"></div>
+                @endif
+                @if($article->is_featured)<div style="position:absolute;top:.75rem;right:.75rem;background:#f97316;color:#fff;font-size:.68rem;font-weight:700;padding:.2rem .6rem;border-radius:9999px;">⭐ Featured</div>@endif
+                @if($article->category)<span style="position:absolute;bottom:.625rem;left:.625rem;background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:700;padding:.2rem .55rem;border-radius:9999px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(6px);text-transform:uppercase;letter-spacing:.04em;">{{ $article->category }}</span>@endif
+            </div>
             <div style="padding:1.25rem;flex:1;display:flex;flex-direction:column;">
                 <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap;">
                     <span style="font-size:.68rem;font-weight:700;background:#eff6ff;color:#1a3c8f;padding:.2rem .6rem;border-radius:9999px;border:1px solid #bfdbfe;">{{ $article->category }}</span>
